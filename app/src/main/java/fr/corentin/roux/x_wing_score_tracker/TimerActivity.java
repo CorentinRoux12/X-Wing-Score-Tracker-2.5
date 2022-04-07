@@ -1,16 +1,16 @@
-package fr.corentin.roux.score_tracker.ui.activities;
+package fr.corentin.roux.x_wing_score_tracker;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import fr.corentin.roux.score_tracker.R;
 
 /**
  * @author Corentin Roux
@@ -31,7 +31,6 @@ public class TimerActivity extends AppCompatActivity {
     private Button btnLessPlayerTwo;
     private TextView textViewScorePlayerTwo;
     private Button btnPlusPlayerTwo;
-
     private long timeToSet;
     private CountDownTimer timer;
     private int scorePlayerOne = 0;
@@ -80,8 +79,10 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setOnClickListener(t -> {
             if (this.timerStart) {
                 this.stopTimer();
+                this.releaseLock();
             } else {
                 this.startTimer();
+                this.acquireLock();
             }
         });
 
@@ -133,6 +134,7 @@ public class TimerActivity extends AppCompatActivity {
             }
         }.start();
         this.btnStartStop.setText("STOP");
+        this.btnStartStop.setBackgroundColor(Color.RED);
         this.timerStart = true;
     }
 
@@ -142,6 +144,7 @@ public class TimerActivity extends AppCompatActivity {
     private void stopTimer() {
         this.timer.cancel();
         this.btnStartStop.setText("START");
+        this.btnStartStop.setBackgroundColor(Color.GREEN);
         this.timerStart = false;
     }
 
@@ -157,5 +160,13 @@ public class TimerActivity extends AppCompatActivity {
         this.btnLessPlayerTwo = this.findViewById(R.id.btnLessPlayerTwo);
         this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
         this.btnPlusPlayerTwo = this.findViewById(R.id.btnPlusPlayerTwo);
+    }
+
+    private void acquireLock() {
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private void releaseLock() {
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }

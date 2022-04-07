@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Score Tracker</string>
+    <string name="app_name">X Wing 2.5 Score Tracker</string>
     <string name="x_wing_2_5_timer_and_score_tracker">X-Wing 2.5 Timer &amp; Score Tracker</string>
     <string name="time">Timer :</string>
     <string name="start">Start</string>
@@ -9,4 +9,6 @@
     <string name="player_2">Player 2</string>
     <string name="player_1">Player 1</string>
     <string name="startBtn">START</string>
+    <string name="_0">0</string>
+    <string name="minutes">Minutes</string>
 </resources>

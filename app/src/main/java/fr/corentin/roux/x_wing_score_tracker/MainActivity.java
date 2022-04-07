@@ -1,4 +1,4 @@
-package fr.corentin.roux.score_tracker.ui.activities;
+package fr.corentin.roux.x_wing_score_tracker;
 
 import android.content.Intent;
 import android.os.Build;
@@ -12,8 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Objects;
-
-import fr.corentin.roux.score_tracker.R;
 
 /**
  * @author Corentin Roux
