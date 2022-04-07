@@ -22,6 +22,8 @@ public class TimerActivity extends AppCompatActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
+    private static final String RED = "#FFF00000";
+    private static final String GREEN = "#FF00C000";
     private boolean timerStart = false;
     private TextView timeClock;
     private Button btnStartStop;
@@ -35,6 +37,10 @@ public class TimerActivity extends AppCompatActivity {
     private CountDownTimer timer;
     private int scorePlayerOne = 0;
     private int scorePlayerTwo = 0;
+    private int round = 0;
+    private TextView roundNumber;
+    private Button btnLessRound;
+    private Button btnPlusRound;
 
     /**
      * {@inheritDoc}
@@ -106,6 +112,19 @@ public class TimerActivity extends AppCompatActivity {
             this.scorePlayerTwo++;
             this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
         });
+        this.btnLessRound.setOnClickListener(t -> {
+            if (this.round > 0) {
+                this.round--;
+                this.roundNumber.setText(String.valueOf(this.round));
+            }
+        });
+        this.btnPlusRound.setOnClickListener(t -> {
+            this.round++;
+            if (this.round == 12) {
+                Toast.makeText(TimerActivity.this, "LAST TURN !!", Toast.LENGTH_LONG).show();
+            }
+            this.roundNumber.setText(String.valueOf(this.round));
+        });
     }
 
     /**
@@ -134,7 +153,7 @@ public class TimerActivity extends AppCompatActivity {
             }
         }.start();
         this.btnStartStop.setText("STOP");
-        this.btnStartStop.setBackgroundColor(Color.RED);
+        this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
         this.timerStart = true;
     }
 
@@ -144,7 +163,7 @@ public class TimerActivity extends AppCompatActivity {
     private void stopTimer() {
         this.timer.cancel();
         this.btnStartStop.setText("START");
-        this.btnStartStop.setBackgroundColor(Color.GREEN);
+        this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         this.timerStart = false;
     }
 
@@ -160,6 +179,9 @@ public class TimerActivity extends AppCompatActivity {
         this.btnLessPlayerTwo = this.findViewById(R.id.btnLessPlayerTwo);
         this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
         this.btnPlusPlayerTwo = this.findViewById(R.id.btnPlusPlayerTwo);
+        this.roundNumber = this.findViewById(R.id.roundNumber);
+        this.btnLessRound = this.findViewById(R.id.btnLessRound);
+        this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
     }
 
     private void acquireLock() {

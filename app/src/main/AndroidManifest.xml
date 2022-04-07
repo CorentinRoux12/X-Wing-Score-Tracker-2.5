@@ -3,6 +3,7 @@
     package="fr.corentin.roux.x_wing_score_tracker">
 
     <application
+        android:debuggable="false"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
