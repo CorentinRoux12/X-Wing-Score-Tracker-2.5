@@ -22,8 +22,8 @@ public class TimerActivity extends AppCompatActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
-    private static final String RED = "#FFF00000";
-    private static final String GREEN = "#FF00C000";
+    private static final String RED = "#9d0208";
+    private static final String GREEN = "#2b9348";
     private boolean timerStart = false;
     private TextView timeClock;
     private Button btnStartStop;

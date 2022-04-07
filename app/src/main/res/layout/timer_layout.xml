@@ -44,7 +44,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#FFF00000"
+            android:backgroundTint="@color/red"
             android:text="@string/less"
             android:textColor="@color/black" />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="25dp"
-            android:backgroundTint="#FF00C000"
+            android:backgroundTint="@color/green"
             android:text="@string/plus"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:backgroundTint="#FF00C000"
+            android:backgroundTint="@color/green"
             android:text="@string/startBtn"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -172,7 +172,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#FFF00000"
+            android:backgroundTint="@color/red"
             android:text="@string/less"
             android:textColor="@color/black" />
 
@@ -192,7 +192,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="25dp"
-            android:backgroundTint="#FF00C000"
+            android:backgroundTint="@color/green"
             android:text="@string/plus"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -203,7 +203,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="#FFF00000"
+            android:backgroundTint="@color/red"
             android:text="@string/less"
             android:textColor="@color/black"
             android:textSize="24sp" />
@@ -223,7 +223,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:backgroundTint="#FF00C000"
+            android:backgroundTint="@color/green"
             android:text="@string/plus"
             android:textColor="@color/black"
             android:textSize="24sp" />
