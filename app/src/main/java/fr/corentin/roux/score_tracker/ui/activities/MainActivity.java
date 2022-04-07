@@ -15,13 +15,20 @@ import java.util.Objects;
 
 import fr.corentin.roux.score_tracker.R;
 
+/**
+ * @author Corentin Roux
+ * <p>
+ * The Main view at the start of the application
+ */
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity {
 
     private TextInputEditText timer;
     private Button btnStart;
 
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
 
         this.findView();
 
+        this.initListeners();
+    }
+
+    /**
+     * Initialization of the listeners for each interaction in the view
+     */
+    private void initListeners() {
         this.btnStart.setOnClickListener(t -> {
             if (Objects.nonNull(this.timer) && Objects.nonNull(this.timer.getText()) && !this.timer.getText().toString().equals("")) {
                 final Intent intent = new Intent(this, TimerActivity.class);
@@ -41,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Binding of all the fields XML and the fields JAVA
+     */
     private void findView() {
         this.timer = this.findViewById(R.id.inputTimer);
         this.btnStart = this.findViewById(R.id.btnStart);
