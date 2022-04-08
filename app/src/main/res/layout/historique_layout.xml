@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_light"
-        android:text="Historique"
+        android:text="@string/Historical"
         android:textColor="@color/black"
         android:textSize="@dimen/title_text_size"
         app:layout_constraintLeft_toLeftOf="parent"

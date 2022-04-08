@@ -48,6 +48,8 @@ public class TimerActivity extends AppCompatActivity {
     private TextView roundNumber;
     private Button btnLessRound;
     private Button btnPlusRound;
+    private boolean hideTimer;
+    private TextView textViewTimeLeft;
 
     /**
      * {@inheritDoc}
@@ -57,6 +59,8 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //We set the view who will be use for display the datas
         this.setContentView(R.layout.timer_layout);
+        //Option d affichage du timer
+        this.hideTimer = (boolean) this.getIntent().getSerializableExtra("hideTimer");
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
         //Bind the xml and the fields
@@ -65,14 +69,26 @@ public class TimerActivity extends AppCompatActivity {
         this.initListeners();
         //Update of the view for the first time => set the fields
         this.updateTimer();
+        if (this.hideTimer) {
+            this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
+            this.textViewTimeLeft.setText("Time");
+        }
     }
 
     /**
      * Update the timer with the time left
      */
     private void updateTimer() {
-        final int minutes = (int) this.timeToSet / MINUTES;
-        final int secondes = (int) this.timeToSet % MINUTES / SECONDES;
+        final StringBuilder timeLeft = this.generateTimeLeft((int) this.timeToSet);
+
+        if (!this.hideTimer) {
+            this.timeClock.setText(timeLeft.toString());
+        }
+    }
+
+    private StringBuilder generateTimeLeft(final int timeToSet) {
+        final int minutes = timeToSet / MINUTES;
+        final int secondes = timeToSet % MINUTES / SECONDES;
 
         final StringBuilder timeLeft = new StringBuilder()
                 .append(minutes)
@@ -81,8 +97,7 @@ public class TimerActivity extends AppCompatActivity {
             timeLeft.append("0");
         }
         timeLeft.append(secondes);
-
-        this.timeClock.setText(timeLeft.toString());
+        return timeLeft;
     }
 
     /**
@@ -199,6 +214,7 @@ public class TimerActivity extends AppCompatActivity {
         this.roundNumber = this.findViewById(R.id.roundNumber);
         this.btnLessRound = this.findViewById(R.id.btnLessRound);
         this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
+        this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
     }
 
     private void acquireLock() {
@@ -216,16 +232,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
-        final int minutes = (int) timeLeft / MINUTES;
-        final int secondes = (int) timeLeft % MINUTES / SECONDES;
-
-        final StringBuilder time = new StringBuilder()
-                .append(minutes)
-                .append(":");
-        if (secondes < 10) {
-            time.append("0");
-        }
-        time.append(secondes);
+        final StringBuilder time = this.generateTimeLeft((int) timeLeft);
         this.historique.insert(0, time.toString() + "-" + "Round " + round + "-" + player + "-" + actions.getLibelle() + "\n");
     }
 }
