@@ -1,7 +1,6 @@
-package fr.corentin.roux.x_wing_score_tracker;
+package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
@@ -9,21 +8,29 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import fr.corentin.roux.x_wing_score_tracker.R;
+import fr.corentin.roux.x_wing_score_tracker.model.Actions;
+import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
+import lombok.Getter;
 
 /**
  * @author Corentin Roux
  * <p>
  * Activity for the view of the scoring board
  */
-@RequiresApi(api = Build.VERSION_CODES.N)
+@Getter
 public class TimerActivity extends AppCompatActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
     private static final String RED = "#9d0208";
     private static final String GREEN = "#2b9348";
+    private static final String START = "START";
+    private static final String STOP = "STOP";
+    private final StringBuilder historique = new StringBuilder();
+    private final HistoriqueService historiqueService = HistoriqueService.getInstance();
     private boolean timerStart = false;
     private TextView timeClock;
     private Button btnStartStop;
@@ -96,26 +103,32 @@ public class TimerActivity extends AppCompatActivity {
             if (this.scorePlayerOne > 0) {
                 this.scorePlayerOne--;
                 this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+                this.addAction(Actions.REMOVE_POINT, "Player_1", this.timeToSet, this.round);
+                //ROUND TIME ACTION PLAYER
             }
         });
         this.btnLessPlayerTwo.setOnClickListener(t -> {
             if (this.scorePlayerTwo > 0) {
                 this.scorePlayerTwo--;
                 this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+                this.addAction(Actions.REMOVE_POINT, "Player_2", this.timeToSet, this.round);
             }
         });
         this.btnPlusPlayerOne.setOnClickListener(t -> {
             this.scorePlayerOne++;
             this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+            this.addAction(Actions.ADD_POINT, "Player_1", this.timeToSet, this.round);
         });
         this.btnPlusPlayerTwo.setOnClickListener(t -> {
             this.scorePlayerTwo++;
             this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+            this.addAction(Actions.ADD_POINT, "Player_2", this.timeToSet, this.round);
         });
         this.btnLessRound.setOnClickListener(t -> {
             if (this.round > 0) {
                 this.round--;
                 this.roundNumber.setText(String.valueOf(this.round));
+                this.addAction(Actions.REMOVE_ROUND, "General", this.timeToSet, this.round);
             }
         });
         this.btnPlusRound.setOnClickListener(t -> {
@@ -124,8 +137,10 @@ public class TimerActivity extends AppCompatActivity {
                 Toast.makeText(TimerActivity.this, "LAST TURN !!", Toast.LENGTH_LONG).show();
             }
             this.roundNumber.setText(String.valueOf(this.round));
+            this.addAction(Actions.ADD_ROUND, "General", this.timeToSet, this.round);
         });
     }
+
 
     /**
      * the trigger for start the timer
@@ -152,9 +167,10 @@ public class TimerActivity extends AppCompatActivity {
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
             }
         }.start();
-        this.btnStartStop.setText("STOP");
+        this.btnStartStop.setText(STOP);
         this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
         this.timerStart = true;
+        this.addAction(Actions.START_TIMER, "General", this.timeToSet, this.round);
     }
 
     /**
@@ -162,9 +178,10 @@ public class TimerActivity extends AppCompatActivity {
      */
     private void stopTimer() {
         this.timer.cancel();
-        this.btnStartStop.setText("START");
+        this.btnStartStop.setText(START);
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         this.timerStart = false;
+        this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.round);
     }
 
     /**
@@ -190,5 +207,25 @@ public class TimerActivity extends AppCompatActivity {
 
     private void releaseLock() {
         this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.historiqueService.saveNewGame(this);
+        super.onDestroy();
+    }
+
+    public void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
+        final int minutes = (int) timeLeft / MINUTES;
+        final int secondes = (int) timeLeft % MINUTES / SECONDES;
+
+        final StringBuilder time = new StringBuilder()
+                .append(minutes)
+                .append(":");
+        if (secondes < 10) {
+            time.append("0");
+        }
+        time.append(secondes);
+        this.historique.insert(0, time.toString() + "-" + "Round " + round + "-" + player + "-" + actions.getLibelle() + "\n");
     }
 }

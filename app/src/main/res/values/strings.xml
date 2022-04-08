@@ -11,4 +11,6 @@
     <string name="startBtn">START</string>
     <string name="_0">0</string>
     <string name="minutes">Minutes</string>
+    <string name="historique">Historique</string>
+    <string name="delete">Delete</string>
 </resources>

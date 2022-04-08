@@ -1,28 +1,26 @@
-package fr.corentin.roux.x_wing_score_tracker;
+package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Objects;
+import fr.corentin.roux.x_wing_score_tracker.R;
 
 /**
  * @author Corentin Roux
  * <p>
  * The Main view at the start of the application
  */
-@RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity {
 
     private TextInputEditText timer;
     private Button btnStart;
+    private Button btnHistorique;
 
     /**
      * {@inheritDoc}
@@ -43,13 +41,18 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initListeners() {
         this.btnStart.setOnClickListener(t -> {
-            if (Objects.nonNull(this.timer) && Objects.nonNull(this.timer.getText()) && !this.timer.getText().toString().equals("")) {
+            if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().equals("")) {
                 final Intent intent = new Intent(this, TimerActivity.class);
                 intent.putExtra("timer", this.timer.getText().toString());
                 this.startActivity(intent);
             } else {
                 Toast.makeText(this, "Timer is not correctly set !!", Toast.LENGTH_LONG).show();
             }
+        });
+
+        this.btnHistorique.setOnClickListener(t -> {
+            final Intent intent = new Intent(this, HistoriqueActivity.class);
+            this.startActivity(intent);
         });
     }
 
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void findView() {
         this.timer = this.findViewById(R.id.inputTimer);
         this.btnStart = this.findViewById(R.id.btnStart);
+        this.btnHistorique = this.findViewById(R.id.btnHistorique);
     }
 
 }
