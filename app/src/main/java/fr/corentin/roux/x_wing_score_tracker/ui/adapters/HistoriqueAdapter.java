@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -63,9 +63,10 @@ public class HistoriqueAdapter extends BaseAdapter {
 
     private void initialisationListeners(final ViewHolder holder, final int position) {
         final Game current = (Game) this.getItem(position);
-        holder.detail.setOnClickListener(v -> {
+        holder.data.setOnClickListener(v -> {
             final Intent mIntent = new Intent(this.context, HistoriqueDetailActivity.class);
             mIntent.putExtra("game", current);
+            mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             this.context.startActivity(mIntent);
         });
         holder.delete.setOnClickListener(v -> {
@@ -76,23 +77,26 @@ public class HistoriqueAdapter extends BaseAdapter {
 
     private void initialisationData(final ViewHolder holder, final int position) {
         final Game current = (Game) this.getItem(position);
-        final String score = "Total Round : " + current.getRound() + " | " + current.getScorePlayer1() + "-" + current.getScorePlayer2();
-        holder.getDate().setText(current.getDate());
-        holder.getScore().setText(score);
+        final StringBuilder score = new StringBuilder();
+        score.append(current.getDate())
+                .append(" Total Round : ")
+                .append(current.getRound() < 10 ? "0" + current.getRound() : current.getRound())
+                .append(" | ")
+                .append(current.getScorePlayer1() < 10 ? "0" + current.getScorePlayer1() : current.getScorePlayer1())
+                .append("-")
+                .append(current.getScorePlayer2() < 10 ? "0" + current.getScorePlayer1() : current.getScorePlayer2());
+
+        holder.getData().setText(score);
     }
 
     public void findViews(final View rowView, final ViewHolder holder) {
-        holder.date = rowView.findViewById(R.id.date);
-        holder.score = rowView.findViewById(R.id.score);
-        holder.detail = rowView.findViewById(R.id.detail);
+        holder.data = rowView.findViewById(R.id.data);
         holder.delete = rowView.findViewById(R.id.delete);
     }
 
     @Getter
     public static class ViewHolder {
-        private TextView date;
-        private TextView score;
-        private LinearLayout detail;
-        private TextView delete;
+        private TextView data;
+        private ImageView delete;
     }
 }
