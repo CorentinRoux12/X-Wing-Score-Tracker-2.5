@@ -1,6 +1,10 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
@@ -50,6 +54,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button btnPlusRound;
     private boolean hideTimer;
     private TextView textViewTimeLeft;
+    private Ringtone ringtoneAlarm;
 
     /**
      * {@inheritDoc}
@@ -156,7 +161,6 @@ public class TimerActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * the trigger for start the timer
      */
@@ -180,6 +184,7 @@ public class TimerActivity extends AppCompatActivity {
             public void onFinish() {
                 //TODO Alarm Minuterie / autre a faire
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
+                TimerActivity.this.playSound();
             }
         }.start();
         this.btnStartStop.setText(STOP);
@@ -197,6 +202,9 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         this.timerStart = false;
         this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.round);
+        if (this.ringtoneAlarm.isPlaying()) {
+            this.ringtoneAlarm.stop();
+        }
     }
 
     /**
@@ -231,8 +239,16 @@ public class TimerActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
+    private void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
         final StringBuilder time = this.generateTimeLeft((int) timeLeft);
         this.historique.insert(0, time.toString() + "-" + "Round " + round + "-" + player + "-" + actions.getLibelle() + "\n");
     }
+
+    private void playSound() {
+        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        this.ringtoneAlarm = RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone);
+        this.ringtoneAlarm.setStreamType(AudioManager.STREAM_ALARM);
+        this.ringtoneAlarm.play();
+    }
+
 }
