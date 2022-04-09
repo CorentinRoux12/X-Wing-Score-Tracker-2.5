@@ -182,7 +182,6 @@ public class TimerActivity extends AppCompatActivity {
              */
             @Override
             public void onFinish() {
-                //TODO Alarm Minuterie / autre a faire
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
                 TimerActivity.this.playSound();
             }
@@ -236,6 +235,9 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         this.historiqueService.saveNewGame(this);
+        if (this.ringtoneAlarm.isPlaying()) {
+            this.ringtoneAlarm.stop();
+        }
         super.onDestroy();
     }
 
