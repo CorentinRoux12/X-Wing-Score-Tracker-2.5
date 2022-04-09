@@ -58,8 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.btnHistorique.setOnClickListener(t -> {
-            final Intent intent = new Intent(this, HistoriqueActivity.class);
-            this.startActivity(intent);
+            this.startHistoriqueActivity();
         });
         this.btnRandom.setOnClickListener(t -> {
             this.time = this.generateRandomTime();
@@ -104,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, TimerActivity.class);
         intent.putExtra("hideTimer", this.timerHideCheck);
         intent.putExtra("timer", this.time);
+        this.startActivity(intent);
+    }
+
+    private void startHistoriqueActivity() {
+        final Intent intent = new Intent(this, HistoriqueActivity.class);
         this.startActivity(intent);
     }
 

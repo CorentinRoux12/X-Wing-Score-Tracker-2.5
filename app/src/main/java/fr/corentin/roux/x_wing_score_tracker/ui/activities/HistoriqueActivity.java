@@ -5,6 +5,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
@@ -29,7 +30,11 @@ public class HistoriqueActivity extends AppCompatActivity {
 
         this.findView();
 
-        this.adapter = new HistoriqueAdapter(this, this.service.getAllGames(this.getBaseContext()));
+        List<Game> games = this.service.getAllGames(this.getBaseContext());
+        if (games == null) {
+            games = new ArrayList<>();
+        }
+        this.adapter = new HistoriqueAdapter(this, games);
         this.listHistorique.setAdapter(this.adapter);
     }
 
@@ -39,7 +44,6 @@ public class HistoriqueActivity extends AppCompatActivity {
 
     public void deleteGame(final int pos) {
         final List<Game> games = this.service.getAllGames(this.getBaseContext());
-        //TODO si erreur toast un msg
         games.remove(pos);
         this.adapter.getGames().remove(pos);
         this.service.saveGames(games, this);
