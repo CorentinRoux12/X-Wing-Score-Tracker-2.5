@@ -70,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String generateRandomTime() {
-        final long attackDice = ((Double) (Math.random() * 100 % 8)).longValue();
+        final long attackDice = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
         //Defense
         //0&1&2 = Blank
         //3&4 = Eyes
         //5-7 = Evades
-        final long defenseDice1 = ((Double) (Math.random() * 100 % 8)).longValue();
-        final long defenseDice2 = ((Double) (Math.random() * 100 % 8)).longValue();
-        final long defenseDice3 = ((Double) (Math.random() * 100 % 8)).longValue();
+        final long defenseDice1 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
+        final long defenseDice2 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
+        final long defenseDice3 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
         final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
         int basicTime = 75;
         if (0L == attackDice || 1L == attackDice) {//0&1 = Blank
