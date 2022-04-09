@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
+import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 
 /**
  * @author Corentin Roux
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkHideTimer;
     private boolean timerHideCheck = false;
     private String time;
+    private Button btnRandomMission;
+    private TextView textViewRandomMission;
+    private Mission mission;
 
     /**
      * {@inheritDoc}
@@ -67,6 +72,20 @@ public class MainActivity extends AppCompatActivity {
         this.checkHideTimer.setOnClickListener(t -> {
             this.timerHideCheck = this.checkHideTimer.isChecked();
         });
+        this.btnRandomMission.setOnClickListener(t -> {
+            this.generateRandomMission();
+        });
+        this.textViewRandomMission.setOnClickListener(t -> {
+            //TODO on affiche les détails de la mission
+        });
+    }
+
+    private void generateRandomMission() {
+        final int randomMission = ((Double) (((Math.random() * (4 - 1)) + 1) % 4)).intValue();
+
+        this.mission = Mission.parseCode(randomMission);
+
+        this.textViewRandomMission.setText(this.mission.getLibelle());
     }
 
     private String generateRandomTime() {
@@ -120,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         this.btnHistorique = this.findViewById(R.id.btnHistorique);
         this.btnRandom = this.findViewById(R.id.btnRandom);
         this.checkHideTimer = this.findViewById(R.id.checkHideTimer);
+        this.btnRandomMission = this.findViewById(R.id.btnRandomMission);
+        this.textViewRandomMission = this.findViewById(R.id.textViewRandomMission);
     }
 
 }
