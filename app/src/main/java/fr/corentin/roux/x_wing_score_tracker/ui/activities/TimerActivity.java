@@ -72,12 +72,20 @@ public class TimerActivity extends AppCompatActivity {
         this.findView();
         //Initialization of the listeners
         this.initListeners();
+        //Init Ring
+        this.initRing();
         //Update of the view for the first time => set the fields
         this.updateTimer();
         if (this.hideTimer) {
             this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
             this.textViewTimeLeft.setText("Time");
         }
+    }
+
+    private void initRing() {
+        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        this.ringtoneAlarm = RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone);
+        this.ringtoneAlarm.setStreamType(AudioManager.STREAM_ALARM);
     }
 
     /**
@@ -247,9 +255,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playSound() {
-        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        this.ringtoneAlarm = RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone);
-        this.ringtoneAlarm.setStreamType(AudioManager.STREAM_ALARM);
         this.ringtoneAlarm.play();
     }
 
