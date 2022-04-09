@@ -13,4 +13,5 @@
     <string name="minutes">Minutes</string>
     <string name="Historical">Historical</string>
     <string name="delete">Delete</string>
+    <string name="mission_rules">Mission Rules</string>
 </resources>

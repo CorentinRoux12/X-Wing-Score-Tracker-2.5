@@ -1,3 +1,12 @@
+# Version 1.2 #
+
+## ADD
+- Random Button for Mission Select
+- Detail of the Mission : PDFs AMG
+
+## FIX
+- Generate Random
+
 # Version 1.1 #
 
 ## ADD

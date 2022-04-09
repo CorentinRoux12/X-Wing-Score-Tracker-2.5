@@ -40,6 +40,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.4.1'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
     implementation 'androidx.multidex:multidex:2.0.1'  //with androidx libraries
 

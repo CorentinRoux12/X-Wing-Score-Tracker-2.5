@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
@@ -24,6 +25,7 @@ import fr.corentin.roux.x_wing_score_tracker.model.Mission;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private final Random random = new Random();
     private TextInputEditText timer;
     private Button btnStart;
     private Button btnHistorique;
@@ -76,27 +78,33 @@ public class MainActivity extends AppCompatActivity {
             this.generateRandomMission();
         });
         this.textViewRandomMission.setOnClickListener(t -> {
-            //TODO on affiche les détails de la mission
+            this.startMissionDetailActivity();
         });
     }
 
+    private void startMissionDetailActivity() {
+        if (this.mission != null) {
+            final Intent intent = new Intent(this, MissionDetailActivity.class);
+            intent.putExtra("mission", this.mission.getCode());
+            this.startActivity(intent);
+        }
+    }
+
     private void generateRandomMission() {
-        final int randomMission = ((Double) (((Math.random() * (4 - 1)) + 1) % 4)).intValue();
-
-        this.mission = Mission.parseCode(randomMission);
-
-        this.textViewRandomMission.setText(this.mission.getLibelle());
+        this.mission = Mission.parseCode(this.random.nextInt(4) + 1);
+        this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+        Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
     }
 
     private String generateRandomTime() {
-        final long attackDice = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
+        final long attackDice = this.random.nextInt(8);
         //Defense
         //0&1&2 = Blank
         //3&4 = Eyes
         //5-7 = Evades
-        final long defenseDice1 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
-        final long defenseDice2 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
-        final long defenseDice3 = ((Double) (((Math.random() * (8 - 1)) + 1) % 8)).longValue();
+        final long defenseDice1 = this.random.nextInt(8);
+        final long defenseDice2 = this.random.nextInt(8);
+        final long defenseDice3 = this.random.nextInt(8);
         final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
         int basicTime = 75;
         if (0L == attackDice || 1L == attackDice) {//0&1 = Blank

@@ -30,6 +30,8 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MissionDetailActivity"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
