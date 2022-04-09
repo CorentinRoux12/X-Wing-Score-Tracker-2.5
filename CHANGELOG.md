@@ -1,13 +1,13 @@
 # Version 1.1 #
 
-##ADD
+## ADD
 
 - Historical 
 - Option Random timer: 72 to 78 with Maths :)
 - Option Hide Timer
 - Set the default Alarm at the end of the timer
 
-##FIX
+## FIX
 
 - Color for Dark Theme
 
