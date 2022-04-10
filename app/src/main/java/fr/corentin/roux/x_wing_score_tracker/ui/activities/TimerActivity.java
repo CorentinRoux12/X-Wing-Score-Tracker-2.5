@@ -58,6 +58,12 @@ public class TimerActivity extends AppCompatActivity {
     private Ringtone ringtoneAlarm;
     private Mission mission;
     private TextView textViewMission;
+    private Button btnPlusPlusPlayerOne;
+    //    private Button btnPlusPlusPlusPlayerOne;
+    private Button btnPlusPlusPlayerTwo;
+    //    private Button btnPlusPlusPlusPlayerTwo;
+    private Button btnLessLessPlayerOne;
+    private Button btnLessLessPlayerTwo;
 
     /**
      * {@inheritDoc}
@@ -77,6 +83,11 @@ public class TimerActivity extends AppCompatActivity {
         this.findView();
         //Initialization of the listeners
         this.initListeners();
+        //Init des datas de la page
+        this.initDatas();
+    }
+
+    private void initDatas() {
         //Init Ring
         this.initRing();
         //Update of the view for the first time => set the fields
@@ -139,32 +150,71 @@ public class TimerActivity extends AppCompatActivity {
                 this.acquireLock();
             }
         });
+        //Init des listeners lié au Player 1
+        this.playerOneListeners();
+        //Init des listeners lié au Player 2
+        this.playerTwoListeners();
+        //Init les listeners pour la gestion des rounds
+        this.roundListeners();
+    }
 
-        this.btnLessPlayerOne.setOnClickListener(t -> {
-            if (this.scorePlayerOne > 0) {
-                this.scorePlayerOne--;
-                this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
-                this.addAction(Actions.REMOVE_POINT, "Player_1", this.timeToSet, this.round);
-                //ROUND TIME ACTION PLAYER
-            }
-        });
+    private void playerTwoListeners() {
         this.btnLessPlayerTwo.setOnClickListener(t -> {
-            if (this.scorePlayerTwo > 0) {
-                this.scorePlayerTwo--;
-                this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-                this.addAction(Actions.REMOVE_POINT, "Player_2", this.timeToSet, this.round);
-            }
-        });
-        this.btnPlusPlayerOne.setOnClickListener(t -> {
-            this.scorePlayerOne++;
-            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
-            this.addAction(Actions.ADD_POINT, "Player_1", this.timeToSet, this.round);
-        });
-        this.btnPlusPlayerTwo.setOnClickListener(t -> {
-            this.scorePlayerTwo++;
+            this.removeOnePlayerTwo();
             this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-            this.addAction(Actions.ADD_POINT, "Player_2", this.timeToSet, this.round);
         });
+        this.btnLessLessPlayerTwo.setOnClickListener(t -> {
+            this.removeOnePlayerTwo();
+            this.removeOnePlayerTwo();
+            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+        });
+
+        this.btnPlusPlayerTwo.setOnClickListener(t -> {
+            this.addOnePlayerTwo();
+            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+        });
+        this.btnPlusPlusPlayerTwo.setOnClickListener(t -> {
+            this.addOnePlayerTwo();
+            this.addOnePlayerTwo();
+            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+        });
+//        this.btnPlusPlusPlusPlayerTwo.setOnClickListener(t -> {
+//            this.addOnePlayerTwo();
+//            this.addOnePlayerTwo();
+//            this.addOnePlayerTwo();
+//            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
+//        });
+    }
+
+    private void playerOneListeners() {
+        this.btnLessPlayerOne.setOnClickListener(t -> {
+            this.removeOnePlayerOne();
+            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        });
+        this.btnLessLessPlayerOne.setOnClickListener(t -> {
+            this.removeOnePlayerOne();
+            this.removeOnePlayerOne();
+            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        });
+
+        this.btnPlusPlayerOne.setOnClickListener(t -> {
+            this.addOnePlayerOne();
+            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        });
+        this.btnPlusPlusPlayerOne.setOnClickListener(t -> {
+            this.addOnePlayerOne();
+            this.addOnePlayerOne();
+            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        });
+//        this.btnPlusPlusPlusPlayerOne.setOnClickListener(t -> {
+//            this.addOnePlayerOne();
+//            this.addOnePlayerOne();
+//            this.addOnePlayerOne();
+//            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+//        });
+    }
+
+    private void roundListeners() {
         this.btnLessRound.setOnClickListener(t -> {
             if (this.round > 0) {
                 this.round--;
@@ -180,6 +230,30 @@ public class TimerActivity extends AppCompatActivity {
             this.roundNumber.setText(String.valueOf(this.round));
             this.addAction(Actions.ADD_ROUND, "General", this.timeToSet, this.round);
         });
+    }
+
+    private void addOnePlayerTwo() {
+        this.scorePlayerTwo++;
+        this.addAction(Actions.ADD_POINT, "Player_2", this.timeToSet, this.round);
+    }
+
+    private void addOnePlayerOne() {
+        this.scorePlayerOne++;
+        this.addAction(Actions.ADD_POINT, "Player_1", this.timeToSet, this.round);
+    }
+
+    private void removeOnePlayerTwo() {
+        if (this.scorePlayerTwo > 0) {
+            this.scorePlayerTwo--;
+            this.addAction(Actions.REMOVE_POINT, "Player_2", this.timeToSet, this.round);
+        }
+    }
+
+    private void removeOnePlayerOne() {
+        if (this.scorePlayerOne > 0) {
+            this.scorePlayerOne--;
+            this.addAction(Actions.REMOVE_POINT, "Player_1", this.timeToSet, this.round);
+        }
     }
 
     /**
@@ -244,6 +318,12 @@ public class TimerActivity extends AppCompatActivity {
         this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
         this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
         this.textViewMission = this.findViewById(R.id.textViewMission);
+        this.btnPlusPlusPlayerOne = this.findViewById(R.id.btnPlusPlusPlayerOne);
+//        this.btnPlusPlusPlusPlayerOne = this.findViewById(R.id.btnPlusPlusPlusPlayerOne);
+        this.btnPlusPlusPlayerTwo = this.findViewById(R.id.btnPlusPlusPlayerTwo);
+//        this.btnPlusPlusPlusPlayerTwo = this.findViewById(R.id.btnPlusPlusPlusPlayerTwo);
+        this.btnLessLessPlayerOne = this.findViewById(R.id.btnLessLessPlayerOne);
+        this.btnLessLessPlayerTwo = this.findViewById(R.id.btnLessLessPlayerTwo);
     }
 
     private void acquireLock() {

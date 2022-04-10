@@ -14,4 +14,10 @@
     <string name="Historical">Historical</string>
     <string name="delete">Delete</string>
     <string name="mission_rules">Mission Rules</string>
+    <string name="lessless">--</string>
+    <string name="plusplus">++</string>
+    <string name="plusplus2">+2</string>
+    <string name="plus1">+1</string>
+    <string name="less1">-1</string>
+    <string name="lessless2">-2</string>
 </resources>
