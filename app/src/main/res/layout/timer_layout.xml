@@ -210,7 +210,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/lessless2"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <Button
                     android:id="@+id/btnLessPlayerOne"
@@ -220,7 +220,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
 
                 <TextView
@@ -252,7 +252,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plusplus2"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <!--                <Button-->
                 <!--                    android:id="@+id/btnPlusPlusPlusPlayerOne"-->
@@ -272,7 +272,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/lessless2"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <Button
                     android:id="@+id/btnLessPlayerTwo"
@@ -282,7 +282,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/scorePlayerTwo"
@@ -302,7 +302,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plus1"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <Button
                     android:id="@+id/btnPlusPlusPlayerTwo"
@@ -312,7 +312,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plusplus2"
                     android:textColor="@color/black"
-                    android:textSize="13sp" />
+                    android:textSize="10sp" />
 
                 <!--                <Button-->
                 <!--                    android:id="@+id/btnPlusPlusPlusPlayerTwo"-->

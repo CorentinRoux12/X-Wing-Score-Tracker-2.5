@@ -1,5 +1,6 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -87,6 +88,7 @@ public class TimerActivity extends AppCompatActivity {
         this.initDatas();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initDatas() {
         //Init Ring
         this.initRing();
