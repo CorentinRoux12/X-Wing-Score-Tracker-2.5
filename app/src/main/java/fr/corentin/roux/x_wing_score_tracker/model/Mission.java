@@ -1,11 +1,13 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Mission {
+public enum Mission implements Serializable {
 
     SATELLITE("Assault At The Satellite Array", 1, "assault.pdf"),
     ENGAGEMENT("Chance Engagement", 2, "engagement.pdf"),

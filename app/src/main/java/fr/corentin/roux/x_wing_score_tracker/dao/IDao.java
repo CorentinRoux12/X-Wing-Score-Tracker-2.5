@@ -1,4 +1,4 @@
-package fr.corentin.roux.x_wing_score_tracker.repositories;
+package fr.corentin.roux.x_wing_score_tracker.dao;
 
 import android.content.Context;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
 
-public interface IRepository<T extends Persistable> {
+public interface IDao<T extends Persistable> {
     /**
      * Permet de récupérer les objects présent dans la liste la sauvegarde
      *

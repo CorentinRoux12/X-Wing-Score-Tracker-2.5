@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Actions;
+import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import lombok.Getter;
 
@@ -55,6 +56,8 @@ public class TimerActivity extends AppCompatActivity {
     private boolean hideTimer;
     private TextView textViewTimeLeft;
     private Ringtone ringtoneAlarm;
+    private Mission mission;
+    private TextView textViewMission;
 
     /**
      * {@inheritDoc}
@@ -68,6 +71,8 @@ public class TimerActivity extends AppCompatActivity {
         this.hideTimer = (boolean) this.getIntent().getSerializableExtra("hideTimer");
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
+        //On recup la mission active dans le main page
+        this.mission = (Mission) this.getIntent().getSerializableExtra("mission");
         //Bind the xml and the fields
         this.findView();
         //Initialization of the listeners
@@ -79,6 +84,14 @@ public class TimerActivity extends AppCompatActivity {
         if (this.hideTimer) {
             this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
             this.textViewTimeLeft.setText("Time");
+        }
+        //Init data
+        this.initMission();
+    }
+
+    private void initMission() {
+        if (this.mission != null) {
+            this.textViewMission.setText(this.mission.getLibelle());
         }
     }
 
@@ -230,6 +243,7 @@ public class TimerActivity extends AppCompatActivity {
         this.btnLessRound = this.findViewById(R.id.btnLessRound);
         this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
         this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
+        this.textViewMission = this.findViewById(R.id.textViewMission);
     }
 
     private void acquireLock() {

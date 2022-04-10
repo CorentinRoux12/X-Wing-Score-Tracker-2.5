@@ -18,6 +18,7 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
     private TextView finalTime;
     private TextView finalScore;
     private TextView details;
+    private TextView mission;
 
     /**
      * {@inheritDoc}
@@ -41,6 +42,7 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
         this.finalTime = this.findViewById(R.id.finalTime);
         this.finalScore = this.findViewById(R.id.finalScore);
         this.details = this.findViewById(R.id.details);
+        this.mission = this.findViewById(R.id.mission);
     }
 
     private void initialisationData() {
@@ -67,5 +69,6 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
         this.finalTime.setText(time.toString());
         this.finalScore.setText(finalScore.toString());
         this.details.setText(this.current.getHistorique());
+        this.mission.setText(this.current.getMission());
     }
 }

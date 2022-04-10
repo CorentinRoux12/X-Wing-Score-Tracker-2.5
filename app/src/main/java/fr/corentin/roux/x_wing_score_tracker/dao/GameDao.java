@@ -1,4 +1,4 @@
-package fr.corentin.roux.x_wing_score_tracker.repositories;
+package fr.corentin.roux.x_wing_score_tracker.dao;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,7 @@ import java.util.List;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.utils.PersistableUtils;
 
-public class GameRepository implements IRepository<Game> {
+public class GameDao implements IDao<Game> {
     /**
      * Nom du fichier JSON utilisé pour sauvegarder les dossiers agricultures
      */
@@ -19,7 +19,7 @@ public class GameRepository implements IRepository<Game> {
     /**
      * L'instance de la classe
      */
-    private static GameRepository instance;
+    private static GameDao instance;
     /**
      * Utilitaire permettant la lecture et l'écriture sur les fichiers
      */
@@ -28,7 +28,7 @@ public class GameRepository implements IRepository<Game> {
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
      */
-    private GameRepository() {
+    private GameDao() {
         Log.d(this.getClass().getSimpleName(), "Génération du singleton.");
     }
 
@@ -37,9 +37,9 @@ public class GameRepository implements IRepository<Game> {
      *
      * @return l'instance créer de la classe
      */
-    public static GameRepository getInstance() {
+    public static GameDao getInstance() {
         if (instance == null) {
-            instance = new GameRepository();
+            instance = new GameDao();
         }
         return instance;
     }

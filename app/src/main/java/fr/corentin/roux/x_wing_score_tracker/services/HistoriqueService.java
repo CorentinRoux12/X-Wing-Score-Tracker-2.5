@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import fr.corentin.roux.x_wing_score_tracker.dao.GameDao;
+import fr.corentin.roux.x_wing_score_tracker.dao.IDao;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
-import fr.corentin.roux.x_wing_score_tracker.repositories.GameRepository;
-import fr.corentin.roux.x_wing_score_tracker.repositories.IRepository;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
 
 public class HistoriqueService {
@@ -19,7 +19,7 @@ public class HistoriqueService {
      */
     private static HistoriqueService instance;
 
-    private final IRepository<Game> repository = GameRepository.getInstance();
+    private final IDao<Game> repository = GameDao.getInstance();
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -45,7 +45,8 @@ public class HistoriqueService {
     public void saveNewGame(final TimerActivity timerActivity) {
         //repository => save la game en data
         final Game game = new Game(timerActivity.getScorePlayerOne(), timerActivity.getScorePlayerTwo(), timerActivity.getTimeToSet(),
-                timerActivity.getRound(), timerActivity.getHistorique().toString(), this.dateFormat.format(new Date()));
+                timerActivity.getRound(), timerActivity.getHistorique().toString(),
+                this.dateFormat.format(new Date()), timerActivity.getMission() != null ? timerActivity.getMission().getLibelle() : "No Mission");
 
         List<Game> games = this.repository.getList(timerActivity.getBaseContext());
         if (games == null) {

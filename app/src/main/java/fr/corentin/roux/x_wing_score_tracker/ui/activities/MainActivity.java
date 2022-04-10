@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, TimerActivity.class);
         intent.putExtra("hideTimer", this.timerHideCheck);
         intent.putExtra("timer", this.time);
+        intent.putExtra("mission", this.mission);
         this.startActivity(intent);
     }
 

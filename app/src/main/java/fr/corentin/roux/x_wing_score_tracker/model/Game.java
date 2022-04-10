@@ -17,4 +17,5 @@ public class Game implements Persistable, Serializable {
     private int round;
     private String historique;
     private String date;
+    private String mission;
 }

@@ -78,7 +78,10 @@ public class HistoriqueAdapter extends BaseAdapter {
     private void initialisationData(final ViewHolder holder, final int position) {
         final Game current = (Game) this.getItem(position);
         final StringBuilder score = new StringBuilder();
-        score.append(current.getDate())
+        score.append(" Mission : ")
+                .append(current.getMission())
+                .append("\n")
+                .append(current.getDate())
                 .append(" Total Round : ")
                 .append(current.getRound() < 10 ? "0" + current.getRound() : current.getRound())
                 .append(" | ")
