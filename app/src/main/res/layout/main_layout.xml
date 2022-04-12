@@ -6,12 +6,24 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:backgroundTint="@color/white">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <TextView
         android:id="@+id/primaryTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textAlignment="center"
         android:fontFamily="@font/open_sans_light"
         android:text="@string/x_wing_2_5_timer_and_score_tracker"
         android:textColor="@android:color/black"
@@ -131,6 +143,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRandomMission" />
+
+    </LinearLayout>
+    </ScrollView>
     <Button
         android:id="@+id/btnHistorique"
         android:layout_width="wrap_content"
@@ -143,5 +158,4 @@
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
