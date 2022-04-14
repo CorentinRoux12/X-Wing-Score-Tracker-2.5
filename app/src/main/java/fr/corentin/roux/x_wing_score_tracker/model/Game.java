@@ -11,11 +11,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Game implements Persistable, Serializable {
 
-    private int scorePlayer1;
-    private int scorePlayer2;
+    private Player player1 = new Player();
+    private Player player2 = new Player();
     private long timeLeft;
-    private int round;
+    private int round = 0;
     private String historique;
     private String date;
-    private String mission;
+    private Mission mission = Mission.NO_MISSION;
+    private boolean hideTimeLeft;
+    private boolean hideTimer;
+
+    public void removeRound() {
+        this.round--;
+    }
+
+    public void addRound() {
+        this.round++;
+    }
+
+
 }

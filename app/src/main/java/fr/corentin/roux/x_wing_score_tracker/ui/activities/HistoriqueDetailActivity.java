@@ -58,17 +58,17 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
         time.append(secondes);
         final StringBuilder finalScore = new StringBuilder();
 
-        finalScore.append("Player_1 ")
-                .append(this.current.getScorePlayer1())
+        finalScore.append("Player 1 ")
+                .append(this.current.getPlayer1().getScore())
                 .append(" - ")
-                .append(this.current.getScorePlayer2())
-                .append(" Player_2");
+                .append(this.current.getPlayer2().getScore())
+                .append(" Player 2");
 
         this.finalDate.setText(this.current.getDate());
         this.finalRound.setText((String.valueOf(this.current.getRound())));
         this.finalTime.setText(time.toString());
         this.finalScore.setText(finalScore.toString());
         this.details.setText(this.current.getHistorique());
-        this.mission.setText(this.current.getMission());
+        this.mission.setText(this.current.getMission().getLibelle());
     }
 }

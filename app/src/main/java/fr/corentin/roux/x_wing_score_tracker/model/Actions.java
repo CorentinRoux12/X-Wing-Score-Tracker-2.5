@@ -6,12 +6,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Actions {
-    ADD_ROUND("Round_ADD"),
-    ADD_POINT("Point_ADD"),
-    REMOVE_ROUND("Round_LESS"),
-    REMOVE_POINT("Point_LESS"),
-    START_TIMER("Start_Timer"),
-    STOP_TIMER("Stop_Timer");
+    END("End GAME !!"),
+    DETAIL_ROUND("Details Round"),
+    ADD_ROUND("Add Round"),
+    ADD_POINT("Add Point"),
+    REMOVE_ROUND("Less Round"),
+    REMOVE_POINT("Less Point"),
+    START_TIMER("Start Timer"),
+    STOP_TIMER("Stop Timer");
 
     private final String libelle;
 

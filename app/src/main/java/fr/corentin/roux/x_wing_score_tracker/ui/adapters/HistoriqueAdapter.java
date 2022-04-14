@@ -85,9 +85,9 @@ public class HistoriqueAdapter extends BaseAdapter {
                 .append(" Total Round : ")
                 .append(current.getRound() < 10 ? "0" + current.getRound() : current.getRound())
                 .append(" | ")
-                .append(current.getScorePlayer1() < 10 ? "0" + current.getScorePlayer1() : current.getScorePlayer1())
+                .append(current.getPlayer1().getScore() < 10 ? "0" + current.getPlayer1().getScore() : current.getPlayer1().getScore())
                 .append("-")
-                .append(current.getScorePlayer2() < 10 ? "0" + current.getScorePlayer2() : current.getScorePlayer2());
+                .append(current.getPlayer2().getScore() < 10 ? "0" + current.getPlayer2().getScore() : current.getPlayer2().getScore());
 
         holder.getData().setText(score);
     }

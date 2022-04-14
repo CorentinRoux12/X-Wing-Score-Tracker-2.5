@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Mission :"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Round :"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <Button
@@ -114,19 +114,19 @@
                     android:id="@+id/textViewTimeLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/time_left"
-                    android:layout_marginEnd="5dp"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
                     android:id="@+id/timeClock"
-                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/textColor"
+                    android:layout_marginStart="5dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
 
@@ -145,10 +145,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:textColor="@color/textColor"
                     android:layout_marginRight="15dp"
                     android:backgroundTint="@color/green"
                     android:text="@string/startBtn"
+                    android:textColor="@color/textColor"
                     android:textSize="20sp" />
 
 
@@ -173,7 +173,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/player_1"
                     android:textAlignment="center"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
@@ -186,7 +186,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/player_2"
                     android:textAlignment="center"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -203,8 +203,53 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bodyTimer">
 
+
+                <TextView
+                    android:id="@+id/scorePlayerOne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="@string/_0"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="GLOBAL"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+
+                <TextView
+                    android:id="@+id/scorePlayerTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="@string/_0"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutScoreKill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bodyTimer">
+
                 <Button
-                    android:id="@+id/btnLessLessPlayerOne"
+                    android:id="@+id/btnLessLessPlayerOneKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -214,7 +259,7 @@
                     android:textSize="10sp" />
 
                 <Button
-                    android:id="@+id/btnLessPlayerOne"
+                    android:id="@+id/btnLessPlayerOneKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -225,17 +270,17 @@
 
 
                 <TextView
-                    android:id="@+id/scorePlayerOne"
+                    android:id="@+id/scorePlayerOneKill"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
                 <Button
-                    android:id="@+id/btnPlusPlayerOne"
+                    android:id="@+id/btnPlusPlayerOneKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -245,30 +290,29 @@
                     android:textSize="10dp" />
 
                 <Button
-                    android:id="@+id/btnPlusPlusPlayerOne"
+                    android:id="@+id/btnPlusPlusPlayerOneKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="25dp"
                     android:backgroundTint="@color/green"
                     android:text="@string/plusplus2"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
 
-                <!--                <Button-->
-                <!--                    android:id="@+id/btnPlusPlusPlusPlayerOne"-->
-                <!--                    android:layout_width="50dp"-->
-                <!--                    android:layout_marginStart="10dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:backgroundTint="@color/green"-->
-                <!--                    android:text="+++"-->
-                <!--                    android:textColor="@color/black"-->
-                <!--                    android:textSize="24sp" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginEnd="45dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="KILL"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
                 <Button
-                    android:id="@+id/btnLessLessPlayerTwo"
+                    android:id="@+id/btnLessLessPlayerTwoKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/red"
                     android:text="@string/lessless2"
@@ -276,7 +320,7 @@
                     android:textSize="10sp" />
 
                 <Button
-                    android:id="@+id/btnLessPlayerTwo"
+                    android:id="@+id/btnLessPlayerTwoKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
@@ -286,17 +330,17 @@
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/scorePlayerTwo"
+                    android:id="@+id/scorePlayerTwoKill"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                     android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
                 <Button
-                    android:id="@+id/btnPlusPlayerTwo"
+                    android:id="@+id/btnPlusPlayerTwoKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -306,7 +350,7 @@
                     android:textSize="10sp" />
 
                 <Button
-                    android:id="@+id/btnPlusPlusPlayerTwo"
+                    android:id="@+id/btnPlusPlusPlayerTwoKill"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -328,6 +372,141 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/linearLayoutScoreMission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreKill">
+
+                <Button
+                    android:id="@+id/btnLessLessPlayerOneMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/lessless2"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/btnLessPlayerOneMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/less1"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+
+                <TextView
+                    android:id="@+id/scorePlayerOneMission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="@string/_0"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+
+                <Button
+                    android:id="@+id/btnPlusPlayerOneMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/plus1"
+                    android:textColor="@color/black"
+                    android:textSize="10dp" />
+
+                <Button
+                    android:id="@+id/btnPlusPlusPlayerOneMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/plusplus2"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="MISSION"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+                <Button
+                    android:id="@+id/btnLessLessPlayerTwoMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/lessless2"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/btnLessPlayerTwoMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/less1"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/scorePlayerTwoMission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="@string/_0"
+                    android:textColor="@color/textColor"
+                    android:textSize="24sp" />
+
+
+                <Button
+                    android:id="@+id/btnPlusPlayerTwoMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/plus1"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <Button
+                    android:id="@+id/btnPlusPlusPlayerTwoMission"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/plusplus2"
+                    android:textColor="@color/black"
+                    android:textSize="10sp" />
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/btnPlusPlusPlusPlayerTwo"-->
+                <!--                    android:layout_width="50dp"-->
+                <!--                    android:layout_marginStart="10dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginEnd="25dp"-->
+                <!--                    android:backgroundTint="@color/green"-->
+                <!--                    android:text="+++"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    android:textSize="24sp" />-->
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

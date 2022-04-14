@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("hideTimeLeft", this.timeLeftHideCheck);
         intent.putExtra("hideTimer", this.timerHideCheck);
         intent.putExtra("timer", this.time);
-        intent.putExtra("mission", this.mission);
+        intent.putExtra("mission", Objects.nonNull(this.mission) ? this.mission : Mission.NO_MISSION);
         this.startActivity(intent);
     }
 

@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Mission implements Serializable {
 
+    NO_MISSION("No Mission", 0, null),
     SATELLITE("Assault At The Satellite Array", 1, "assault.pdf"),
     ENGAGEMENT("Chance Engagement", 2, "engagement.pdf"),
     SALVAGE("Salvage Mission", 3, "salvage.pdf"),

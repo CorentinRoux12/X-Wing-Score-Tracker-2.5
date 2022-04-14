@@ -5,13 +5,11 @@ import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.dao.GameDao;
 import fr.corentin.roux.x_wing_score_tracker.dao.IDao;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
-import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
 
 public class HistoriqueService {
     /**
@@ -42,19 +40,16 @@ public class HistoriqueService {
         return instance;
     }
 
-    public void saveNewGame(final TimerActivity timerActivity) {
+    public void saveNewGame(final Context context, final Game game) {
         //repository => save la game en data
-        final Game game = new Game(timerActivity.getScorePlayerOne(), timerActivity.getScorePlayerTwo(), timerActivity.getTimeToSet(),
-                timerActivity.getRound(), timerActivity.getHistorique().toString(),
-                this.dateFormat.format(new Date()), timerActivity.getMission() != null ? timerActivity.getMission().getLibelle() : "No Mission");
 
-        List<Game> games = this.repository.getList(timerActivity.getBaseContext());
+        List<Game> games = this.repository.getList(context);
         if (games == null) {
             games = new ArrayList<>();
         }
         games.add(game);
 
-        this.repository.save(games, timerActivity.getBaseContext());
+        this.repository.save(games, context);
     }
 
     public List<Game> getAllGames(final Context context) {

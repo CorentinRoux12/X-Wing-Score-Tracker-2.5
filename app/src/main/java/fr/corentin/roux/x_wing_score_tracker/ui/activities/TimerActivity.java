@@ -15,8 +15,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Actions;
+import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import lombok.Getter;
@@ -37,35 +41,41 @@ public class TimerActivity extends AppCompatActivity {
     private static final String STOP = "STOP";
     private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     private boolean timerStart = false;
     private TextView timeClock;
     private Button btnStartStop;
-    private Button btnLessPlayerOne;
-    private TextView textViewScorePlayerOne;
-    private Button btnPlusPlayerOne;
-    private Button btnLessPlayerTwo;
-    private TextView textViewScorePlayerTwo;
-    private Button btnPlusPlayerTwo;
     private long timeToSet;
     private CountDownTimer timer;
-    private int scorePlayerOne = 0;
-    private int scorePlayerTwo = 0;
-    private int round = 0;
     private TextView roundNumber;
     private Button btnLessRound;
     private Button btnPlusRound;
-    private boolean hideTimeLeft;
-    private boolean hideTimer;
     private TextView textViewTimeLeft;
     private Ringtone ringtoneAlarm;
-    private Mission mission;
     private TextView textViewMission;
-    private Button btnPlusPlusPlayerOne;
-    //    private Button btnPlusPlusPlusPlayerOne;
-    private Button btnPlusPlusPlayerTwo;
-    //    private Button btnPlusPlusPlusPlayerTwo;
-    private Button btnLessLessPlayerOne;
-    private Button btnLessLessPlayerTwo;
+    private Game game;
+    private TextView textViewScorePlayerOne;
+    private TextView textViewScorePlayerTwo;
+    private TextView textViewScorePlayerOneKill;
+    private TextView textViewScorePlayerTwoKill;
+    private TextView textViewScorePlayerOneMission;
+    private TextView textViewScorePlayerTwoMission;
+    private Button btnLessPlayerOneKill;
+    private Button btnPlusPlayerOneKill;
+    private Button btnLessPlayerTwoKill;
+    private Button btnPlusPlayerTwoKill;
+    private Button btnPlusPlusPlayerOneKill;
+    private Button btnPlusPlusPlayerTwoKill;
+    private Button btnLessLessPlayerOneKill;
+    private Button btnLessLessPlayerTwoKill;
+    private Button btnLessPlayerOneMission;
+    private Button btnPlusPlayerOneMission;
+    private Button btnLessPlayerTwoMission;
+    private Button btnPlusPlayerTwoMission;
+    private Button btnPlusPlusPlayerOneMission;
+    private Button btnPlusPlusPlayerTwoMission;
+    private Button btnLessLessPlayerOneMission;
+    private Button btnLessLessPlayerTwoMission;
 
     /**
      * {@inheritDoc}
@@ -75,13 +85,16 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //We set the view who will be use for display the datas
         this.setContentView(R.layout.timer_layout);
+        //TODO a voir si on ajout un name dans la partie Menu
+        //Init Basic data
+        this.game = new Game();
         //Option d affichage du timer
-        this.hideTimeLeft = (boolean) this.getIntent().getSerializableExtra("hideTimeLeft");
-        this.hideTimer = (boolean) this.getIntent().getSerializableExtra("hideTimer");
+        this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
+        this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
         //On recup la mission active dans le main page
-        this.mission = (Mission) this.getIntent().getSerializableExtra("mission");
+        this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
         //Bind the xml and the fields
         this.findView();
         //Initialization of the listeners
@@ -96,11 +109,11 @@ public class TimerActivity extends AppCompatActivity {
         this.initRing();
         //Update of the view for the first time => set the fields
         this.updateTimer();
-        if (this.hideTimer) {
+        if (this.game.isHideTimer()) {
             this.timeClock.setText("Secret Time !!");
             this.textViewTimeLeft.setText("");
         }
-        if (this.hideTimeLeft && !this.hideTimer) {
+        if (this.game.isHideTimeLeft() && !this.game.isHideTimer()) {
             this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
             this.textViewTimeLeft.setText("Time");
         }
@@ -109,8 +122,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initMission() {
-        if (this.mission != null) {
-            this.textViewMission.setText(this.mission.getLibelle());
+        if (this.game.getMission() != null) {
+            this.textViewMission.setText(this.game.getMission().getLibelle());
         }
     }
 
@@ -126,7 +139,7 @@ public class TimerActivity extends AppCompatActivity {
     private void updateTimer() {
         final StringBuilder timeLeft = this.generateTimeLeft((int) this.timeToSet);
 
-        if (!this.hideTimeLeft && !this.hideTimer) {
+        if (!this.game.isHideTimeLeft() && !this.game.isHideTimer()) {
             this.timeClock.setText(timeLeft.toString());
         }
     }
@@ -166,103 +179,136 @@ public class TimerActivity extends AppCompatActivity {
         this.roundListeners();
     }
 
-    private void playerTwoListeners() {
-        this.btnLessPlayerTwo.setOnClickListener(t -> {
-            this.removeOnePlayerTwo();
-            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-        });
-        this.btnLessLessPlayerTwo.setOnClickListener(t -> {
-            this.removeOnePlayerTwo();
-            this.removeOnePlayerTwo();
-            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-        });
+    private void playerOneListeners() {
+        this.playerOneListenersKill();
 
-        this.btnPlusPlayerTwo.setOnClickListener(t -> {
-            this.addOnePlayerTwo();
-            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-        });
-        this.btnPlusPlusPlayerTwo.setOnClickListener(t -> {
-            this.addOnePlayerTwo();
-            this.addOnePlayerTwo();
-            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-        });
-//        this.btnPlusPlusPlusPlayerTwo.setOnClickListener(t -> {
-//            this.addOnePlayerTwo();
-//            this.addOnePlayerTwo();
-//            this.addOnePlayerTwo();
-//            this.textViewScorePlayerTwo.setText(String.valueOf(this.scorePlayerTwo));
-//        });
+        this.playerOneListenersMission();
     }
 
-    private void playerOneListeners() {
-        this.btnLessPlayerOne.setOnClickListener(t -> {
-            this.removeOnePlayerOne();
-            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+    private void playerOneListenersKill() {
+        this.btnLessPlayerOneKill.setOnClickListener(t -> {
+            this.game.getPlayer1().lessScoreKill(1);
+            this.updateScorePlayerOne();
         });
-        this.btnLessLessPlayerOne.setOnClickListener(t -> {
-            this.removeOnePlayerOne();
-            this.removeOnePlayerOne();
-            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        this.btnLessLessPlayerOneKill.setOnClickListener(t -> {
+            this.game.getPlayer1().lessScoreKill(2);
+            this.updateScorePlayerOne();
         });
 
-        this.btnPlusPlayerOne.setOnClickListener(t -> {
-            this.addOnePlayerOne();
-            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        this.btnPlusPlayerOneKill.setOnClickListener(t -> {
+            this.game.getPlayer1().addScoreKill(1);
+            this.updateScorePlayerOne();
         });
-        this.btnPlusPlusPlayerOne.setOnClickListener(t -> {
-            this.addOnePlayerOne();
-            this.addOnePlayerOne();
-            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
+        this.btnPlusPlusPlayerOneKill.setOnClickListener(t -> {
+            this.game.getPlayer1().addScoreKill(2);
+            this.updateScorePlayerOne();
         });
-//        this.btnPlusPlusPlusPlayerOne.setOnClickListener(t -> {
-//            this.addOnePlayerOne();
-//            this.addOnePlayerOne();
-//            this.addOnePlayerOne();
-//            this.textViewScorePlayerOne.setText(String.valueOf(this.scorePlayerOne));
-//        });
+    }
+
+    private void playerOneListenersMission() {
+        this.btnLessPlayerOneMission.setOnClickListener(t -> {
+            this.game.getPlayer1().lessScoreMission(1);
+            this.updateScorePlayerOne();
+        });
+        this.btnLessLessPlayerOneMission.setOnClickListener(t -> {
+            this.game.getPlayer1().lessScoreMission(2);
+            this.updateScorePlayerOne();
+        });
+
+        this.btnPlusPlayerOneMission.setOnClickListener(t -> {
+            this.game.getPlayer1().addScoreMission(1);
+            this.updateScorePlayerOne();
+        });
+        this.btnPlusPlusPlayerOneMission.setOnClickListener(t -> {
+            this.game.getPlayer1().addScoreMission(2);
+            this.updateScorePlayerOne();
+        });
+    }
+
+    private void updateScorePlayerOne() {
+        this.textViewScorePlayerOneKill.setText(String.valueOf(this.game.getPlayer1().getScoreKill()));
+        this.textViewScorePlayerOneMission.setText(String.valueOf(this.game.getPlayer1().getScoreMission()));
+        this.textViewScorePlayerOne.setText(String.valueOf(this.game.getPlayer1().getScore()));
+    }
+
+    private void playerTwoListeners() {
+        this.playerTwoListenersKill();
+
+        this.playerTwoListenersMission();
+    }
+
+    private void playerTwoListenersKill() {
+        this.btnLessPlayerTwoKill.setOnClickListener(t -> {
+            this.game.getPlayer2().lessScoreKill(1);
+            this.updateScorePlayerTwo();
+        });
+        this.btnLessLessPlayerTwoKill.setOnClickListener(t -> {
+            this.game.getPlayer2().lessScoreKill(2);
+            this.updateScorePlayerTwo();
+        });
+
+        this.btnPlusPlayerTwoKill.setOnClickListener(t -> {
+            this.game.getPlayer2().addScoreKill(1);
+            this.updateScorePlayerTwo();
+        });
+        this.btnPlusPlusPlayerTwoKill.setOnClickListener(t -> {
+            this.game.getPlayer2().addScoreKill(2);
+            this.updateScorePlayerTwo();
+        });
+    }
+
+    private void playerTwoListenersMission() {
+        this.btnLessPlayerTwoMission.setOnClickListener(t -> {
+            this.game.getPlayer2().lessScoreMission(1);
+            this.updateScorePlayerTwo();
+        });
+        this.btnLessLessPlayerTwoMission.setOnClickListener(t -> {
+            this.game.getPlayer2().lessScoreMission(2);
+            this.updateScorePlayerTwo();
+        });
+
+        this.btnPlusPlayerTwoMission.setOnClickListener(t -> {
+            this.game.getPlayer2().addScoreMission(1);
+            this.updateScorePlayerTwo();
+        });
+        this.btnPlusPlusPlayerTwoMission.setOnClickListener(t -> {
+            this.game.getPlayer2().addScoreMission(2);
+            this.updateScorePlayerTwo();
+        });
+    }
+
+    private void updateScorePlayerTwo() {
+        this.textViewScorePlayerTwoKill.setText(String.valueOf(this.game.getPlayer2().getScoreKill()));
+        this.textViewScorePlayerTwoMission.setText(String.valueOf(this.game.getPlayer2().getScoreMission()));
+        this.textViewScorePlayerTwo.setText(String.valueOf(this.game.getPlayer2().getScore()));
     }
 
     private void roundListeners() {
         this.btnLessRound.setOnClickListener(t -> {
-            if (this.round > 0) {
-                this.round--;
-                this.roundNumber.setText(String.valueOf(this.round));
-                this.addAction(Actions.REMOVE_ROUND, "General", this.timeToSet, this.round);
+            if (this.game.getRound() > 0) {
+                this.game.removeRound();
+                this.roundNumber.setText(String.valueOf(this.game.getRound()));
+                this.addAction(Actions.REMOVE_ROUND, "General", this.timeToSet, this.game.getRound());
             }
         });
         this.btnPlusRound.setOnClickListener(t -> {
-            this.round++;
-            if (this.round == 12) {
+            this.game.addRound();
+            if (this.game.getRound() == 12) {
                 Toast.makeText(TimerActivity.this, "LAST TURN !!", Toast.LENGTH_LONG).show();
             }
-            this.roundNumber.setText(String.valueOf(this.round));
-            this.addAction(Actions.ADD_ROUND, "General", this.timeToSet, this.round);
+            this.roundNumber.setText(String.valueOf(this.game.getRound()));
+            this.addAction(Actions.ADD_ROUND, "General", this.timeToSet, this.game.getRound());
+            this.updateRoundDetail();
         });
     }
 
-    private void addOnePlayerTwo() {
-        this.scorePlayerTwo++;
-        this.addAction(Actions.ADD_POINT, "Player_2", this.timeToSet, this.round);
+    private void updateRoundDetail() {
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 1 Kill Point : " + this.game.getPlayer1().getScoreKill() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 1 Mission Point : " + this.game.getPlayer1().getScoreMission() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 2 Kill Point : " + this.game.getPlayer2().getScoreKill() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 2 Mission Point : " + this.game.getPlayer2().getScoreMission() + "\n");
     }
 
-    private void addOnePlayerOne() {
-        this.scorePlayerOne++;
-        this.addAction(Actions.ADD_POINT, "Player_1", this.timeToSet, this.round);
-    }
-
-    private void removeOnePlayerTwo() {
-        if (this.scorePlayerTwo > 0) {
-            this.scorePlayerTwo--;
-            this.addAction(Actions.REMOVE_POINT, "Player_2", this.timeToSet, this.round);
-        }
-    }
-
-    private void removeOnePlayerOne() {
-        if (this.scorePlayerOne > 0) {
-            this.scorePlayerOne--;
-            this.addAction(Actions.REMOVE_POINT, "Player_1", this.timeToSet, this.round);
-        }
-    }
 
     /**
      * the trigger for start the timer
@@ -292,7 +338,7 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setText(STOP);
         this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
         this.timerStart = true;
-        this.addAction(Actions.START_TIMER, "General", this.timeToSet, this.round);
+        this.addAction(Actions.START_TIMER, "General", this.timeToSet, this.game.getRound());
     }
 
     /**
@@ -303,7 +349,7 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setText(START);
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         this.timerStart = false;
-        this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.round);
+        this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
         if (this.ringtoneAlarm.isPlaying()) {
             this.ringtoneAlarm.stop();
         }
@@ -315,23 +361,37 @@ public class TimerActivity extends AppCompatActivity {
     private void findView() {
         this.timeClock = this.findViewById(R.id.timeClock);
         this.btnStartStop = this.findViewById(R.id.btnStart);
-        this.btnLessPlayerOne = this.findViewById(R.id.btnLessPlayerOne);
-        this.textViewScorePlayerOne = this.findViewById(R.id.scorePlayerOne);
-        this.btnPlusPlayerOne = this.findViewById(R.id.btnPlusPlayerOne);
-        this.btnLessPlayerTwo = this.findViewById(R.id.btnLessPlayerTwo);
-        this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
-        this.btnPlusPlayerTwo = this.findViewById(R.id.btnPlusPlayerTwo);
         this.roundNumber = this.findViewById(R.id.roundNumber);
         this.btnLessRound = this.findViewById(R.id.btnLessRound);
         this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
         this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
         this.textViewMission = this.findViewById(R.id.textViewMission);
-        this.btnPlusPlusPlayerOne = this.findViewById(R.id.btnPlusPlusPlayerOne);
-//        this.btnPlusPlusPlusPlayerOne = this.findViewById(R.id.btnPlusPlusPlusPlayerOne);
-        this.btnPlusPlusPlayerTwo = this.findViewById(R.id.btnPlusPlusPlayerTwo);
-//        this.btnPlusPlusPlusPlayerTwo = this.findViewById(R.id.btnPlusPlusPlusPlayerTwo);
-        this.btnLessLessPlayerOne = this.findViewById(R.id.btnLessLessPlayerOne);
-        this.btnLessLessPlayerTwo = this.findViewById(R.id.btnLessLessPlayerTwo);
+        //GLOBAL
+        this.textViewScorePlayerOne = this.findViewById(R.id.scorePlayerOne);
+        this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
+        //Kill
+        this.textViewScorePlayerOneKill = this.findViewById(R.id.scorePlayerOneKill);
+        this.textViewScorePlayerTwoKill = this.findViewById(R.id.scorePlayerTwoKill);
+        this.btnLessPlayerOneKill = this.findViewById(R.id.btnLessPlayerOneKill);
+        this.btnPlusPlayerOneKill = this.findViewById(R.id.btnPlusPlayerOneKill);
+        this.btnLessPlayerTwoKill = this.findViewById(R.id.btnLessPlayerTwoKill);
+        this.btnPlusPlayerTwoKill = this.findViewById(R.id.btnPlusPlayerTwoKill);
+        this.btnPlusPlusPlayerOneKill = this.findViewById(R.id.btnPlusPlusPlayerOneKill);
+        this.btnPlusPlusPlayerTwoKill = this.findViewById(R.id.btnPlusPlusPlayerTwoKill);
+        this.btnLessLessPlayerOneKill = this.findViewById(R.id.btnLessLessPlayerOneKill);
+        this.btnLessLessPlayerTwoKill = this.findViewById(R.id.btnLessLessPlayerTwoKill);
+        //Mission
+        this.textViewScorePlayerOneMission = this.findViewById(R.id.scorePlayerOneMission);
+        this.textViewScorePlayerTwoMission = this.findViewById(R.id.scorePlayerTwoMission);
+        this.btnLessPlayerOneMission = this.findViewById(R.id.btnLessPlayerOneMission);
+        this.btnPlusPlayerOneMission = this.findViewById(R.id.btnPlusPlayerOneMission);
+        this.btnLessPlayerTwoMission = this.findViewById(R.id.btnLessPlayerTwoMission);
+        this.btnPlusPlayerTwoMission = this.findViewById(R.id.btnPlusPlayerTwoMission);
+        this.btnPlusPlusPlayerOneMission = this.findViewById(R.id.btnPlusPlusPlayerOneMission);
+        this.btnPlusPlusPlayerTwoMission = this.findViewById(R.id.btnPlusPlusPlayerTwoMission);
+        this.btnLessLessPlayerOneMission = this.findViewById(R.id.btnLessLessPlayerOneMission);
+        this.btnLessLessPlayerTwoMission = this.findViewById(R.id.btnLessLessPlayerTwoMission);
+
     }
 
     private void acquireLock() {
@@ -344,7 +404,15 @@ public class TimerActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        this.historiqueService.saveNewGame(this);
+        this.addAction(Actions.END, "General", this.timeToSet, this.game.getRound());
+
+        this.updateRoundDetail();
+
+        this.game.setTimeLeft(this.getTimeToSet());
+        this.game.setHistorique(this.historique.toString());
+        this.game.setDate(this.dateFormat.format(new Date()));
+        this.historiqueService.saveNewGame(this.getBaseContext(), this.game);
+
         if (this.ringtoneAlarm.isPlaying()) {
             this.ringtoneAlarm.stop();
         }
