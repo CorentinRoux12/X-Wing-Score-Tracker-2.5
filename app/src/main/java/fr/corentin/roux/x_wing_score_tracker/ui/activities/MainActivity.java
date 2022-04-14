@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btnHistorique;
     private Button btnRandom;
     private CheckBox checkHideTimer;
+    private CheckBox checkHideTimeLeft;
     private boolean timerHideCheck = false;
+    private boolean timeLeftHideCheck = false;
     private String time;
     private Button btnRandomMission;
     private TextView textViewRandomMission;
@@ -49,6 +51,21 @@ public class MainActivity extends AppCompatActivity {
         this.findView();
 
         this.initListeners();
+
+        this.initDefaultValue();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        this.initDefaultValue();
+    }
+
+    private void initDefaultValue() {
+        this.checkHideTimer.setChecked(false);
+        this.checkHideTimeLeft.setChecked(false);
+        this.timerHideCheck = false;
+        this.timeLeftHideCheck = false;
     }
 
     /**
@@ -64,22 +81,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        this.btnHistorique.setOnClickListener(t -> {
-            this.startHistoriqueActivity();
-        });
+        this.btnHistorique.setOnClickListener(t -> this.startHistoriqueActivity());
         this.btnRandom.setOnClickListener(t -> {
             this.time = this.generateRandomTime();
             this.startTimerActivity();
         });
-        this.checkHideTimer.setOnClickListener(t -> {
-            this.timerHideCheck = this.checkHideTimer.isChecked();
-        });
-        this.btnRandomMission.setOnClickListener(t -> {
-            this.generateRandomMission();
-        });
-        this.textViewRandomMission.setOnClickListener(t -> {
-            this.startMissionDetailActivity();
-        });
+        this.checkHideTimer.setOnClickListener(t -> this.timerHideCheck = this.checkHideTimer.isChecked());
+        this.checkHideTimeLeft.setOnClickListener(t -> this.timeLeftHideCheck = this.checkHideTimeLeft.isChecked());
+        this.btnRandomMission.setOnClickListener(t -> this.generateRandomMission());
+        this.textViewRandomMission.setOnClickListener(t -> this.startMissionDetailActivity());
     }
 
     private void startMissionDetailActivity() {
@@ -128,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startTimerActivity() {
         final Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("hideTimeLeft", this.timeLeftHideCheck);
         intent.putExtra("hideTimer", this.timerHideCheck);
         intent.putExtra("timer", this.time);
         intent.putExtra("mission", this.mission);
@@ -150,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         this.checkHideTimer = this.findViewById(R.id.checkHideTimer);
         this.btnRandomMission = this.findViewById(R.id.btnRandomMission);
         this.textViewRandomMission = this.findViewById(R.id.textViewRandomMission);
+        this.checkHideTimeLeft = this.findViewById(R.id.checkHideTimeLeft);
     }
 
 }

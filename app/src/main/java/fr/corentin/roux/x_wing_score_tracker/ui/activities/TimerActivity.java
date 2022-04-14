@@ -54,6 +54,7 @@ public class TimerActivity extends AppCompatActivity {
     private TextView roundNumber;
     private Button btnLessRound;
     private Button btnPlusRound;
+    private boolean hideTimeLeft;
     private boolean hideTimer;
     private TextView textViewTimeLeft;
     private Ringtone ringtoneAlarm;
@@ -75,6 +76,7 @@ public class TimerActivity extends AppCompatActivity {
         //We set the view who will be use for display the datas
         this.setContentView(R.layout.timer_layout);
         //Option d affichage du timer
+        this.hideTimeLeft = (boolean) this.getIntent().getSerializableExtra("hideTimeLeft");
         this.hideTimer = (boolean) this.getIntent().getSerializableExtra("hideTimer");
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
@@ -95,6 +97,10 @@ public class TimerActivity extends AppCompatActivity {
         //Update of the view for the first time => set the fields
         this.updateTimer();
         if (this.hideTimer) {
+            this.timeClock.setText("Secret Time !!");
+            this.textViewTimeLeft.setText("");
+        }
+        if (this.hideTimeLeft && !this.hideTimer) {
             this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
             this.textViewTimeLeft.setText("Time");
         }
@@ -120,7 +126,7 @@ public class TimerActivity extends AppCompatActivity {
     private void updateTimer() {
         final StringBuilder timeLeft = this.generateTimeLeft((int) this.timeToSet);
 
-        if (!this.hideTimer) {
+        if (!this.hideTimeLeft && !this.hideTimer) {
             this.timeClock.setText(timeLeft.toString());
         }
     }
