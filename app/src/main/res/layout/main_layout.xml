@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white">
+    android:background="@color/backgrondColor">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
                 android:fontFamily="@font/open_sans_light"
                 android:text="@string/x_wing_2_5_timer_and_score_tracker"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
+                android:textColor="@color/textColor"
                 android:textSize="@dimen/subsubtitle_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -48,8 +47,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
+                    android:textColor="@color/textColor"
                     android:text="@string/time"
-                    android:textColor="@android:color/black"
                     android:textSize="@dimen/subsubtitle_text_size" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -64,6 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
+                        android:textColor="@color/textColor"
                         android:gravity="center_vertical"
                         android:hint="@string/minutes"
                         android:inputType="number"
@@ -90,7 +90,8 @@
                     android:layout_marginRight="25dp"
                     android:backgroundTint="@color/green"
                     android:text="Random Timer"
-                    android:textColor="@color/black" />
+                                    android:textColor="@color/textColor"
+ />
 
                 <Button
                     android:id="@+id/btnStart"
@@ -98,7 +99,8 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green"
                     android:text="@string/start"
-                    android:textColor="@color/black" />
+                                    android:textColor="@color/textColor"
+ />
             </LinearLayout>
 
             <LinearLayout
@@ -122,7 +124,8 @@
                     android:layout_marginRight="5dp"
                     android:text="Hide Timer"
                     android:textAlignment="textStart"
-                    android:textColor="@android:color/black"
+                                    android:textColor="@color/textColor"
+
                     android:textSize="@dimen/normal_text"
                     tools:ignore="RtlCompat" />
 
@@ -137,7 +140,8 @@
                     android:gravity="center"
                     android:text="Hide Time Left"
                     android:textAlignment="textStart"
-                    android:textColor="@android:color/black"
+                                    android:textColor="@color/textColor"
+
                     android:textSize="@dimen/normal_text"
                     tools:ignore="RtlCompat" />
             </LinearLayout>
@@ -149,7 +153,8 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/green"
                 android:text="Get Random Mission"
-                android:textColor="@color/black"
+                                android:textColor="@color/textColor"
+
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
@@ -160,7 +165,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                android:textColor="@android:color/black"
+                                android:textColor="@color/textColor"
+
                 android:textSize="@dimen/subsubtitle_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -178,7 +184,8 @@
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/grey"
         android:text="@string/Historical"
-        android:textColor="@color/black"
+                        android:textColor="@color/textColor"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

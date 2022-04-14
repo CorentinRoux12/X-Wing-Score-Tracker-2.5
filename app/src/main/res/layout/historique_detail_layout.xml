@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/white"
-    android:background="@color/white">
+    android:background="@color/backgrondColor">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -31,7 +30,7 @@
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/open_sans_light"
                         android:text="Mission :"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
                     <TextView
@@ -40,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="16sp" />
                 </TableRow>
 
@@ -54,7 +53,7 @@
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/open_sans_light"
                         android:text="Date End :"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
                     <TextView
@@ -63,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="16sp" />
                 </TableRow>
 
@@ -76,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
                         android:text="Final Round :"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
                     <TextView
@@ -85,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="16sp" />
                 </TableRow>
 
@@ -98,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
                         android:text="@string/time_left"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
                     <TextView
@@ -107,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
@@ -123,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_span="2"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/black"
+                                        android:textColor="@color/textColor"
                         android:textSize="20sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
@@ -151,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_light"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />

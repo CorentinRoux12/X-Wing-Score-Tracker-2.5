@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.setContentView(R.layout.main_layout);
-
+        this.onNightModeChanged(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         this.findView();
 
         this.initListeners();

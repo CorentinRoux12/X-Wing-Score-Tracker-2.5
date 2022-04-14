@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/white">
+    android:background="@color/backgrondColor">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Mission :"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
@@ -61,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Round :"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
@@ -72,7 +71,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <Button
@@ -118,7 +117,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/time_left"
                     android:layout_marginEnd="5dp"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
                 <TextView
@@ -126,8 +125,8 @@
                     android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textColor"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/black"
                     android:textSize="40sp" />
 
 
@@ -146,10 +145,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
+                    android:textColor="@color/textColor"
                     android:layout_marginRight="15dp"
                     android:backgroundTint="@color/green"
                     android:text="@string/startBtn"
-                    android:textColor="@color/black"
                     android:textSize="20sp" />
 
 
@@ -174,7 +173,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/player_1"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
@@ -187,7 +186,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/player_2"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -231,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
@@ -292,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/_0"
-                    android:textColor="@android:color/black"
+                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
 
