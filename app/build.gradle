@@ -10,8 +10,8 @@ android {
         applicationId "fr.corentin.roux.score_tracker"
         minSdkVersion 17
         targetSdkVersion 31
-        versionCode 9
-        versionName "1.2.6"
+        versionCode 11
+        versionName "1.2.7"
         multiDexEnabled true
         ndk {
             debugSymbolLevel 'SYMBOL_TABLE'
