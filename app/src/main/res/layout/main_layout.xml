@@ -47,8 +47,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:textColor="@color/textColor"
                     android:text="@string/time"
+                    android:textColor="@color/textColor"
                     android:textSize="@dimen/subsubtitle_text_size" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -63,10 +63,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
-                        android:textColor="@color/textColor"
                         android:gravity="center_vertical"
                         android:hint="@string/minutes"
                         android:inputType="number"
+                        android:textColor="@color/textColor"
                         android:textSize="24sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,8 +90,7 @@
                     android:layout_marginRight="25dp"
                     android:backgroundTint="@color/green"
                     android:text="Random Timer"
-                                    android:textColor="@color/textColor"
- />
+                    android:textColor="@color/textColor" />
 
                 <Button
                     android:id="@+id/btnStart"
@@ -99,8 +98,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green"
                     android:text="@string/start"
-                                    android:textColor="@color/textColor"
- />
+                    android:textColor="@color/textColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,13 +116,13 @@
                     android:id="@+id/checkHideTimer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
                     android:buttonTint="@color/green"
                     android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
-                    android:layout_marginRight="5dp"
                     android:text="Hide Timer"
                     android:textAlignment="textStart"
-                                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
 
                     android:textSize="@dimen/normal_text"
                     tools:ignore="RtlCompat" />
@@ -140,7 +138,7 @@
                     android:gravity="center"
                     android:text="Hide Time Left"
                     android:textAlignment="textStart"
-                                    android:textColor="@color/textColor"
+                    android:textColor="@color/textColor"
 
                     android:textSize="@dimen/normal_text"
                     tools:ignore="RtlCompat" />
@@ -153,7 +151,7 @@
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/green"
                 android:text="Get Random Mission"
-                                android:textColor="@color/textColor"
+                android:textColor="@color/textColor"
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -165,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
-                                android:textColor="@color/textColor"
+                android:textColor="@color/textColor"
 
                 android:textSize="@dimen/subsubtitle_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -184,7 +182,7 @@
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/grey"
         android:text="@string/Historical"
-                        android:textColor="@color/textColor"
+        android:textColor="@color/textColor"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

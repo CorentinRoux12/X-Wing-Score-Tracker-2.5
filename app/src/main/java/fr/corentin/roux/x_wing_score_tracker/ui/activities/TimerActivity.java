@@ -23,7 +23,9 @@ import fr.corentin.roux.x_wing_score_tracker.model.Actions;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
+import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Corentin Roux
@@ -42,6 +44,8 @@ public class TimerActivity extends AppCompatActivity {
     private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    @Setter
+    private boolean end = false;
     private boolean timerStart = false;
     private TextView timeClock;
     private Button btnStartStop;
@@ -309,7 +313,6 @@ public class TimerActivity extends AppCompatActivity {
         this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 2 Mission Point : " + this.game.getPlayer2().getScoreMission() + "\n");
     }
 
-
     /**
      * the trigger for start the timer
      */
@@ -403,6 +406,16 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (!this.end) {
+            final EndDialogTimer endDialogTimer = new EndDialogTimer(this);
+            endDialogTimer.show(this.getSupportFragmentManager(), "dialogHelp");
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onDestroy() {
         this.addAction(Actions.END, "General", this.timeToSet, this.game.getRound());
 
@@ -418,6 +431,7 @@ public class TimerActivity extends AppCompatActivity {
         }
         super.onDestroy();
     }
+
 
     private void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
         final StringBuilder time = this.generateTimeLeft((int) timeLeft);

@@ -20,4 +20,6 @@
     <string name="plus1">+1</string>
     <string name="less1">-1</string>
     <string name="lessless2">-2</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
