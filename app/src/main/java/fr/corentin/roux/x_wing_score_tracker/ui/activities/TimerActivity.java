@@ -1,6 +1,7 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -101,10 +102,10 @@ public class TimerActivity extends AppCompatActivity {
         this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
         //Bind the xml and the fields
         this.findView();
-        //Initialization of the listeners
-        this.initListeners();
         //Init des datas de la page
         this.initDatas();
+        //Initialization of the listeners
+        this.initListeners();
     }
 
     @SuppressLint("SetTextI18n")
@@ -181,6 +182,16 @@ public class TimerActivity extends AppCompatActivity {
         this.playerTwoListeners();
         //Init les listeners pour la gestion des rounds
         this.roundListeners();
+
+        this.textViewMission.setOnClickListener(t -> {
+            if (Mission.NO_MISSION.equals(this.game.getMission())) {
+                Toast.makeText(this, "No Mission for this game !!", Toast.LENGTH_SHORT).show();
+            } else {
+                final Intent intent = new Intent(this, MissionDetailActivity.class);
+                intent.putExtra("mission", this.game.getMission().getCode());
+                this.startActivity(intent);
+            }
+        });
     }
 
     private void playerOneListeners() {
