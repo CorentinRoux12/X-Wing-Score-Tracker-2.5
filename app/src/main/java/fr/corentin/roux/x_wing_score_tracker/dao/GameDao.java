@@ -6,6 +6,7 @@ import android.util.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
@@ -58,6 +59,17 @@ public class GameDao implements IDao<Game> {
      * {@inheritDoc}
      */
     @Override
+    public Game findFirst(final Context context) {
+        final Game game = this.persistableUtils.get(FILENAME, Game.class, context);
+        return game == null ?
+                new Game() :
+                game;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void save(final List<Game> t, final Context context) {
         this.persistableUtils.write(FILENAME, t, context);
     }
@@ -68,5 +80,13 @@ public class GameDao implements IDao<Game> {
     @Override
     public void save(final Game t, final Context context) {
         this.persistableUtils.write(FILENAME, t, context);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void deleteAll(final Context context) {
+        this.persistableUtils.write(FILENAME, new ArrayList<>(), context);
     }
 }

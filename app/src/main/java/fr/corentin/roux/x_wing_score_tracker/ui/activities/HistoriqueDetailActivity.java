@@ -58,11 +58,13 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
         time.append(secondes);
         final StringBuilder finalScore = new StringBuilder();
 
-        finalScore.append("Player 1 ")
+        finalScore.append(this.current.getPlayer1().getName())
+                .append(" ")
                 .append(this.current.getPlayer1().getScore())
                 .append(" - ")
                 .append(this.current.getPlayer2().getScore())
-                .append(" Player 2");
+                .append(" ")
+                .append(this.current.getPlayer2().getName());
 
         this.finalDate.setText(this.current.getDate());
         this.finalRound.setText((String.valueOf(this.current.getRound())));

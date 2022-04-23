@@ -3,7 +3,6 @@ package fr.corentin.roux.x_wing_score_tracker.services;
 import android.content.Context;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +17,6 @@ public class HistoriqueService {
     private static HistoriqueService instance;
 
     private final IDao<Game> repository = GameDao.getInstance();
-
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe

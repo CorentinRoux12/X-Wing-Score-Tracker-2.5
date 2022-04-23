@@ -15,6 +15,13 @@ public interface IDao<T extends Persistable> {
     List<T> getList(final Context context);
 
     /**
+     * Permet de récupérer les objects présent dans la liste la sauvegarde
+     *
+     * @return la liste des objects qui sont présent dans le fichier de sauvegarde
+     */
+    T findFirst(final Context context);
+
+    /**
      * Permet de sauvegarder une liste d'objects
      *
      * @param t la liste des objects a save
@@ -27,5 +34,7 @@ public interface IDao<T extends Persistable> {
      * @param t l'objects a save
      */
     void save(final T t, Context context);
+
+    void deleteAll(Context context);
 
 }

@@ -24,6 +24,7 @@ import fr.corentin.roux.x_wing_score_tracker.model.Actions;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
+import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +45,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final String STOP = "STOP";
     private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
+    private final SettingService service = SettingService.getInstance();
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     @Setter
     private boolean end = false;
@@ -59,6 +61,8 @@ public class TimerActivity extends AppCompatActivity {
     private Ringtone ringtoneAlarm;
     private TextView textViewMission;
     private Game game;
+    private TextView playerOne;
+    private TextView playerTwo;
     private TextView textViewScorePlayerOne;
     private TextView textViewScorePlayerTwo;
     private TextView textViewScorePlayerOneKill;
@@ -90,22 +94,33 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //We set the view who will be use for display the datas
         this.setContentView(R.layout.timer_layout);
-        //TODO a voir si on ajout un name dans la partie Menu
         //Init Basic data
-        this.game = new Game();
-        //Option d affichage du timer
-        this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
-        this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
-        //We set the timer at the time in minutes
-        this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
-        //On recup la mission active dans le main page
-        this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
+        this.initGame();
         //Bind the xml and the fields
         this.findView();
         //Init des datas de la page
         this.initDatas();
         //Initialization of the listeners
         this.initListeners();
+    }
+
+    private void initGame() {
+        this.game = new Game();
+        //Option d affichage du timer
+        this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
+        this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
+        this.game.getPlayer1().setName(this.service.getSetting(this).getName());
+        if (this.game.getPlayer1().getName().equals("")) {
+            this.game.getPlayer1().setName("Player 1");
+        }
+        this.game.getPlayer2().setName(this.service.getSetting(this).getOpponent());
+        if (this.game.getPlayer2().getName().equals("")) {
+            this.game.getPlayer2().setName("Player 2");
+        }
+        //We set the timer at the time in minutes
+        this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
+        //On recup la mission active dans le main page
+        this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
     }
 
     @SuppressLint("SetTextI18n")
@@ -121,6 +136,14 @@ public class TimerActivity extends AppCompatActivity {
         if (this.game.isHideTimeLeft() && !this.game.isHideTimer()) {
             this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
             this.textViewTimeLeft.setText("Time");
+        }
+        final String nameP1 = this.game.getPlayer1().getName();
+        if (!nameP1.equals("")) {
+            this.playerOne.setText(nameP1);
+        }
+        final String nameP2 = this.game.getPlayer2().getName();
+        if (!nameP2.equals("")) {
+            this.playerTwo.setText(nameP2);
         }
         //Init data
         this.initMission();
@@ -318,10 +341,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateRoundDetail() {
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 1 Kill Point : " + this.game.getPlayer1().getScoreKill() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 1 Mission Point : " + this.game.getPlayer1().getScoreMission() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 2 Kill Point : " + this.game.getPlayer2().getScoreKill() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - Player 2 Mission Point : " + this.game.getPlayer2().getScoreMission() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer1().getName() + " Kill Point : " + this.game.getPlayer1().getScoreKill() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer1().getName() + " Mission Point : " + this.game.getPlayer1().getScoreMission() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer2().getName() + " Kill Point : " + this.game.getPlayer2().getScoreKill() + "\n");
+        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer2().getName() + " Mission Point : " + this.game.getPlayer2().getScoreMission() + "\n");
     }
 
     /**
@@ -381,6 +404,8 @@ public class TimerActivity extends AppCompatActivity {
         this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
         this.textViewMission = this.findViewById(R.id.textViewMission);
         //GLOBAL
+        this.playerOne = this.findViewById(R.id.playerOne);
+        this.playerTwo = this.findViewById(R.id.playerTwo);
         this.textViewScorePlayerOne = this.findViewById(R.id.scorePlayerOne);
         this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
         //Kill

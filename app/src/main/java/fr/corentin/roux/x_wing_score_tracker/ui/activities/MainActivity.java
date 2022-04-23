@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText timer;
     private Button btnStart;
     private Button btnHistorique;
+    private Button btnSetting;
     private Button btnRandom;
     private CheckBox checkHideTimer;
     private CheckBox checkHideTimeLeft;
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.btnHistorique.setOnClickListener(t -> this.startHistoriqueActivity());
+        this.btnSetting.setOnClickListener(t -> this.startSettingsActivity());
         this.btnRandom.setOnClickListener(t -> {
             this.time = this.generateRandomTime();
             this.startTimerActivity();
@@ -92,6 +93,11 @@ public class MainActivity extends AppCompatActivity {
         this.checkHideTimeLeft.setOnClickListener(t -> this.timeLeftHideCheck = this.checkHideTimeLeft.isChecked());
         this.btnRandomMission.setOnClickListener(t -> this.generateRandomMission());
         this.textViewRandomMission.setOnClickListener(t -> this.startMissionDetailActivity());
+    }
+
+    private void startSettingsActivity() {
+        final Intent intent = new Intent(this, SettingsActivity.class);
+        this.startActivity(intent);
     }
 
     private void startMissionDetailActivity() {
@@ -143,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("hideTimeLeft", this.timeLeftHideCheck);
         intent.putExtra("hideTimer", this.timerHideCheck);
         intent.putExtra("timer", this.time);
-        intent.putExtra("mission", Objects.nonNull(this.mission) ? this.mission : Mission.NO_MISSION);
+        intent.putExtra("mission", this.mission != null ? this.mission : Mission.NO_MISSION);
         this.startActivity(intent);
     }
 
@@ -159,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         this.timer = this.findViewById(R.id.inputTimer);
         this.btnStart = this.findViewById(R.id.btnStart);
         this.btnHistorique = this.findViewById(R.id.btnHistorique);
+        this.btnSetting = this.findViewById(R.id.btnSetting);
         this.btnRandom = this.findViewById(R.id.btnRandom);
         this.checkHideTimer = this.findViewById(R.id.checkHideTimer);
         this.btnRandomMission = this.findViewById(R.id.btnRandomMission);
