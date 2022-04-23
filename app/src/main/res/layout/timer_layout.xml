@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="Mission :"
+                    android:text="@string/mission"
                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
@@ -41,7 +41,7 @@
                     android:layout_marginStart="10sp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="No Mission"
+                    android:text="@string/no_mission"
                     android:textColor="@android:color/darker_gray"
                     android:textSize="40sp" />
             </LinearLayout>
@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="Round :"
+                    android:text="@string/round"
                     android:textColor="@color/textColor"
                     android:textSize="40sp" />
 
@@ -221,7 +221,7 @@
                     android:layout_marginLeft="100dp"
                     android:layout_marginRight="100dp"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="GLOBAL"
+                    android:text="@string/global"
                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
@@ -307,7 +307,7 @@
                     android:layout_marginStart="45dp"
                     android:layout_marginEnd="45dp"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="KILL"
+                    android:text="@string/kill"
                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 
@@ -443,7 +443,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="MISSION"
+                    android:text="@string/mission"
                     android:textColor="@color/textColor"
                     android:textSize="24sp" />
 

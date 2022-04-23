@@ -25,4 +25,22 @@
     <string name="settings">Settings</string>
     <string name="name">Name :</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="end_the_game">End the game ?</string>
+    <string name="delete_game">delete game</string>
+    <string name="missiondeuxpoint">Mission :</string>
+    <string name="date_end">Date End :</string>
+    <string name="final_round">Final Round :</string>
+    <string name="events">Events :</string>
+    <string name="random_timer">Random Timer</string>
+    <string name="hide_timer">Hide Timer</string>
+    <string name="hide_time_left">Hide Time Left</string>
+    <string name="get_random_mission">Get Random Mission</string>
+    <string name="opponent">Opponent :</string>
+    <string name="mission">Mission</string>
+    <string name="no_mission">No Mission</string>
+    <string name="round">Round :</string>
+    <string name="global">GLOBAL</string>
+    <string name="kill">KILL</string>
+<!--    <string name="language">Language :</string>-->
+    <string name="stop">Stop</string>
 </resources>

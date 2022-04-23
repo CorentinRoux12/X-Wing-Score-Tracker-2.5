@@ -15,4 +15,6 @@ public class Setting implements Persistable, Serializable {
 
     private String opponent;
 
+    private String language;
+
 }

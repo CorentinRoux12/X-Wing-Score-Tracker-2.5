@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="End the game ?"
+                    android:text="@string/end_the_game"
                     android:textAlignment="center"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/subsubtitle_text_size" />
@@ -48,7 +48,7 @@
                     android:id="@+id/btnYesEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/green"
                     android:text="@string/yes"
                     android:textColor="@color/textColor" />
@@ -57,7 +57,7 @@
                     android:id="@+id/btnNoEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:backgroundTint="@color/red"
                     android:text="@string/no"
                     android:textColor="@color/textColor" />

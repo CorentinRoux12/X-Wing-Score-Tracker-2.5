@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
+import java.util.Locale;
+
 import fr.corentin.roux.x_wing_score_tracker.R;
+import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 
 public class MissionDetailActivity extends AppCompatActivity {
@@ -26,9 +29,18 @@ public class MissionDetailActivity extends AppCompatActivity {
         this.findView();
 
         if (mission != null) {
+            String resource;
+            if (Locale.getDefault().getCountry().toLowerCase().equals(Language.FRENCH.getCodeLanguage())) {
+                resource = "fr/";
+            } else { // Default Package => English
+                resource = "en/";
+            }
+            resource += mission.getRessource();
+            resource += mission.getExtension();
+
             this.pdfView.fitToWidth();
             this.pdfView.documentFitsView();
-            this.pdfView.fromAsset(mission.getRessource())
+            this.pdfView.fromAsset(resource)
                     .enableSwipe(true)
                     .enableDoubletap(true)
                     .enableAnnotationRendering(true)

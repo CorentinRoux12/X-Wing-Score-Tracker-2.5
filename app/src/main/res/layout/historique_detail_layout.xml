@@ -29,7 +29,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Mission :"
+                        android:text="@string/missiondeuxpoint"
                         android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Date End :"
+                        android:text="@string/date_end"
                         android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Final Round :"
+                        android:text="@string/final_round"
                         android:textColor="@color/textColor"
                         android:textSize="20sp" />
 
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_span="2"
                         android:fontFamily="@font/open_sans_light"
-                        android:text="Events :"
+                        android:text="@string/events"
                         android:textColor="@color/red"
                         android:textSize="16sp"
                         app:layout_constraintLeft_toLeftOf="parent"

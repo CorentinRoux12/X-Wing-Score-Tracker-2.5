@@ -41,8 +41,6 @@ public class TimerActivity extends AppCompatActivity {
     private static final int SECONDES = 1000;
     private static final String RED = "#9d0208";
     private static final String GREEN = "#2b9348";
-    private static final String START = "START";
-    private static final String STOP = "STOP";
     private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
     private final SettingService service = SettingService.getInstance();
@@ -372,7 +370,7 @@ public class TimerActivity extends AppCompatActivity {
                 TimerActivity.this.playSound();
             }
         }.start();
-        this.btnStartStop.setText(STOP);
+        this.btnStartStop.setText(this.getString(R.string.stop));
         this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
         this.timerStart = true;
         this.addAction(Actions.START_TIMER, "General", this.timeToSet, this.game.getRound());
@@ -383,7 +381,7 @@ public class TimerActivity extends AppCompatActivity {
      */
     private void stopTimer() {
         this.timer.cancel();
-        this.btnStartStop.setText(START);
+        this.btnStartStop.setText(this.getString(R.string.start));
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         this.timerStart = false;
         this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
