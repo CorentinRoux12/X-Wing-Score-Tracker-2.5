@@ -108,11 +108,11 @@ public class TimerActivity extends AppCompatActivity {
         this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
         this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
         this.game.getPlayer1().setName(this.service.getSetting(this).getName());
-        if (this.game.getPlayer1().getName().equals("")) {
+        if ("".equals(this.game.getPlayer1().getName().trim())) {
             this.game.getPlayer1().setName("Player 1");
         }
         this.game.getPlayer2().setName(this.service.getSetting(this).getOpponent());
-        if (this.game.getPlayer2().getName().equals("")) {
+        if ("".equals(this.game.getPlayer2().getName().trim())) {
             this.game.getPlayer2().setName("Player 2");
         }
         //We set the timer at the time in minutes
@@ -136,11 +136,11 @@ public class TimerActivity extends AppCompatActivity {
             this.textViewTimeLeft.setText("Time");
         }
         final String nameP1 = this.game.getPlayer1().getName();
-        if (!nameP1.equals("")) {
+        if (!"".equals(nameP1)) {
             this.playerOne.setText(nameP1);
         }
         final String nameP2 = this.game.getPlayer2().getName();
-        if (!nameP2.equals("")) {
+        if (!"".equals(nameP2)) {
             this.playerTwo.setText(nameP2);
         }
         //Init data
