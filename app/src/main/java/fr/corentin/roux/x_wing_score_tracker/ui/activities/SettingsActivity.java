@@ -14,10 +14,13 @@ public class SettingsActivity extends AppCompatActivity {
 
     private final SettingService service = SettingService.getInstance();
     //    Context context;
-//    private Resources resources;
+//    Resources resources;
     private TextInputEditText inputName;
     private TextInputEditText inputOpponent;
+    private TextInputEditText inputTime;
+    private TextInputEditText inputVolatility;
     //    private Spinner language;
+//    private String langue;
     private Setting setting;
 
     /**
@@ -43,20 +46,9 @@ public class SettingsActivity extends AppCompatActivity {
 //            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int position, final long id) {
 //                final Object item = adapterView.getItemAtPosition(position);
 //                Log.e(AdapterViewUtils.class.getSimpleName(), "NICE !!!");
-//                String itemString = "";
 //                if (item != null) {
-//                    itemString = item.toString();
-//
 //                    //SAVE de la langue
-//                    SettingsActivity.this.setting.setLanguage(itemString);
-//                    //TODO Force reload du system avec la langue
-//
-//                    final Locale locale = new Locale(Language.parseCodeIhm(itemString).getCodeLanguage());
-//                    Locale.setDefault(locale);
-//                    final Configuration config = new Configuration();
-//                    config.locale = locale;
-//                    SettingsActivity.this.getBaseContext().getResources().updateConfiguration(config, SettingsActivity.this.getBaseContext().getResources().getDisplayMetrics());
-//                    SettingsActivity.this.setContentView(R.layout.settings_layout);
+//                    SettingsActivity.this.langue = item.toString();
 //                }
 //            }
 //
@@ -71,8 +63,11 @@ public class SettingsActivity extends AppCompatActivity {
         this.setting = this.service.getSetting(this);
 
 //        this.formatLanguage();
+//        this.langue = this.setting.getLanguage();
         this.inputName.setText(this.setting.getName());
         this.inputOpponent.setText(this.setting.getOpponent());
+        this.inputTime.setText(this.setting.getRandomTime());
+        this.inputVolatility.setText(this.setting.getVolatilityTime());
     }
 
 //    private void formatLanguage() {
@@ -88,17 +83,28 @@ public class SettingsActivity extends AppCompatActivity {
 //    }
 
     private void findView() {
+        this.inputTime = this.findViewById(R.id.inputTime);
+        this.inputVolatility = this.findViewById(R.id.inputVolatility);
 //        this.language = this.findViewById(R.id.language);
         this.inputName = this.findViewById(R.id.inputName);
         this.inputOpponent = this.findViewById(R.id.inputOpponent);
     }
 
-
     @Override
     protected void onDestroy() {
+//        this.setting.setLanguage(this.langue);
+        String time = this.inputTime.getText().toString();
+        if ("".equals(time.trim())) {
+            time = "75";
+        }
+        this.setting.setRandomTime(time);
+        this.setting.setVolatilityTime(this.inputVolatility.getText().toString());
         this.setting.setName(this.inputName.getText().toString());
         this.setting.setOpponent(this.inputOpponent.getText().toString());
         this.service.save(this, this.setting);
+
         super.onDestroy();
     }
+
+
 }

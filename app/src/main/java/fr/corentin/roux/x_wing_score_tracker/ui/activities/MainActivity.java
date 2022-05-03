@@ -2,6 +2,7 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -12,12 +13,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
+import fr.corentin.roux.x_wing_score_tracker.model.Setting;
+import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 
 /**
  * @author Corentin Roux
@@ -27,6 +31,9 @@ import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 public class MainActivity extends AppCompatActivity {
 
     private final Random random = new Random();
+    private final SettingService settingService = SettingService.getInstance();
+    //    @Getter
+//    private LocaleManager localeManager;
     private TextInputEditText timer;
     private Button btnStart;
     private Button btnHistorique;
@@ -116,32 +123,62 @@ public class MainActivity extends AppCompatActivity {
 
     private String generateRandomTime() {
         final long attackDice = this.random.nextInt(8);
+        final Setting setting = this.settingService.getSetting(this);
+        int randomTimer = 75;
+        try {
+            randomTimer = Integer.parseInt(setting.getRandomTime());
+            int cpt = Integer.parseInt(setting.getVolatilityTime());
+            cpt = Math.abs(cpt);
+            final List<Long> defenseDice = new ArrayList<>();
+            for (int i = 0; i < cpt; i++) {
+                defenseDice.add((long) this.random.nextInt(8));
+            }
+            randomTimer = this.calculVolatility(attackDice, defenseDice, randomTimer);
+            randomTimer = Math.abs(randomTimer);
+            return String.valueOf(randomTimer);
+        } catch (final Exception e) {
+            Log.e(this.getClass().getSimpleName(), "Erreur de parsing de la volatilité.");
+            final long defenseDice1 = this.random.nextInt(8);
+            final long defenseDice2 = this.random.nextInt(8);
+            final long defenseDice3 = this.random.nextInt(8);
+            final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
+            int basicTime = setting.getRandomTime() != null && !setting.getRandomTime().trim().equals("") ?
+                    randomTimer :
+                    75;
+            basicTime = this.calculVolatility(attackDice, defenseDice, basicTime);
+            return String.valueOf(basicTime);
+        }
+    }
+
+    private int calculVolatility(final long attackDice, final List<Long> defenseDice, int basicTime) {
         //Defense
         //0&1&2 = Blank
         //3&4 = Eyes
         //5-7 = Evades
-        final long defenseDice1 = this.random.nextInt(8);
-        final long defenseDice2 = this.random.nextInt(8);
-        final long defenseDice3 = this.random.nextInt(8);
-        final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
-        int basicTime = 75;
         if (0L == attackDice || 1L == attackDice) {//0&1 = Blank
-            for (final Long l : defenseDice) {
-                if (l >= 3L) {
-                    basicTime--;
-                }
+            for (final Long valueDefenseDice : defenseDice) {
+                basicTime = this.downGradeTime(basicTime, valueDefenseDice);
             }
-            return String.valueOf(basicTime);
-        } else if (2L == attackDice || 3L == attackDice) {//2&3 = Eyes
-            return "75";
-        } else { //4-7 = Hit&Crit
-            for (final Long l : defenseDice) {
-                if (l >= 3L) {
-                    basicTime++;
-                }
+        } else if (4L <= attackDice) { //4-7 = Hit&Crit
+            for (final Long valueDefenseDice : defenseDice) {
+                basicTime = this.upgradeTime(basicTime, valueDefenseDice);
             }
-            return String.valueOf(basicTime);
         }
+        return basicTime;
+    }
+
+    private int upgradeTime(int basicTime, final Long valueDefenseDice) {
+        if (valueDefenseDice >= 3L) {
+            basicTime++;
+        }
+        return basicTime;
+    }
+
+    private int downGradeTime(int basicTime, final Long valueDefenseDice) {
+        if (valueDefenseDice >= 3L) {
+            basicTime--;
+        }
+        return basicTime;
     }
 
     private void startTimerActivity() {

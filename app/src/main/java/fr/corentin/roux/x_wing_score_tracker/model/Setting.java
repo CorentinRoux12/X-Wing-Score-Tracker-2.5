@@ -17,4 +17,8 @@ public class Setting implements Persistable, Serializable {
 
     private String language;
 
+    private String randomTime = "75";
+
+    private String volatilityTime = "3";
+
 }

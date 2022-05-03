@@ -41,6 +41,8 @@
     <string name="round">Round :</string>
     <string name="global">GLOBAL</string>
     <string name="kill">KILL</string>
-<!--    <string name="language">Language :</string>-->
+    <string name="language">Language :</string>
     <string name="stop">Stop</string>
+    <string name="random_timer_setting">Random :</string>
+    <string name="time_volatility">Graduation :</string>
 </resources>
