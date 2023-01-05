@@ -5,8 +5,6 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
 public enum Mission implements Serializable {
 
     NO_MISSION("No Mission", 0, null, null),
@@ -32,4 +30,26 @@ public enum Mission implements Serializable {
         return null;
     }
 
+    Mission(String libelle, int code, String ressource, String extension) {
+        this.libelle = libelle;
+        this.code = code;
+        this.ressource = ressource;
+        this.extension = extension;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getRessource() {
+        return ressource;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
 }

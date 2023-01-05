@@ -45,4 +45,5 @@
     <string name="stop">Arrêter</string>
     <string name="random_timer_setting">Aléatoire :</string>
     <string name="time_volatility">Graduation :</string>
+    <string name="first_player">Premier Joueur</string>
 </resources>

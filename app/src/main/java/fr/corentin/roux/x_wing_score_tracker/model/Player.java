@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Player implements Persistable, Serializable {
 
     private String name;
@@ -47,5 +44,47 @@ public class Player implements Persistable, Serializable {
 
     private void updateScore() {
         this.score = this.scoreKill + this.scoreMission;
+    }
+
+    public Player() {
+    }
+
+    public Player(String name, int score, int scoreKill, int scoreMission) {
+        this.name = name;
+        this.score = score;
+        this.scoreKill = scoreKill;
+        this.scoreMission = scoreMission;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScoreKill() {
+        return scoreKill;
+    }
+
+    public void setScoreKill(int scoreKill) {
+        this.scoreKill = scoreKill;
+    }
+
+    public int getScoreMission() {
+        return scoreMission;
+    }
+
+    public void setScoreMission(int scoreMission) {
+        this.scoreMission = scoreMission;
     }
 }

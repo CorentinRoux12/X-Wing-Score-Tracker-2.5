@@ -59,12 +59,12 @@ dependencies {
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation project(path: ':flutter')  //with androidx libraries
+//    implementation project(path: ':flutter')  //with androidx libraries
 
     /** Lombok **/
     def lombokVersion = '1.18.22'
     compileOnly 'org.projectlombok:lombok:' + lombokVersion
     annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
 
-    implementation project(':flutter')
+//    implementation project(':flutter')
 }
