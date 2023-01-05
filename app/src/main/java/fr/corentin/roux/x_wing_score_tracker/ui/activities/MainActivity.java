@@ -1,6 +1,8 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -16,9 +18,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
+import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnRandomMission;
     private TextView textViewRandomMission;
     private Mission mission;
+    private Setting setting;
 
     /**
      * {@inheritDoc}
@@ -56,12 +61,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.setContentView(R.layout.main_layout);
-        this.onNightModeChanged(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        this.setting = this.settingService.getSetting(this);
+
+//        this.initDarkMode();
         this.findView();
 
         this.initListeners();
 
         this.initDefaultValue();
+    }
+
+    //Pour le changement de langue on doit redemarer l app ...
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(checkDefaultLanguage(newBase));
+    }
+
+    private Context checkDefaultLanguage(Context context) {
+        this.setting = this.settingService.getSetting(context);
+
+        Language language;
+        if (this.setting.getLanguage() == null) {
+            language = Language.ENGLISH;
+        } else {
+            language = Language.parseCodeIhm(this.setting.getLanguage());
+        }
+        Locale locale;
+        if (language == null) {
+            language = Language.ENGLISH;
+        }
+        switch (language) {
+            case FRENCH:
+                locale = Locale.FRENCH;
+                break;
+//            case ENGLISH:
+//                locale = Locale.ENGLISH;
+//                break;
+            default:
+                locale = Locale.ENGLISH;
+                break;
+        }
+        Locale.setDefault(locale);
+
+        final Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        configuration.setLayoutDirection(locale);
+
+        if (setting.getEnabledDarkTheme() != null) {
+            AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        return context.createConfigurationContext(configuration);
     }
 
     @Override

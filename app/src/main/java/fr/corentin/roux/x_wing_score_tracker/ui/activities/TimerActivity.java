@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -466,4 +465,43 @@ public class TimerActivity extends AppCompatActivity {
         this.ringtoneAlarm.play();
     }
 
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        outState.putString("roundNumber", roundNumber.getText().toString());
+//        outState.putString("textViewScorePlayerOne", textViewScorePlayerOne.getText().toString());
+//        outState.putString("textViewScorePlayerOneKill", textViewScorePlayerOneKill.getText().toString());
+//        outState.putString("textViewScorePlayerOneMission", textViewScorePlayerOneMission.getText().toString());
+//        outState.putString("textViewScorePlayerTwo", textViewScorePlayerTwo.getText().toString());
+//        outState.putString("textViewScorePlayerTwoKill", textViewScorePlayerTwoKill.getText().toString());
+//        outState.putString("textViewScorePlayerTwoMission", textViewScorePlayerTwoMission.getText().toString());
+//        outState.putString("firstPlayerName", firstPlayerName.getText().toString());
+//        outState.putString("timeClock", timeClock.getText().toString());
+//        outState.putString("textViewTimeLeft", textViewTimeLeft.getText().toString());
+//        outState.putString("playerOne", playerOne.getText().toString());
+//        outState.putString("playerTwo", playerTwo.getText().toString());
+//        outState.putString("firstPlayer1", firstPlayer1.getText().toString());
+//        outState.putString("firstPlayer2", firstPlayer2.getText().toString());
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//
+//        this.roundNumber.setText(savedInstanceState.getString("roundNumber"));
+//        this.textViewScorePlayerOne.setText(savedInstanceState.getString("textViewScorePlayerOne"));
+//        this.textViewScorePlayerOneKill.setText(savedInstanceState.getString("textViewScorePlayerOneKill"));
+//        this.textViewScorePlayerOneMission.setText(savedInstanceState.getString("textViewScorePlayerOneMission"));
+//        this.textViewScorePlayerTwo.setText(savedInstanceState.getString("textViewScorePlayerTwo"));
+//        this.textViewScorePlayerTwoKill.setText(savedInstanceState.getString("textViewScorePlayerTwoKill"));
+//        this.textViewScorePlayerTwoMission.setText(savedInstanceState.getString("textViewScorePlayerTwoMission"));
+//        this.firstPlayerName.setText(savedInstanceState.getString("firstPlayerName"));
+//        this.timeClock.setText(savedInstanceState.getString("timeClock"));
+//        this.textViewTimeLeft.setText(savedInstanceState.getString("textViewTimeLeft"));
+//        this.playerOne.setText(savedInstanceState.getString("playerOne"));
+//        this.playerTwo.setText(savedInstanceState.getString("playerTwo"));
+//        this.firstPlayer1.setText(savedInstanceState.getString("firstPlayer1"));
+//        this.firstPlayer2.setText(savedInstanceState.getString("firstPlayer2"));
+//    }
 }

@@ -46,4 +46,5 @@
     <string name="random_timer_setting">Random :</string>
     <string name="time_volatility">Graduation :</string>
     <string name="first_player">First Player</string>
+    <string name="dark_mode">Dark Mode</string>
 </resources>

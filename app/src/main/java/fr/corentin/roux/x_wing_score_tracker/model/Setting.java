@@ -2,10 +2,6 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 public class Setting implements Persistable, Serializable {
 
     private String name;
@@ -18,15 +14,18 @@ public class Setting implements Persistable, Serializable {
 
     private String volatilityTime = "3";
 
+    private Boolean enabledDarkTheme;
+
     public Setting() {
     }
 
-    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime) {
+    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme) {
         this.name = name;
         this.opponent = opponent;
         this.language = language;
         this.randomTime = randomTime;
         this.volatilityTime = volatilityTime;
+        this.enabledDarkTheme = enabledDarkTheme;
     }
 
     public String getName() {
@@ -67,5 +66,13 @@ public class Setting implements Persistable, Serializable {
 
     public void setVolatilityTime(String volatilityTime) {
         this.volatilityTime = volatilityTime;
+    }
+
+    public Boolean getEnabledDarkTheme() {
+        return enabledDarkTheme;
+    }
+
+    public void setEnabledDarkTheme(Boolean enabledDarkTheme) {
+        this.enabledDarkTheme = enabledDarkTheme;
     }
 }
