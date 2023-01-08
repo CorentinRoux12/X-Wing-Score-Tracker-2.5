@@ -23,6 +23,7 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Actions;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
+import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
@@ -35,6 +36,7 @@ import lombok.Setter;
  * Activity for the view of the scoring board
  */
 @Getter
+@SuppressLint("SetTextI18n")
 public class TimerActivity extends AppCompatActivity {
 
     private static final int MINUTES = 60000;
@@ -44,6 +46,7 @@ public class TimerActivity extends AppCompatActivity {
     private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
     private final SettingService service = SettingService.getInstance();
+    private Setting setting;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     @Setter
     private boolean end = false;
@@ -98,19 +101,17 @@ public class TimerActivity extends AppCompatActivity {
         this.initListeners();
     }
 
-    @SuppressLint("SetTextI18n")
     private void initGame() {
         this.game = new Game();
+        this.setting = this.service.getSetting(this);
         //Option d affichage du timer
         this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
         this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
-        this.game.getPlayer1().setName(this.service.getSetting(this).getName());
-        if (this.game.getPlayer1().getName() != null && "".equals(this.game.getPlayer1().getName().trim())) {
-            this.game.getPlayer1().setName("Player 1");
+        if (setting.getName() != null && !"".equals(setting.getName().trim())) {
+            this.game.getPlayer1().setName(setting.getName());
         }
-        this.game.getPlayer2().setName(this.service.getSetting(this).getOpponent());
-        if (this.game.getPlayer2().getName() != null && "".equals(this.game.getPlayer2().getName().trim())) {
-            this.game.getPlayer2().setName("Player 2");
+        if (setting.getOpponent() != null && !"".equals(setting.getOpponent().trim())) {
+            this.game.getPlayer2().setName(setting.getOpponent());
         }
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
@@ -118,7 +119,6 @@ public class TimerActivity extends AppCompatActivity {
         this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
     }
 
-    @SuppressLint("SetTextI18n")
     private void initDatas() {
         //Init Ring
         this.initRing();

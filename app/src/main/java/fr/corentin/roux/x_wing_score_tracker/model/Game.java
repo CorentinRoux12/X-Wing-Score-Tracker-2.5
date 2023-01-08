@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 public class Game implements Persistable, Serializable {
 
-    private Player player1 = new Player();
-    private Player player2 = new Player();
+    private Player player1 = new Player("Player 1");
+    private Player player2 = new Player("Player 2");
     private long timeLeft;
     private int round = 0;
     private String historique;

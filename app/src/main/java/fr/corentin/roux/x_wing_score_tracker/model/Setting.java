@@ -14,7 +14,7 @@ public class Setting implements Persistable, Serializable {
 
     private String volatilityTime = "3";
 
-    private Boolean enabledDarkTheme;
+    private Boolean enabledDarkTheme = Boolean.FALSE;
 
     public Setting() {
     }

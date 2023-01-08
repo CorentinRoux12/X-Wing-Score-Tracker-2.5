@@ -49,6 +49,13 @@ public class Player implements Persistable, Serializable {
     public Player() {
     }
 
+    public Player(String name) {
+        this.name = name;
+        this.score = 0;
+        this.scoreKill = 0;
+        this.scoreMission = 0;
+    }
+
     public Player(String name, int score, int scoreKill, int scoreMission) {
         this.name = name;
         this.score = score;
