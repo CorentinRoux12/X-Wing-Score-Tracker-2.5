@@ -98,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void reloadDarkMode() {
 //        this.onNightModeChanged(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
         AppCompatDelegate.setDefaultNightMode(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 
@@ -111,7 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (langue != null) {
             final int spinnerPosition = adapterConst.getPosition(langue.getCodeIhm());
             this.language.setSelection(spinnerPosition);
-            Toast.makeText(this, "Restart Application to apply settings.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Restart Application to apply settings.", Toast.LENGTH_SHORT).show();
         }
     }
 
