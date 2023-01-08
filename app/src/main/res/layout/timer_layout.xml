@@ -32,7 +32,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/mission"
                     android:textColor="@color/textColor"
-                    android:textSize="40sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textViewMission"
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/round"
                     android:textColor="@color/textColor"
-                    android:textSize="40sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/roundNumber"
@@ -111,9 +111,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="First Player :"
+                    android:text="@string/first_player"
                     android:textColor="@color/textColor"
-                    android:textSize="40sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/firstPlayerName"
@@ -123,7 +123,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/open_sans_light"
                     android:textColor="@color/textColor"
-                    android:textSize="40sp" />
+                    android:textSize="24sp" />
 
 
             </LinearLayout>
@@ -148,7 +148,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/time_left"
                     android:textColor="@color/textColor"
-                    android:textSize="40sp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/timeClock"
@@ -179,7 +179,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/startBtn"
                     android:textColor="@color/textColor"
-                    android:textSize="20sp" />
+                    android:textSize="24sp" />
 
 
             </LinearLayout>
