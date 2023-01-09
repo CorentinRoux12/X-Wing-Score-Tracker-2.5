@@ -2,9 +2,6 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public enum Mission implements Serializable {
 
     NO_MISSION("No Mission", 0, null, null),

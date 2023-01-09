@@ -16,10 +16,8 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity;
-import lombok.Getter;
 
 public class HistoriqueAdapter extends BaseAdapter {
-    @Getter
     private final List<Game> games;
     private final Context context;
     private final LayoutInflater inflater;
@@ -97,9 +95,16 @@ public class HistoriqueAdapter extends BaseAdapter {
         holder.delete = rowView.findViewById(R.id.delete);
     }
 
-    @Getter
     public static class ViewHolder {
         private TextView data;
         private ImageView delete;
+
+        public TextView getData() {
+            return data;
+        }
+    }
+
+    public List<Game> getGames() {
+        return games;
     }
 }

@@ -32,7 +32,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/mission"
                     android:textColor="@color/textColor"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textViewMission"
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/round"
                     android:textColor="@color/textColor"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/roundNumber"
@@ -81,7 +81,8 @@
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/red"
                     android:text="@string/less"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
 
 
                 <Button
@@ -113,7 +114,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/first_player"
                     android:textColor="@color/textColor"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/firstPlayerName"
@@ -148,7 +149,7 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/time_left"
                     android:textColor="@color/textColor"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/timeClock"
@@ -193,12 +194,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayoutBtnStartStop">
 
-                <Button
-                    android:id="@+id/firstPlayer1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/textColor" />
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -209,16 +205,34 @@
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/first_player"
                     android:textColor="@color/textColor"
-                    android:textSize="24sp" />
+                    android:textSize="20sp" />
 
-                <Button
-                    android:id="@+id/firstPlayer2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/textColor" />
+
 
             </LinearLayout>
+        <LinearLayout
+            android:id="@+id/firstPlayerBtns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstPlayerLayout">
+            <Button
+                android:id="@+id/firstPlayer1"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="10sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/textColor" />
+            <Button
+                android:id="@+id/firstPlayer2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"
+                android:layout_gravity="center"
+                android:textColor="@color/textColor" />
+        </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/bodyTimer"
@@ -227,7 +241,7 @@
                 android:gravity="center_horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstPlayerLayout">
+                app:layout_constraintTop_toBottomOf="@+id/firstPlayerBtns">
 
 
                 <TextView

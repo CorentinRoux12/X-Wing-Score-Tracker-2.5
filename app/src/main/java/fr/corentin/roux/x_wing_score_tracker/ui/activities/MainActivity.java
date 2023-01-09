@@ -2,6 +2,7 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -26,6 +28,7 @@ import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
+import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 
 /**
  * @author Corentin Roux
@@ -69,54 +72,28 @@ public class MainActivity extends AppCompatActivity {
         this.initListeners();
 
         this.initDefaultValue();
+
+        if (setting.getEnabledDarkTheme() != null) {
+            AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     //Pour le changement de langue on doit redemarer l app ...
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(checkDefaultLanguage(newBase));
+        this.setting = this.settingService.getSetting(newBase);
+        super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
     }
 
-    private Context checkDefaultLanguage(Context context) {
-        this.setting = this.settingService.getSetting(context);
-
-        Language language;
-        if (this.setting.getLanguage() == null) {
-            language = Language.ENGLISH;
-        } else {
-            language = Language.parseCodeIhm(this.setting.getLanguage());
-        }
-        Locale locale;
-        if (language == null) {
-            language = Language.ENGLISH;
-        }
-        switch (language) {
-            case FRENCH:
-                locale = Locale.FRENCH;
-                break;
-//            case ENGLISH:
-//                locale = Locale.ENGLISH;
-//                break;
-            default:
-                locale = Locale.ENGLISH;
-                break;
-        }
-        Locale.setDefault(locale);
-
-        final Configuration configuration = context.getResources().getConfiguration();
-        configuration.setLocale(locale);
-        configuration.setLayoutDirection(locale);
-
-        if (setting.getEnabledDarkTheme() != null) {
-            AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-        return context.createConfigurationContext(configuration);
-    }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
+
+        if (this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).getBoolean("settingsChange", true)) {
+            this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange", false).apply();
+            this.recreate();
+        }
         this.initDefaultValue();
     }
 

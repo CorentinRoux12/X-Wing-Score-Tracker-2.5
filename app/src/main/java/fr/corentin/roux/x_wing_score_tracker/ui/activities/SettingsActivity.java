@@ -1,8 +1,12 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,11 +19,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Locale;
+import java.util.Objects;
+
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.AdapterViewUtils;
+import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 
 @SuppressLint("SetTextI18n")
 public class SettingsActivity extends AppCompatActivity {
@@ -52,34 +60,22 @@ public class SettingsActivity extends AppCompatActivity {
         this.listeners();
     }
 
-    private void listeners() {
-        this.darkModeBtn.setOnClickListener(t -> {
-            this.enabledDarkMode = !this.enabledDarkMode;
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.setting = this.service.getSetting(newBase);
+        super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
+    }
 
-            if (Boolean.TRUE.equals(this.enabledDarkMode)) {
-                this.setting.setEnabledDarkTheme(Boolean.TRUE);
-                reloadDarkMode();
-            } else {
-                this.setting.setEnabledDarkTheme(Boolean.FALSE);
-                reloadDarkMode();
-            }
-        });
+    @Override
+    public void onBackPressed() {
+        this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange",true).apply();
+        super.onBackPressed();
+    }
 
-        this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-                final Object item = adapterView.getItemAtPosition(position);
-                if (item != null) {
-                    //SAVE de la langue
-                    SettingsActivity.this.langue = item.toString();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(final AdapterView<?> parent) {
-                Log.d(AdapterViewUtils.class.getSimpleName(), "On Nothing Selected call");
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        this.saveSettings();
+        super.onDestroy();
     }
 
     private void initData() {
@@ -96,10 +92,40 @@ public class SettingsActivity extends AppCompatActivity {
         this.darkModeBtn.setText("Dark Mode : " + (Boolean.TRUE.equals(enabledDarkMode) ? "Yes" : "No"));
     }
 
-    private void reloadDarkMode() {
-//        this.onNightModeChanged(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
-        AppCompatDelegate.setDefaultNightMode(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+    private void listeners() {
+        this.darkModeBtn.setOnClickListener(t -> {
+            if (enabledDarkMode == setting.getEnabledDarkTheme()) {
+                this.enabledDarkMode = !this.enabledDarkMode;
+
+                if (Boolean.TRUE.equals(this.enabledDarkMode)) {
+                    this.setting.setEnabledDarkTheme(Boolean.TRUE);
+                    reloadDarkMode();
+                } else {
+                    this.setting.setEnabledDarkTheme(Boolean.FALSE);
+                    reloadDarkMode();
+                }
+
+            }
+        });
+
+        this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final Object item = adapterView.getItemAtPosition(position);
+                if (item != null) {
+                    SettingsActivity.this.langue = item.toString();
+                    if (setting.getLanguage() != null && langue != null && !setting.getLanguage().equals(langue)) {
+                        SettingsActivity.this.saveSettings();
+                        SettingsActivity.this.startSettingsActivity();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(final AdapterView<?> parent) {
+                Log.d(AdapterViewUtils.class.getSimpleName(), "On Nothing Selected call");
+            }
+        });
     }
 
     private void formatLanguage() {
@@ -111,8 +137,18 @@ public class SettingsActivity extends AppCompatActivity {
         if (langue != null) {
             final int spinnerPosition = adapterConst.getPosition(langue.getCodeIhm());
             this.language.setSelection(spinnerPosition);
-            Toast.makeText(this, "Restart Application to apply settings.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void reloadDarkMode() {
+        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
+        AppCompatDelegate.setDefaultNightMode(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    private void startSettingsActivity() {
+        this.recreate();
+//        final Intent intent = new Intent(this, SettingsActivity.class);
+//        this.startActivity(intent);
     }
 
     private void findView() {
@@ -124,8 +160,7 @@ public class SettingsActivity extends AppCompatActivity {
         this.darkModeBtn = this.findViewById(R.id.darkModeBtn);
     }
 
-    @Override
-    protected void onDestroy() {
+    private void saveSettings() {
         String time = this.inputTime.getText().toString();
         if ("".equals(time.trim())) {
             time = "75";
@@ -137,8 +172,6 @@ public class SettingsActivity extends AppCompatActivity {
         this.setting.setOpponent(this.inputOpponent.getText().toString());
         this.setting.setEnabledDarkTheme(enabledDarkMode);
         this.service.save(this, this.setting);
-
-        super.onDestroy();
     }
 
 

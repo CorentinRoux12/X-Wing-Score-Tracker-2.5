@@ -2,10 +2,6 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 public class Game implements Persistable, Serializable {
 
     private Player player1 = new Player("Player 1");

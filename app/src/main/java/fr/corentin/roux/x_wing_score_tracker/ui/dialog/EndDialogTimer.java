@@ -6,13 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
-import lombok.Getter;
 
-@Getter
 public class EndDialogTimer extends DialogFragment {
 
     private final TimerActivity timerActivity;
@@ -56,4 +55,21 @@ public class EndDialogTimer extends DialogFragment {
         }
     }
 
+    public TimerActivity getTimerActivity() {
+        return timerActivity;
+    }
+
+    @Nullable
+    @Override
+    public View getView() {
+        return view;
+    }
+
+    public Button getBtnYesEnd() {
+        return btnYesEnd;
+    }
+
+    public Button getBtnNoEnd() {
+        return btnNoEnd;
+    }
 }

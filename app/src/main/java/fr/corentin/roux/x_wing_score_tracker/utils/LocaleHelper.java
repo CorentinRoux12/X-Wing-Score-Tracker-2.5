@@ -1,42 +1,19 @@
 package fr.corentin.roux.x_wing_score_tracker.utils;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
-import android.preference.PreferenceManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.Locale;
 
+import fr.corentin.roux.x_wing_score_tracker.model.Language;
+import fr.corentin.roux.x_wing_score_tracker.model.Setting;
+
 public class LocaleHelper {
-    private static final String SELECTED_LANGUAGE = "Locale.Helper.Selected.Language";
 
-    // the method is used to set the language at runtime
-    public static Context setLocale(final Context context, final String language) {
-        persist(context, language);
-
-        // updating the language for devices above android nougat
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return updateResources(context, language);
-        }
-        // for devices having lower version of android os
-        return updateResourcesLegacy(context, language);
-    }
-
-    private static void persist(final Context context, final String language) {
-        final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(SELECTED_LANGUAGE, language);
-        editor.apply();
-    }
-
-    // the method is used update the language of application by creating
-    // object of inbuilt Locale class and passing language argument to it
-    @TargetApi(Build.VERSION_CODES.N)
-    private static Context updateResources(final Context context, final String language) {
-        final Locale locale = new Locale(language);
+    public static Context checkDefaultLanguage(Setting setting, Context context) {
+        final Locale locale = getLocaleFromSettings(setting);
         Locale.setDefault(locale);
 
         final Configuration configuration = context.getResources().getConfiguration();
@@ -46,22 +23,37 @@ public class LocaleHelper {
         return context.createConfigurationContext(configuration);
     }
 
-
-    @SuppressWarnings("deprecation")
-    private static Context updateResourcesLegacy(final Context context, final String language) {
-        final Locale locale = new Locale(language);
-        Locale.setDefault(locale);
-
-        final Resources resources = context.getResources();
-
-        final Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLayoutDirection(locale);
+    private static Locale getLocaleFromSettings(Setting setting) {
+        Language language;
+        if (setting.getLanguage() == null) {
+            language = Language.ENGLISH;
+        } else {
+            language = Language.parseCodeIhm(setting.getLanguage());
         }
+        Locale locale;
 
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        switch (language) {
+            case FRENCH:
+                locale = Locale.FRENCH;
+                break;
 
-        return context;
+            case ITALIANO:
+                locale = Locale.ITALIAN;
+                break;
+            case SPANNISH:
+                locale = new Locale("es");
+                break;
+            case DEUTSCH:
+                locale = Locale.GERMAN;
+                break;
+            case CHINOIS:
+                locale = Locale.SIMPLIFIED_CHINESE;
+                break;
+            case ENGLISH:
+            default:
+                locale = Locale.ENGLISH;
+                break;
+        }
+        return locale;
     }
 }

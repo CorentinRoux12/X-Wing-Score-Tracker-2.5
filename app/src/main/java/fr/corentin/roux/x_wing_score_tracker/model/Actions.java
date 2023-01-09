@@ -1,8 +1,5 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
 public enum Actions {
     END("End GAME !!"),
     DETAIL_ROUND("Details Round"),

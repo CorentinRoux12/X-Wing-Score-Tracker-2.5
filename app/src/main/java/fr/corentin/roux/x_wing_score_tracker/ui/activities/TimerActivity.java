@@ -148,7 +148,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initMission() {
-        if (this.game.getMission() != null) {
+        if (this.game.getMission() != null && !Mission.NO_MISSION.equals(this.game.getMission())) {
             this.textViewMission.setText(this.game.getMission().getLibelle());
         }
     }
@@ -358,7 +358,9 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
-                TimerActivity.this.playSound();
+                if (TimerActivity.this.timeToSet == 0) {
+                    TimerActivity.this.playSound();
+                }
             }
         }.start();
         this.btnStartStop.setText(this.getString(R.string.stop));
@@ -375,13 +377,17 @@ public class TimerActivity extends AppCompatActivity {
      * the trigger for stop the timer
      */
     private void stopTimer() {
-        this.timer.cancel();
+        if (timer != null) {
+            this.timer.cancel();
+        }
         this.btnStartStop.setText(this.getString(R.string.start));
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
-        this.timerStart = false;
-        this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
-        if (this.ringtoneAlarm.isPlaying()) {
-            this.ringtoneAlarm.stop();
+        if (timerStart){
+            this.timerStart = false;
+            this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
+            if (this.ringtoneAlarm.isPlaying()) {
+                this.ringtoneAlarm.stop();
+            }
         }
     }
 
@@ -470,20 +476,25 @@ public class TimerActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("roundNumber", roundNumber.getText().toString());
-        outState.putString("textViewScorePlayerOne", textViewScorePlayerOne.getText().toString());
-        outState.putString("textViewScorePlayerOneKill", textViewScorePlayerOneKill.getText().toString());
-        outState.putString("textViewScorePlayerOneMission", textViewScorePlayerOneMission.getText().toString());
-        outState.putString("textViewScorePlayerTwo", textViewScorePlayerTwo.getText().toString());
-        outState.putString("textViewScorePlayerTwoKill", textViewScorePlayerTwoKill.getText().toString());
-        outState.putString("textViewScorePlayerTwoMission", textViewScorePlayerTwoMission.getText().toString());
-        outState.putString("firstPlayerName", firstPlayerName.getText().toString());
-        outState.putString("timeClock", timeClock.getText().toString());
-        outState.putString("textViewTimeLeft", textViewTimeLeft.getText().toString());
-        outState.putString("playerOne", playerOne.getText().toString());
-        outState.putString("playerTwo", playerTwo.getText().toString());
-        outState.putString("firstPlayer1", firstPlayer1.getText().toString());
-        outState.putString("firstPlayer2", firstPlayer2.getText().toString());
+        outState.putString("roundNumber", this.roundNumber.getText().toString());
+        outState.putString("textViewScorePlayerOne", this.textViewScorePlayerOne.getText().toString());
+        outState.putString("textViewScorePlayerOneKill", this.textViewScorePlayerOneKill.getText().toString());
+        outState.putString("textViewScorePlayerOneMission", this.textViewScorePlayerOneMission.getText().toString());
+        outState.putString("textViewScorePlayerTwo", this.textViewScorePlayerTwo.getText().toString());
+        outState.putString("textViewScorePlayerTwoKill", this.textViewScorePlayerTwoKill.getText().toString());
+        outState.putString("textViewScorePlayerTwoMission", this.textViewScorePlayerTwoMission.getText().toString());
+        outState.putString("firstPlayerName", this.firstPlayerName.getText().toString());
+        outState.putString("timeClock", this.timeClock.getText().toString());
+        outState.putString("textViewTimeLeft", this.textViewTimeLeft.getText().toString());
+        outState.putString("playerOne", this.playerOne.getText().toString());
+        outState.putString("playerTwo", this.playerTwo.getText().toString());
+        outState.putString("firstPlayer1", this.firstPlayer1.getText().toString());
+        outState.putString("firstPlayer2", this.firstPlayer2.getText().toString());
+
+        outState.putSerializable("game", this.game);
+        outState.putBoolean("timerStart", this.timerStart);
+        outState.putLong("timeToSet", this.timeToSet);
+
     }
 
     @Override
@@ -504,5 +515,16 @@ public class TimerActivity extends AppCompatActivity {
         this.playerTwo.setText(savedInstanceState.getString("playerTwo"));
         this.firstPlayer1.setText(savedInstanceState.getString("firstPlayer1"));
         this.firstPlayer2.setText(savedInstanceState.getString("firstPlayer2"));
+
+        this.game = (Game) savedInstanceState.getSerializable("game");
+        this.timerStart = savedInstanceState.getBoolean("timerStart");
+        this.timeToSet = savedInstanceState.getLong("timeToSet");
+
+        if (timerStart) {
+            this.startTimer();
+        } else {
+            this.stopTimer();
+        }
+
     }
 }
