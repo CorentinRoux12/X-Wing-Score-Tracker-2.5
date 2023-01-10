@@ -47,4 +47,5 @@
     <string name="time_volatility">Graduation :</string>
     <string name="first_player">Premier Joueur</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="set_alarme">Régler l\'Alarme</string>
 </resources>

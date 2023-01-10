@@ -2,11 +2,10 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,13 +13,11 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Locale;
-import java.util.Objects;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
@@ -28,9 +25,11 @@ import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.AdapterViewUtils;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
+import xyz.aprildown.ultimatemusicpicker.MusicPickerListener;
+import xyz.aprildown.ultimatemusicpicker.UltimateMusicPicker;
 
 @SuppressLint("SetTextI18n")
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements MusicPickerListener {
 
     private final SettingService service = SettingService.getInstance();
 
@@ -39,10 +38,12 @@ public class SettingsActivity extends AppCompatActivity {
     private TextInputEditText inputTime;
     private TextInputEditText inputVolatility;
     private Button darkModeBtn;
+    private Button alarmeSong;
     private Spinner language;
     private String langue;
-    private Setting setting;
     private Boolean enabledDarkMode;
+    private String pathRingTone;
+    private Setting setting;
 
     /**
      * {@inheritDoc}
@@ -68,7 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange",true).apply();
+        this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange", true).apply();
         super.onBackPressed();
     }
 
@@ -89,6 +90,7 @@ public class SettingsActivity extends AppCompatActivity {
         this.inputVolatility.setText(this.setting.getVolatilityTime());
 
         this.enabledDarkMode = setting.getEnabledDarkTheme();
+        this.pathRingTone = setting.getPathRingTone();
         this.darkModeBtn.setText("Dark Mode : " + (Boolean.TRUE.equals(enabledDarkMode) ? "Yes" : "No"));
     }
 
@@ -108,13 +110,49 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        this.alarmeSong.setOnClickListener(t -> {
+           new UltimateMusicPicker()
+                    // Picker activity action bar title or dialog title
+                    .windowTitle("Alarm Selection")
+
+                    // Add a extra default item
+                    //.defaultUri(uri)
+                    // Add a default item and change the default item name("Default" is used otherwise)
+                   //.defaultTitleAndUri("My default name", uri)
+
+                    // There's a "silent" item by default, use this line to remove it.
+                    .removeSilent()
+
+                    // Select this uri
+                   //.selectUri(uri)
+
+                    // Add some other music items(from R.raw or app's asset)
+                   //.additional("Myself Music", uri)
+                   //.additional("Another Music", uri)
+
+                    // Music preview stream type(AudioManager.STREAM_MUSIC is used by default)
+                    .streamType(AudioManager.STREAM_ALARM)
+
+                    // Show different kinds of system ringtones. Calling order determines their display order.
+                    .ringtone()
+                    .notification()
+                    .alarm()
+                    // Show music files from external storage. Requires READ_EXTERNAL_STORAGE permission.
+                    .music()
+
+                    // Show a picker dialog
+                    .goWithDialog(getSupportFragmentManager());
+            // Or show a picker activity
+            //.goWithActivity(this, 0, MusicPickerActivity::class.java)
+        });
+
         this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(final AdapterView<?> adapterView, final View view, final int position, final long id) {
                 final Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
                     SettingsActivity.this.langue = item.toString();
-                    if (setting.getLanguage() != null && langue != null && !setting.getLanguage().equals(langue)) {
+                    if (setting != null && !langue.equals(setting.getLanguage())) {
                         SettingsActivity.this.saveSettings();
                         SettingsActivity.this.startSettingsActivity();
                     }
@@ -158,6 +196,7 @@ public class SettingsActivity extends AppCompatActivity {
         this.inputName = this.findViewById(R.id.inputName);
         this.inputOpponent = this.findViewById(R.id.inputOpponent);
         this.darkModeBtn = this.findViewById(R.id.darkModeBtn);
+        this.alarmeSong = this.findViewById(R.id.setAlarme);
     }
 
     private void saveSettings() {
@@ -170,9 +209,18 @@ public class SettingsActivity extends AppCompatActivity {
         this.setting.setVolatilityTime(this.inputVolatility.getText().toString());
         this.setting.setName(this.inputName.getText().toString());
         this.setting.setOpponent(this.inputOpponent.getText().toString());
-        this.setting.setEnabledDarkTheme(enabledDarkMode);
+        this.setting.setEnabledDarkTheme(this.enabledDarkMode);
+        this.setting.setPathRingTone(this.pathRingTone);
         this.service.save(this, this.setting);
     }
 
 
+    @Override
+    public void onMusicPick(@NonNull Uri uri, @NonNull String s) {
+        this.pathRingTone = uri.toString();
+    }
+
+    @Override
+    public void onPickCanceled() {
+    }
 }

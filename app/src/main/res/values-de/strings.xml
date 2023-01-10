@@ -47,4 +47,5 @@
     <string name="time_volatility">Abschluss :</string>
     <string name="first_player">Erster Spieler</string>
     <string name="dark_mode">Dunkler Modus</string>
+    <string name="set_alarme">Wecker stellen</string>
 </resources>

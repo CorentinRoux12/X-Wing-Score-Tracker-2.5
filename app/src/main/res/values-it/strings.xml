@@ -47,4 +47,5 @@
     <string name="time_volatility">La laurea :</string>
     <string name="first_player">Primo giocatore</string>
     <string name="dark_mode">Modalità scura</string>
+    <string name="set_alarme">Imposta sveglia</string>
 </resources>

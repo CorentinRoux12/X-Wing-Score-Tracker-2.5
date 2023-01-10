@@ -16,16 +16,19 @@ public class Setting implements Persistable, Serializable {
 
     private Boolean enabledDarkTheme = Boolean.FALSE;
 
+    private String pathRingTone = "";
+
     public Setting() {
     }
 
-    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme) {
+    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone) {
         this.name = name;
         this.opponent = opponent;
         this.language = language;
         this.randomTime = randomTime;
         this.volatilityTime = volatilityTime;
         this.enabledDarkTheme = enabledDarkTheme;
+        this.pathRingTone = pathRingTone;
     }
 
     public String getName() {
@@ -74,5 +77,13 @@ public class Setting implements Persistable, Serializable {
 
     public void setEnabledDarkTheme(Boolean enabledDarkTheme) {
         this.enabledDarkTheme = enabledDarkTheme;
+    }
+
+    public String getPathRingTone() {
+        return pathRingTone;
+    }
+
+    public void setPathRingTone(String pathRingTone) {
+        this.pathRingTone = pathRingTone;
     }
 }

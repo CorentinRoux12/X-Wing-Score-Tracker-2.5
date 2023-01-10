@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -83,6 +84,7 @@ public class TimerActivity extends AppCompatActivity {
     private Button firstPlayer2;
     private TextView firstPlayerName;
     private int firstPlayerChoice = 0;
+    private boolean alreadyEnd = false;
 
     /**
      * {@inheritDoc}
@@ -154,7 +156,11 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initRing() {
-        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+//        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        final Uri alarmTone = this.setting.getPathRingTone() != null ?
+                Uri.parse(this.setting.getPathRingTone()) :
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
         this.ringtoneAlarm = RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone);
         this.ringtoneAlarm.setStreamType(AudioManager.STREAM_ALARM);
     }
@@ -358,9 +364,9 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
-                if (TimerActivity.this.timeToSet == 0) {
-                    TimerActivity.this.playSound();
-                }
+//                if (TimerActivity.this.timeToSet == 0) {
+                TimerActivity.this.playSound();
+//                }
             }
         }.start();
         this.btnStartStop.setText(this.getString(R.string.stop));
@@ -382,7 +388,7 @@ public class TimerActivity extends AppCompatActivity {
         }
         this.btnStartStop.setText(this.getString(R.string.start));
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
-        if (timerStart){
+        if (timerStart) {
             this.timerStart = false;
             this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
             if (this.ringtoneAlarm.isPlaying()) {
@@ -469,6 +475,10 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playSound() {
+        if (this.alreadyEnd) {
+            return;
+        }
+        this.alreadyEnd = true;
         this.ringtoneAlarm.play();
     }
 
@@ -493,6 +503,7 @@ public class TimerActivity extends AppCompatActivity {
 
         outState.putSerializable("game", this.game);
         outState.putBoolean("timerStart", this.timerStart);
+        outState.putBoolean("alreadyEnd", this.alreadyEnd);
         outState.putLong("timeToSet", this.timeToSet);
 
     }
@@ -518,6 +529,7 @@ public class TimerActivity extends AppCompatActivity {
 
         this.game = (Game) savedInstanceState.getSerializable("game");
         this.timerStart = savedInstanceState.getBoolean("timerStart");
+        this.alreadyEnd = savedInstanceState.getBoolean("alreadyEnd");
         this.timeToSet = savedInstanceState.getLong("timeToSet");
 
         if (timerStart) {
@@ -526,5 +538,9 @@ public class TimerActivity extends AppCompatActivity {
             this.stopTimer();
         }
 
+        //Init des datas de la page
+        this.initDatas();
+        //Initialization of the listeners
+        this.initListeners();
     }
 }
