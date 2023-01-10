@@ -2,11 +2,8 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
-
-import java.util.Locale;
-import java.util.Objects;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
@@ -68,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange",true).apply();
+        this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange", true).apply();
         super.onBackPressed();
     }
 
@@ -114,7 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
                 final Object item = adapterView.getItemAtPosition(position);
                 if (item != null) {
                     SettingsActivity.this.langue = item.toString();
-                    if (setting.getLanguage() != null && langue != null && !setting.getLanguage().equals(langue)) {
+                    if (setting != null && !langue.equals(setting.getLanguage())) {
                         SettingsActivity.this.saveSettings();
                         SettingsActivity.this.startSettingsActivity();
                     }
@@ -146,6 +140,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void startSettingsActivity() {
+        Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
         this.recreate();
 //        final Intent intent = new Intent(this, SettingsActivity.class);
 //        this.startActivity(intent);
