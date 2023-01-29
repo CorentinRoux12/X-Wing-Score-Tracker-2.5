@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.utils.PersistableUtils;
 
-public class GameDao implements IDao<Game> {
+public class GameDao implements IDao<Games> {
     /**
      * Nom du fichier JSON utilisé pour sauvegarder les dossiers agricultures
      */
@@ -49,7 +50,7 @@ public class GameDao implements IDao<Game> {
      * {@inheritDoc}
      */
     @Override
-    public List<Game> getList(final Context context) {
+    public List<Games> getList(final Context context) {
         final CollectionType javaType = new ObjectMapper().getTypeFactory()
                 .constructCollectionType(List.class, Game.class);
         return this.persistableUtils.get(FILENAME, javaType, context);
@@ -59,27 +60,29 @@ public class GameDao implements IDao<Game> {
      * {@inheritDoc}
      */
     @Override
-    public Game findFirst(final Context context) {
-        final Game game = this.persistableUtils.get(FILENAME, Game.class, context);
-        return game == null ?
-                new Game() :
-                game;
+    public Games findFirst(final Context context) {
+        final Games games = this.persistableUtils.get(FILENAME, Games.class, context);
+        return games == null ?
+                new Games() :
+                games;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(final List<Game> t, final Context context) {
-        this.persistableUtils.write(FILENAME, t, context);
+    public void save(final List<Games> games, final Context context) {
+        for (Games game : games) {
+            this.save(game,context);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(final Game t, final Context context) {
-        this.persistableUtils.write(FILENAME, t, context);
+    public void save(final Games game, final Context context) {
+        this.persistableUtils.write(FILENAME, game, context);
     }
 
     /**

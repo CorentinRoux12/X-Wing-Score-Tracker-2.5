@@ -9,6 +9,7 @@ import java.util.List;
 import fr.corentin.roux.x_wing_score_tracker.dao.GameDao;
 import fr.corentin.roux.x_wing_score_tracker.dao.IDao;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import fr.corentin.roux.x_wing_score_tracker.model.Games;
 
 public class HistoriqueService {
     /**
@@ -16,7 +17,7 @@ public class HistoriqueService {
      */
     private static HistoriqueService instance;
 
-    private final IDao<Game> repository = GameDao.getInstance();
+    private final IDao<Games> repository = GameDao.getInstance();
 
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
@@ -40,20 +41,21 @@ public class HistoriqueService {
     public void saveNewGame(final Context context, final Game game) {
         //repository => save la game en data
 
-        List<Game> games = this.repository.getList(context);
+        Games games = this.repository.findFirst(context);
+//        List<Game> games = this.repository.getList(context);
         if (games == null) {
-            games = new ArrayList<>();
+            games = new Games();
         }
-        games.add(game);
+        games.getGames().add(game);
 
         this.repository.save(games, context);
     }
 
-    public List<Game> getAllGames(final Context context) {
-        return this.repository.getList(context);
+    public Games getAllGames(final Context context) {
+        return this.repository.findFirst(context);
     }
 
-    public void saveGames(final List<Game> games, final Context context) {
+    public void saveGames(final Games games, final Context context) {
         this.repository.save(games, context);
     }
 }

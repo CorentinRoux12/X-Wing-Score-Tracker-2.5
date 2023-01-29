@@ -10,6 +10,7 @@ import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.HistoriqueAdapter;
 
@@ -30,9 +31,9 @@ public class HistoriqueActivity extends AppCompatActivity {
 
         this.findView();
 
-        List<Game> games = this.service.getAllGames(this.getBaseContext());
+        Games games = this.service.getAllGames(this.getBaseContext());
         if (games == null) {
-            games = new ArrayList<>();
+            games = new Games();
         }
         this.adapter = new HistoriqueAdapter(this, games);
         this.listHistorique.setAdapter(this.adapter);
@@ -43,8 +44,8 @@ public class HistoriqueActivity extends AppCompatActivity {
     }
 
     public void deleteGame(final int pos) {
-        final List<Game> games = this.service.getAllGames(this.getBaseContext());
-        games.remove(pos);
+        final Games games = this.service.getAllGames(this.getBaseContext());
+        games.getGames().remove(pos);
         this.adapter.getGames().remove(pos);
         this.service.saveGames(games, this);
         this.adapter.notifyDataSetChanged();

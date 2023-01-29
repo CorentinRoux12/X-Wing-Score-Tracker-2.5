@@ -4,42 +4,33 @@ import java.io.Serializable;
 
 public class Player implements Persistable, Serializable {
 
+    /**
+     * Nom du joueur
+     */
     private String name;
 
-    private int score = 0;
-
-    private int scoreKill = 0;
-
-    private int scoreMission = 0;
+    /**
+     * Score du joueur
+     * - Global
+     * - Kill
+     * -  Mission
+     */
+    private Score score = new Score();
 
     public void addScoreKill(final int point) {
-        this.scoreKill += point;
-        this.updateScore();
+        this.score.addScoreKill(point);
     }
 
     public void lessScoreKill(final int point) {
-        this.scoreKill -= point;
-        if (this.scoreKill < 0) {
-            this.scoreKill = 0;
-        }
-        this.updateScore();
+        this.score.lessScoreKill(point);
     }
 
     public void addScoreMission(final int point) {
-        this.scoreMission += point;
-        this.updateScore();
+        this.score.addScoreMission(point);
     }
 
     public void lessScoreMission(final int point) {
-        this.scoreMission -= point;
-        if (this.scoreMission < 0) {
-            this.scoreMission = 0;
-        }
-        this.updateScore();
-    }
-
-    private void updateScore() {
-        this.score = this.scoreKill + this.scoreMission;
+        this.score.lessScoreMission(point);
     }
 
     public Player() {
@@ -47,16 +38,11 @@ public class Player implements Persistable, Serializable {
 
     public Player(String name) {
         this.name = name;
-        this.score = 0;
-        this.scoreKill = 0;
-        this.scoreMission = 0;
     }
 
-    public Player(String name, int score, int scoreKill, int scoreMission) {
+    public Player(String name, Score score) {
         this.name = name;
         this.score = score;
-        this.scoreKill = scoreKill;
-        this.scoreMission = scoreMission;
     }
 
     public String getName() {
@@ -67,27 +53,11 @@ public class Player implements Persistable, Serializable {
         this.name = name;
     }
 
-    public int getScore() {
+    public Score getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Score score) {
         this.score = score;
-    }
-
-    public int getScoreKill() {
-        return scoreKill;
-    }
-
-    public void setScoreKill(int scoreKill) {
-        this.scoreKill = scoreKill;
-    }
-
-    public int getScoreMission() {
-        return scoreMission;
-    }
-
-    public void setScoreMission(int scoreMission) {
-        this.scoreMission = scoreMission;
     }
 }

@@ -24,6 +24,8 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Actions;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
+import fr.corentin.roux.x_wing_score_tracker.model.Round;
+import fr.corentin.roux.x_wing_score_tracker.model.Score;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
@@ -37,20 +39,16 @@ import lombok.Setter;
  * <p>
  * Activity for the view of the scoring board
  */
-@Getter
-@SuppressLint("SetTextI18n")
 public class TimerActivity extends AppCompatActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
     private static final String RED = "#9d0208";
     private static final String GREEN = "#2b9348";
-    private final StringBuilder historique = new StringBuilder();
     private final HistoriqueService historiqueService = HistoriqueService.getInstance();
     private final SettingService service = SettingService.getInstance();
     private Setting setting;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    @Setter
     private boolean end = false;
     private boolean timerStart = false;
     private TextView timeClock;
@@ -86,6 +84,10 @@ public class TimerActivity extends AppCompatActivity {
     private int firstPlayerChoice = 0;
     private boolean alreadyEnd = false;
 
+    private Score scoreRoundJoueur1 = new Score();
+    private Score scoreRoundJoueur2 = new Score();
+    private long timeStartRound = 0;
+
     /**
      * {@inheritDoc}
      */
@@ -118,6 +120,7 @@ public class TimerActivity extends AppCompatActivity {
         }
         //We set the timer at the time in minutes
         this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
+        this.timeStartRound = this.timeToSet;
         //On recup la mission active dans le main page
         this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
     }
@@ -156,7 +159,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void initRing() {
-//        final Uri alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         final Uri alarmTone = this.setting.getPathRingTone() != null ?
                 Uri.parse(this.setting.getPathRingTone()) :
                 RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -197,10 +199,11 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setOnClickListener(t -> {
             if (this.timerStart) {
                 this.stopTimer();
-                this.releaseLock();
+                this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
             } else {
                 this.startTimer();
-                this.acquireLock();
+                this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             }
         });
         //Init des listeners lié au Player 1
@@ -247,11 +250,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private void playerOneListenersKill() {
         this.btnLessPlayerOneKill.setOnClickListener(t -> {
+            this.scoreRoundJoueur1.lessScoreKill(1);
             this.game.getPlayer1().lessScoreKill(1);
             this.updateScorePlayerOne();
         });
 
         this.btnPlusPlayerOneKill.setOnClickListener(t -> {
+            this.scoreRoundJoueur1.addScoreKill(1);
             this.game.getPlayer1().addScoreKill(1);
             this.updateScorePlayerOne();
         });
@@ -259,20 +264,22 @@ public class TimerActivity extends AppCompatActivity {
 
     private void playerOneListenersMission() {
         this.btnLessPlayerOneMission.setOnClickListener(t -> {
+            this.scoreRoundJoueur1.lessScoreMission(1);
             this.game.getPlayer1().lessScoreMission(1);
             this.updateScorePlayerOne();
         });
 
         this.btnPlusPlayerOneMission.setOnClickListener(t -> {
+            this.scoreRoundJoueur1.addScoreMission(1);
             this.game.getPlayer1().addScoreMission(1);
             this.updateScorePlayerOne();
         });
     }
 
     private void updateScorePlayerOne() {
-        this.textViewScorePlayerOneKill.setText(String.valueOf(this.game.getPlayer1().getScoreKill()));
-        this.textViewScorePlayerOneMission.setText(String.valueOf(this.game.getPlayer1().getScoreMission()));
-        this.textViewScorePlayerOne.setText(String.valueOf(this.game.getPlayer1().getScore()));
+        this.textViewScorePlayerOneKill.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreKill()));
+        this.textViewScorePlayerOneMission.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreMission()));
+        this.textViewScorePlayerOne.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreGlobal()));
     }
 
     private void playerTwoListeners() {
@@ -283,11 +290,13 @@ public class TimerActivity extends AppCompatActivity {
 
     private void playerTwoListenersKill() {
         this.btnLessPlayerTwoKill.setOnClickListener(t -> {
+            this.scoreRoundJoueur2.lessScoreKill(1);
             this.game.getPlayer2().lessScoreKill(1);
             this.updateScorePlayerTwo();
         });
 
         this.btnPlusPlayerTwoKill.setOnClickListener(t -> {
+            this.scoreRoundJoueur2.addScoreKill(1);
             this.game.getPlayer2().addScoreKill(1);
             this.updateScorePlayerTwo();
         });
@@ -295,20 +304,22 @@ public class TimerActivity extends AppCompatActivity {
 
     private void playerTwoListenersMission() {
         this.btnLessPlayerTwoMission.setOnClickListener(t -> {
+            this.scoreRoundJoueur2.lessScoreMission(1);
             this.game.getPlayer2().lessScoreMission(1);
             this.updateScorePlayerTwo();
         });
 
         this.btnPlusPlayerTwoMission.setOnClickListener(t -> {
+            this.scoreRoundJoueur2.addScoreMission(1);
             this.game.getPlayer2().addScoreMission(1);
             this.updateScorePlayerTwo();
         });
     }
 
     private void updateScorePlayerTwo() {
-        this.textViewScorePlayerTwoKill.setText(String.valueOf(this.game.getPlayer2().getScoreKill()));
-        this.textViewScorePlayerTwoMission.setText(String.valueOf(this.game.getPlayer2().getScoreMission()));
-        this.textViewScorePlayerTwo.setText(String.valueOf(this.game.getPlayer2().getScore()));
+        this.textViewScorePlayerTwoKill.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreKill()));
+        this.textViewScorePlayerTwoMission.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreMission()));
+        this.textViewScorePlayerTwo.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreGlobal()));
     }
 
     private void roundListeners() {
@@ -320,26 +331,31 @@ public class TimerActivity extends AppCompatActivity {
         if (this.game.getRound() > 0) {
             this.game.removeRound();
             this.roundNumber.setText(String.valueOf(this.game.getRound()));
-            this.addAction(Actions.REMOVE_ROUND, "General", this.timeToSet, this.game.getRound());
         }
     }
 
     private void addRound() {
+        this.updateRoundDetail();
         this.game.addRound();
         if (this.game.getRound() == 12) {
             Toast.makeText(TimerActivity.this, "LAST TURN !!", Toast.LENGTH_LONG).show();
         }
         this.roundNumber.setText(String.valueOf(this.game.getRound()));
-        this.addAction(Actions.ADD_ROUND, "General", this.timeToSet, this.game.getRound());
-        this.updateRoundDetail();
     }
 
+
     private void updateRoundDetail() {
-        this.historique.insert(0, Actions.FIRST_PLAYER.getLibelle() + " - " + this.firstPlayerName.getText() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer1().getName() + " Kill Point : " + this.game.getPlayer1().getScoreKill() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer1().getName() + " Mission Point : " + this.game.getPlayer1().getScoreMission() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer2().getName() + " Kill Point : " + this.game.getPlayer2().getScoreKill() + "\n");
-        this.historique.insert(0, Actions.DETAIL_ROUND.getLibelle() + " - " + this.game.getPlayer2().getName() + " Mission Point : " + this.game.getPlayer2().getScoreMission() + "\n");
+        final Round round = new Round();
+        round.setRoundNumber(this.roundNumber.getText().toString());
+        round.setFirstPlayer(this.firstPlayerName.getText().toString());
+        round.setScorePlayer1(this.scoreRoundJoueur1);
+        round.setScorePlayer2(this.scoreRoundJoueur2);
+        round.setTime(this.timeStartRound - this.timeToSet);
+        this.game.getRounds().add(round);
+        //Reset des scores du round post save
+        this.timeStartRound = this.timeToSet;
+        this.scoreRoundJoueur1 = new Score();
+        this.scoreRoundJoueur2 = new Score();
     }
 
     /**
@@ -364,17 +380,13 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
-//                if (TimerActivity.this.timeToSet == 0) {
                 TimerActivity.this.playSound();
-//                }
             }
         }.start();
         this.btnStartStop.setText(this.getString(R.string.stop));
         this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
         this.timerStart = true;
-        this.addAction(Actions.START_TIMER, "General", this.timeToSet, this.game.getRound());
         if (this.game.getRound() == 0) {
-            this.historique.insert(0, Actions.FIRST_PLAYER.getLibelle() + " - " + this.firstPlayerName.getText() + "\n");
             this.addRound();
         }
     }
@@ -390,7 +402,6 @@ public class TimerActivity extends AppCompatActivity {
         this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
         if (timerStart) {
             this.timerStart = false;
-            this.addAction(Actions.STOP_TIMER, "General", this.timeToSet, this.game.getRound());
             if (this.ringtoneAlarm.isPlaying()) {
                 this.ringtoneAlarm.stop();
             }
@@ -433,14 +444,6 @@ public class TimerActivity extends AppCompatActivity {
         this.firstPlayerName = this.findViewById(R.id.firstPlayerName);
     }
 
-    private void acquireLock() {
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-    private void releaseLock() {
-        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
     @Override
     public void onBackPressed() {
         if (!this.end) {
@@ -453,26 +456,22 @@ public class TimerActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        this.addAction(Actions.END, "General", this.timeToSet, this.game.getRound());
-
         this.updateRoundDetail();
-
         this.game.setTimeLeft(this.timeToSet);
-        this.game.setHistorique(this.historique.toString());
         this.game.setDate(this.dateFormat.format(new Date()));
+
         this.historiqueService.saveNewGame(this.getBaseContext(), this.game);
 
+        if (timer != null) {
+            this.timer.cancel();
+        }
         if (this.ringtoneAlarm.isPlaying()) {
             this.ringtoneAlarm.stop();
         }
+
         super.onDestroy();
     }
 
-
-    private void addAction(final Actions actions, final String player, final long timeLeft, final int round) {
-        final StringBuilder time = this.generateTimeLeft((int) timeLeft);
-        this.historique.insert(0, time.toString() + "-" + "Round " + round + "-" + player + "-" + actions.getLibelle() + "\n");
-    }
 
     private void playSound() {
         if (this.alreadyEnd) {
@@ -542,5 +541,13 @@ public class TimerActivity extends AppCompatActivity {
         this.initDatas();
         //Initialization of the listeners
         this.initListeners();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 }

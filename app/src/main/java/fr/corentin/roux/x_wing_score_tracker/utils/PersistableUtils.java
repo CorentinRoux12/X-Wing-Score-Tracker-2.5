@@ -3,13 +3,26 @@ package fr.corentin.roux.x_wing_score_tracker.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.List;
 
+import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
 
 public class PersistableUtils {
@@ -106,7 +119,7 @@ public class PersistableUtils {
      * @param filename le nom du fichier choisit
      * @param object   l'object à écrire
      */
-    private void writeJsonToFileSystem(final String filename, final Object object, final Context context) {
+    private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context) {
         FileOutputStream fos = null;
         try {
             fos = context.openFileOutput(filename, Context.MODE_PRIVATE);

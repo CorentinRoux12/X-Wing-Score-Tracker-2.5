@@ -1,6 +1,8 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
-public enum Actions {
+import java.io.Serializable;
+
+public enum Actions implements Serializable {
     END("End GAME !!"),
     DETAIL_ROUND("Details Round"),
     ADD_ROUND("Add Round"),

@@ -14,6 +14,7 @@ import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity;
 
@@ -23,10 +24,10 @@ public class HistoriqueAdapter extends BaseAdapter {
     private final LayoutInflater inflater;
     private final HistoriqueActivity activity;
 
-    public HistoriqueAdapter(final HistoriqueActivity activity, final List<Game> allGames) {
+    public HistoriqueAdapter(final HistoriqueActivity activity, final Games allGames) {
         this.activity = activity;
         this.context = activity.getBaseContext();
-        this.games = allGames;
+        this.games = allGames.getGames();
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -83,9 +84,9 @@ public class HistoriqueAdapter extends BaseAdapter {
                 .append(" Total Round : ")
                 .append(current.getRound() < 10 ? "0" + current.getRound() : current.getRound())
                 .append(" | ")
-                .append(current.getPlayer1().getScore() < 10 ? "0" + current.getPlayer1().getScore() : current.getPlayer1().getScore())
+                .append(current.getPlayer1().getScore().getScoreGlobal() < 10 ? "0" + current.getPlayer1().getScore().getScoreGlobal() : current.getPlayer1().getScore().getScoreGlobal())
                 .append("-")
-                .append(current.getPlayer2().getScore() < 10 ? "0" + current.getPlayer2().getScore() : current.getPlayer2().getScore());
+                .append(current.getPlayer2().getScore().getScoreGlobal() < 10 ? "0" + current.getPlayer2().getScore().getScoreGlobal() : current.getPlayer2().getScore().getScoreGlobal());
 
         holder.getData().setText(score);
     }

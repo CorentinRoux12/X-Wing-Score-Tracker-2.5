@@ -59,16 +59,12 @@ dependencies {
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
 
     implementation 'androidx.multidex:multidex:2.0.1'
-//    implementation project(path: ':flutter')  //with androidx libraries
 
     /** Lombok **/
     def lombokVersion = '1.18.22'
     compileOnly 'org.projectlombok:lombok:' + lombokVersion
     annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
-//    compile 'com.kevalpatel2106:ringtonepicker:1.2'
 
     def RingtonePickerVersion = '2.0.6'
     implementation 'com.github.DeweyReed:UltimateRingtonePicker:' + RingtonePickerVersion
-//    implementation 'com.github.DeweyReed:UltimateRingtonePicker:3.0.0'
-//    implementation project(':flutter')
 }

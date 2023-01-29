@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.utils.PersistableUtils;
 
@@ -70,16 +71,18 @@ public class SettingDao implements IDao<Setting> {
      * {@inheritDoc}
      */
     @Override
-    public void save(final List<Setting> t, final Context context) {
-        this.persistableUtils.write(FILENAME, t, context);
+    public void save(final List<Setting> settings, final Context context) {
+        for (Setting setting : settings) {
+            this.save(setting,context);
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void save(final Setting t, final Context context) {
-        this.persistableUtils.write(FILENAME, t, context);
+    public void save(final Setting setting, final Context context) {
+        this.persistableUtils.write(FILENAME, setting, context);
     }
 
     /**
