@@ -10,8 +10,8 @@ android {
         applicationId "fr.corentin.roux.score_tracker"
         minSdkVersion 17
         targetSdkVersion 31
-        versionCode 24
-        versionName "1.4.9"
+        versionCode 25
+        versionName "1.5.1"
         multiDexEnabled true
         ndk {
             // Filter for architectures supported by Flutter.

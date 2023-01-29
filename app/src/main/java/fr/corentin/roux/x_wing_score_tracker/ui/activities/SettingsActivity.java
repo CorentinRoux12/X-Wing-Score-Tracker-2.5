@@ -111,37 +111,41 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
         });
 
         this.alarmeSong.setOnClickListener(t -> {
-           new UltimateMusicPicker()
-                    // Picker activity action bar title or dialog title
-                    .windowTitle("Alarm Selection")
+           try{
+               new UltimateMusicPicker()
+                       // Picker activity action bar title or dialog title
+                       .windowTitle("Alarm Selection")
 
-                    // Add a extra default item
-                    //.defaultUri(uri)
-                    // Add a default item and change the default item name("Default" is used otherwise)
-                   //.defaultTitleAndUri("My default name", uri)
+                       // Add a extra default item
+                       //.defaultUri(uri)
+                       // Add a default item and change the default item name("Default" is used otherwise)
+                       //.defaultTitleAndUri("My default name", uri)
 
-                    // There's a "silent" item by default, use this line to remove it.
-                    .removeSilent()
+                       // There's a "silent" item by default, use this line to remove it.
+                       .removeSilent()
 
-                    // Select this uri
-                   //.selectUri(uri)
+                       // Select this uri
+                       //.selectUri(uri)
 
-                    // Add some other music items(from R.raw or app's asset)
-                   //.additional("Myself Music", uri)
-                   //.additional("Another Music", uri)
+                       // Add some other music items(from R.raw or app's asset)
+                       //.additional("Myself Music", uri)
+                       //.additional("Another Music", uri)
 
-                    // Music preview stream type(AudioManager.STREAM_MUSIC is used by default)
-                    .streamType(AudioManager.STREAM_ALARM)
+                       // Music preview stream type(AudioManager.STREAM_MUSIC is used by default)
+                       .streamType(AudioManager.STREAM_ALARM)
 
-                    // Show different kinds of system ringtones. Calling order determines their display order.
-                    .ringtone()
-                    .notification()
-                    .alarm()
-                    // Show music files from external storage. Requires READ_EXTERNAL_STORAGE permission.
-                    .music()
+                       // Show different kinds of system ringtones. Calling order determines their display order.
+                       .ringtone()
+                       .notification()
+                       .alarm()
+                       // Show music files from external storage. Requires READ_EXTERNAL_STORAGE permission.
+                       .music()
 
-                    // Show a picker dialog
-                    .goWithDialog(getSupportFragmentManager());
+                       // Show a picker dialog
+                       .goWithDialog(getSupportFragmentManager());
+           } catch (Throwable throwable){
+               Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show();
+           }
             // Or show a picker activity
             //.goWithActivity(this, 0, MusicPickerActivity::class.java)
         });
