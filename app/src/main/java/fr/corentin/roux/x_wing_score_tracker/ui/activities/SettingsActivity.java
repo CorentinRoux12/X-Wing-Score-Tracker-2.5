@@ -184,6 +184,7 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
     }
 
     private void startSettingsActivity() {
+        Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
         this.recreate();
 //        final Intent intent = new Intent(this, SettingsActivity.class);
 //        this.startActivity(intent);
