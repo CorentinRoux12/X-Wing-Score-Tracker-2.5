@@ -48,4 +48,6 @@
     <string name="first_player">Primo giocatore</string>
     <string name="dark_mode">Modalità scura</string>
     <string name="set_alarme">Imposta sveglia</string>
+    <string name="list">Elenco</string>
+
 </resources>

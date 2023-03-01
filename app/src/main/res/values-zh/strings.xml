@@ -48,4 +48,6 @@
     <string name="first_player">第一玩家</string>
     <string name="dark_mode">深色模式</string>
     <string name="set_alarme">设置闹钟</string>
+    <string name="list">列表</string>
+
 </resources>

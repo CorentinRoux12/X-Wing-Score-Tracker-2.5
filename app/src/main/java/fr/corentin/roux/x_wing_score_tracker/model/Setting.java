@@ -1,6 +1,10 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Setting implements Persistable, Serializable {
 
@@ -18,10 +22,14 @@ public class Setting implements Persistable, Serializable {
 
     private String pathRingTone = "";
 
+   private List<Ship> listPlayer1 = new ArrayList<>();
+
+   private List<Ship> listPlayer2 = new ArrayList<>();
+
     public Setting() {
     }
 
-    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone) {
+    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, List<Ship> listPlayer1, List<Ship> listPlayer2) {
         this.name = name;
         this.opponent = opponent;
         this.language = language;
@@ -29,6 +37,8 @@ public class Setting implements Persistable, Serializable {
         this.volatilityTime = volatilityTime;
         this.enabledDarkTheme = enabledDarkTheme;
         this.pathRingTone = pathRingTone;
+        this.listPlayer1 = listPlayer1;
+        this.listPlayer2 = listPlayer2;
     }
 
     public String getName() {
@@ -85,5 +95,21 @@ public class Setting implements Persistable, Serializable {
 
     public void setPathRingTone(String pathRingTone) {
         this.pathRingTone = pathRingTone;
+    }
+
+    public List<Ship> getListPlayer1() {
+        return listPlayer1;
+    }
+
+    public void setListPlayer1(List<Ship> listPlayer1) {
+        this.listPlayer1 = listPlayer1;
+    }
+
+    public List<Ship> getListPlayer2() {
+        return listPlayer2;
+    }
+
+    public void setListPlayer2(List<Ship> listPlayer2) {
+        this.listPlayer2 = listPlayer2;
     }
 }

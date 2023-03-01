@@ -1,6 +1,5 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -11,28 +10,29 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Actions;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
+import fr.corentin.roux.x_wing_score_tracker.model.Player;
 import fr.corentin.roux.x_wing_score_tracker.model.Round;
 import fr.corentin.roux.x_wing_score_tracker.model.Score;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
+import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
+import fr.corentin.roux.x_wing_score_tracker.ui.adapters.ShipListAdapter;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
-import lombok.Getter;
+import fr.corentin.roux.x_wing_score_tracker.utils.UIUtils;
 import lombok.NonNull;
-import lombok.Setter;
 
 /**
  * @author Corentin Roux
@@ -64,6 +64,8 @@ public class TimerActivity extends AppCompatActivity {
     private Game game;
     private TextView playerOne;
     private TextView playerTwo;
+    private TextView playerOneList;
+    private TextView playerTwoList;
     private TextView textViewScorePlayerOne;
     private TextView textViewScorePlayerTwo;
     private TextView textViewScorePlayerOneKill;
@@ -87,6 +89,11 @@ public class TimerActivity extends AppCompatActivity {
     private Score scoreRoundJoueur1 = new Score();
     private Score scoreRoundJoueur2 = new Score();
     private long timeStartRound = 0;
+
+    private ShipListAdapter shipAdapter1;
+    private ShipListAdapter shipAdapter2;
+    private ListView listShipPlayer1;
+    private ListView listShipPlayer2;
 
     /**
      * {@inheritDoc}
@@ -123,6 +130,9 @@ public class TimerActivity extends AppCompatActivity {
         this.timeStartRound = this.timeToSet;
         //On recup la mission active dans le main page
         this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
+        //Set des listes des joueurs dans leurs profils de game
+        this.game.getPlayer1().setShips(this.setting.getListPlayer1());
+        this.game.getPlayer2().setShips(this.setting.getListPlayer2());
     }
 
     private void initDatas() {
@@ -141,15 +151,30 @@ public class TimerActivity extends AppCompatActivity {
         final String nameP1 = this.game.getPlayer1().getName();
         if (!"".equals(nameP1)) {
             this.playerOne.setText(nameP1);
+            this.playerOneList.setText(nameP1);
         }
         final String nameP2 = this.game.getPlayer2().getName();
         if (!"".equals(nameP2)) {
             this.playerTwo.setText(nameP2);
+            this.playerTwoList.setText(nameP2);
         }
         this.firstPlayer1.setText(game.getPlayer1().getName());
         this.firstPlayer2.setText(game.getPlayer2().getName());
         //Init data
         this.initMission();
+        //Init des adapters
+        this.shipAdapter1 = new ShipListAdapter(this, game.getPlayer1());
+        this.shipAdapter2 = new ShipListAdapter(this, game.getPlayer2());
+
+        this.listShipPlayer1.setAdapter(this.shipAdapter1);
+        this.listShipPlayer2.setAdapter(this.shipAdapter2);
+
+        UIUtils.setListViewHeightBasedOnItems(listShipPlayer1);
+        UIUtils.setListViewHeightBasedOnItems(listShipPlayer2);
+
+        //whenever the data changes
+        shipAdapter1.notifyDataSetChanged();
+        shipAdapter2.notifyDataSetChanged();
     }
 
     private void initMission() {
@@ -240,6 +265,11 @@ public class TimerActivity extends AppCompatActivity {
                 this.firstPlayerName.setText(game.getPlayer2().getName());
             }
         });
+    }
+
+    public void updateScorePlayers() {
+        this.updateScorePlayerOne();
+        this.updateScorePlayerTwo();
     }
 
     private void playerOneListeners() {
@@ -422,6 +452,8 @@ public class TimerActivity extends AppCompatActivity {
         //GLOBAL
         this.playerOne = this.findViewById(R.id.playerOne);
         this.playerTwo = this.findViewById(R.id.playerTwo);
+        this.playerOneList = this.findViewById(R.id.playerOneList);
+        this.playerTwoList = this.findViewById(R.id.playerTwoList);
         this.textViewScorePlayerOne = this.findViewById(R.id.scorePlayerOne);
         this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
         //Kill
@@ -442,6 +474,9 @@ public class TimerActivity extends AppCompatActivity {
         this.firstPlayer1 = this.findViewById(R.id.firstPlayer1);
         this.firstPlayer2 = this.findViewById(R.id.firstPlayer2);
         this.firstPlayerName = this.findViewById(R.id.firstPlayerName);
+
+        this.listShipPlayer1 = this.findViewById(R.id.listShipPlayer1);
+        this.listShipPlayer2 = this.findViewById(R.id.listShipPlayer2);
     }
 
     @Override
@@ -523,6 +558,8 @@ public class TimerActivity extends AppCompatActivity {
         this.textViewTimeLeft.setText(savedInstanceState.getString("textViewTimeLeft"));
         this.playerOne.setText(savedInstanceState.getString("playerOne"));
         this.playerTwo.setText(savedInstanceState.getString("playerTwo"));
+        this.playerOneList.setText(savedInstanceState.getString("playerOne"));
+        this.playerTwoList.setText(savedInstanceState.getString("playerTwo"));
         this.firstPlayer1.setText(savedInstanceState.getString("firstPlayer1"));
         this.firstPlayer2.setText(savedInstanceState.getString("firstPlayer2"));
 
@@ -549,5 +586,24 @@ public class TimerActivity extends AppCompatActivity {
 
     public void setEnd(boolean end) {
         this.end = end;
+    }
+
+    public void changeScoreByOpponentPlayer(Player player, Ship current, Ship.Statut oldStatut) {
+        if (player == game.getPlayer1()) {
+            changeScoreByPlayer(game.getPlayer2(), current, oldStatut);
+        } else {
+            changeScoreByPlayer(game.getPlayer1(), current, oldStatut);
+        }
+    }
+
+    public void changeScoreByPlayer(Player player, Ship current, Ship.Statut oldStatut) {
+        if (oldStatut.equals(Ship.Statut.FULL)) {
+            player.getScore().addScoreKill(current.getPoints() / 2);
+        } else if (oldStatut.equals(Ship.Statut.HALF)) {
+            player.getScore().lessScoreKill(current.getPoints() / 2);
+            player.getScore().addScoreKill(current.getPoints());
+        } else if (oldStatut.equals(Ship.Statut.DEAD)) {
+            player.getScore().lessScoreKill(current.getPoints());
+        }
     }
 }

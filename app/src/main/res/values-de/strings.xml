@@ -48,4 +48,6 @@
     <string name="first_player">Erster Spieler</string>
     <string name="dark_mode">Dunkler Modus</string>
     <string name="set_alarme">Wecker stellen</string>
+    <string name="list">Liste</string>
+
 </resources>

@@ -100,6 +100,45 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:id="@+id/myList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="List :"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/subsubtitle_text_size" />
+
+                <Button
+                    android:id="@+id/myListImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Import XWS List"
+                    android:textColor="@color/textColor" />
+
+                <Button
+                    android:id="@+id/resetMyListImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Reset XWS"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,6 +174,45 @@
                         android:textSize="24sp" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/darkMode">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
+                    android:text="List: "
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/subsubtitle_text_size" />
+
+
+                <Button
+                    android:id="@+id/opponentListImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Import XWS List"
+                    android:textColor="@color/textColor" />
+
+                <Button
+                    android:id="@+id/resetOpponentListImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:text="Reset XWS"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"

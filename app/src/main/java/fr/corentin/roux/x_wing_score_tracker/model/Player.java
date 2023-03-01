@@ -1,6 +1,8 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player implements Persistable, Serializable {
 
@@ -16,6 +18,8 @@ public class Player implements Persistable, Serializable {
      * -  Mission
      */
     private Score score = new Score();
+
+    private List<Ship> ships= new ArrayList<>();
 
     public void addScoreKill(final int point) {
         this.score.addScoreKill(point);
@@ -43,6 +47,14 @@ public class Player implements Persistable, Serializable {
     public Player(String name, Score score) {
         this.name = name;
         this.score = score;
+    }
+
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    public void setShips(List<Ship> ships) {
+        this.ships = ships;
     }
 
     public String getName() {

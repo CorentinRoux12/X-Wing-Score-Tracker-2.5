@@ -41,7 +41,7 @@ public class HistoriqueService {
     public void saveNewGame(final Context context, final Game game) {
         //repository => save la game en data
 
-        Games games = this.repository.findFirst(context);
+        Games games = this.getAllGames(context);
 //        List<Game> games = this.repository.getList(context);
         if (games == null) {
             games = new Games();
