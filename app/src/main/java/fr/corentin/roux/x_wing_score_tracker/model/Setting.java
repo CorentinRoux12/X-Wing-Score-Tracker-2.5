@@ -2,9 +2,7 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Setting implements Persistable, Serializable {
 

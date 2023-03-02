@@ -45,7 +45,7 @@ public class TimerActivity extends AppCompatActivity {
     private static final int SECONDES = 1000;
     private static final String RED = "#9d0208";
     private static final String GREEN = "#2b9348";
-    private final HistoriqueService historiqueService = HistoriqueService.getInstance();
+    private final HistoriqueService historiqueService;
     private final SettingService service = SettingService.getInstance();
     private Setting setting;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -94,6 +94,10 @@ public class TimerActivity extends AppCompatActivity {
     private ShipListAdapter shipAdapter2;
     private ListView listShipPlayer1;
     private ListView listShipPlayer2;
+
+    public TimerActivity() {
+        this.historiqueService = HistoriqueService.getInstance();
+    }
 
     /**
      * {@inheritDoc}

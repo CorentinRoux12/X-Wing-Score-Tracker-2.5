@@ -11,10 +11,8 @@ public class UIUtils {
      * Sets ListView height dynamically based on the height of the items.
      *
      * @param listView to be resized
-     * @return true if the listView is successfully resized, false otherwise
      */
-    public static boolean setListViewHeightBasedOnItems(ListView listView) {
-
+    public static void setListViewHeightBasedOnItems(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         if (listAdapter != null) {
 
@@ -36,13 +34,6 @@ public class UIUtils {
             ViewGroup.LayoutParams params = listView.getLayoutParams();
             params.height = totalItemsHeight + totalDividersHeight;
             listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            return true;
-
-        } else {
-            return false;
         }
-
     }
 }

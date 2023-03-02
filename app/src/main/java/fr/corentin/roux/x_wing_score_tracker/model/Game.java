@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game implements Persistable, Serializable {
+public class Game implements Serializable {
 
     private final List<Round> rounds = new ArrayList<>();
     private Player player1 = new Player("Player 1");

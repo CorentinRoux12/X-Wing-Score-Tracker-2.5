@@ -12,6 +12,7 @@ public interface IDao<T extends Persistable> {
      *
      * @return la liste des objects qui sont présent dans le fichier de sauvegarde
      */
+    @Deprecated
     List<T> getList(final Context context);
 
     /**
@@ -26,6 +27,7 @@ public interface IDao<T extends Persistable> {
      *
      * @param t la liste des objects a save
      */
+    @Deprecated
     void save(final List<T> t, Context context);
 
     /**
@@ -35,6 +37,7 @@ public interface IDao<T extends Persistable> {
      */
     void save(final T t, Context context);
 
+    @Deprecated
     void deleteAll(Context context);
 
 }

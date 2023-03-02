@@ -1,9 +1,10 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Games implements Persistable{
+public class Games implements Persistable, Serializable {
 
     private List<Game> games = new ArrayList<>();
 

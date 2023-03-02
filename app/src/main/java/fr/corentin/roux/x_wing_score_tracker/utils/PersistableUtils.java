@@ -1,35 +1,20 @@
 package fr.corentin.roux.x_wing_score_tracker.utils;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
 
 public class PersistableUtils {
@@ -93,44 +78,12 @@ public class PersistableUtils {
         try {
 //            T cacheFile = this.mapper.readValue(new File(context.getCacheDir(), filename), clazz);
 //            result = cacheFile;
-            result = new ObjectMapper().readValue(context.openFileInput(filename), clazz);
+            result = new ObjectMapper().readValue(new FileInputStream(new File(context.getFilesDir(), filename)), clazz);
+//            result = new ObjectMapper().readValue(context.openFileInput(filename), clazz);
         } catch (final IOException e) {
-            try {
-                this.gett(filename, clazz, context);
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            }
             Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération des données");
         }
         return result;
-    }
-
-    public <T extends Persistable> T gett(final String filename,final Class<T> clazz, final Context context) throws FileNotFoundException {
-        FileInputStream fis = context.openFileInput(filename);
-        InputStreamReader inputStreamReader =
-                null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            inputStreamReader = new InputStreamReader(fis, StandardCharsets.UTF_8);
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(inputStreamReader)) {
-            String line = reader.readLine();
-            while (line != null) {
-                stringBuilder.append(line).append('\n');
-                line = reader.readLine();
-            }
-        } catch (IOException e) {
-            // Error occurred when opening raw file for reading.
-        } finally {
-            String content = stringBuilder.toString();
-
-            try {
-                return new ObjectMapper().readValue(content,clazz);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
     }
 
     /**
@@ -164,7 +117,8 @@ public class PersistableUtils {
     private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context) {
         FileOutputStream fos = null;
         try {
-            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fos = new FileOutputStream(new File(context.getFilesDir(),filename));
+//            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
             new ObjectMapper().writer().writeValue(fos, object);
         } catch (final IOException e) {
             Log.e(this.getClass().getSimpleName(), "Erreur lors de l'écriture du fichier json");
@@ -178,13 +132,4 @@ public class PersistableUtils {
             }
         }
     }
-
-//    private void write(final Context context){
-//        String filename = "myfile";
-//        String fileContents = "Hello world!";
-//        try (FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE)) {
-//            fos.write(fileContents.toByteArray());
-//        }
-//    }
-
 }

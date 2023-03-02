@@ -5,20 +5,20 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.HistoriqueAdapter;
 
 public class HistoriqueActivity extends AppCompatActivity {
 
-    private final HistoriqueService service = HistoriqueService.getInstance();
+    private final HistoriqueService service;
     private HistoriqueAdapter adapter;
     private ListView listHistorique;
+
+    public HistoriqueActivity() {
+        this.service = HistoriqueService.getInstance();
+    }
 
     /**
      * {@inheritDoc}
