@@ -4,12 +4,14 @@ import android.content.Context;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.google.android.material.internal.ContextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
 import fr.corentin.roux.x_wing_score_tracker.utils.PersistableUtils;
+import io.vavr.control.Try;
 
 public abstract class ADao<T extends Persistable> implements IDao<T> {
 
@@ -29,7 +31,11 @@ public abstract class ADao<T extends Persistable> implements IDao<T> {
 
     abstract Class<T> getClassType();
 
-    abstract T defaultObject();
+    T defaultObject() {
+        return Try.of(this::getClassType)
+                .mapTry(Class::newInstance)
+                .getOrNull();
+    }
 
     /**
      * {@inheritDoc}
@@ -58,7 +64,7 @@ public abstract class ADao<T extends Persistable> implements IDao<T> {
     @Override
     public void save(final List<T> objects, final Context context) {
         for (T object : objects) {
-            this.save(object,context);
+            this.save(object, context);
         }
     }
 

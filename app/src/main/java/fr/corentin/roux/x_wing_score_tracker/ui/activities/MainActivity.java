@@ -27,6 +27,7 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
+import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 
@@ -35,12 +36,9 @@ import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
  * <p>
  * The Main view at the start of the application
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AbstractActivity {
 
     private final Random random = new Random();
-    private final SettingService settingService = SettingService.getInstance();
-    //    @Getter
-//    private LocaleManager localeManager;
     private TextInputEditText timer;
     private Button btnStart;
     private Button btnHistorique;
@@ -60,32 +58,32 @@ public class MainActivity extends AppCompatActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.setContentView(R.layout.main_layout);
-        this.setting = this.settingService.getSetting(this);
-
-//        this.initDarkMode();
-        this.findView();
-
-        this.initListeners();
-
-        this.initDefaultValue();
-
-        if (setting.getEnabledDarkTheme() != null) {
-            AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-        }
+    protected void initDatas() {
+        this.setting = SettingService.getInstance().getSetting(this);
     }
 
-    //Pour le changement de langue on doit redemarer l app ...
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initContentView() {
+        this.setContentView(R.layout.main_layout);
+    }
+
+    /**
+     * Pour le changement de langue on doit redemarer l app ...
+     * {@inheritDoc}
+     */
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.setting = this.settingService.getSetting(newBase);
+        this.setting = SettingService.getInstance().getSetting(newBase);
         super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onPostResume() {
         super.onPostResume();
@@ -97,17 +95,26 @@ public class MainActivity extends AppCompatActivity {
         this.initDefaultValue();
     }
 
-    private void initDefaultValue() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initDefaultValue() {
         this.checkHideTimer.setChecked(false);
         this.checkHideTimeLeft.setChecked(false);
         this.timerHideCheck = false;
         this.timeLeftHideCheck = false;
+
+        if (setting.getEnabledDarkTheme() != null) {
+            AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     /**
-     * Initialization of the listeners for each interaction in the view
+     * {@inheritDoc}
      */
-    private void initListeners() {
+    @Override
+    protected void initListeners() {
         this.btnStart.setOnClickListener(t -> {
             if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().equals("")) {
                 this.time = this.timer.getText().toString();
@@ -117,40 +124,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        this.btnHistorique.setOnClickListener(t -> this.startHistoriqueActivity());
-        this.btnSetting.setOnClickListener(t -> this.startSettingsActivity());
+        this.btnHistorique.setOnClickListener(t -> {
+            final Intent intent = new Intent(this, HistoriqueActivity.class);
+            this.startActivity(intent);
+        });
+        this.btnSetting.setOnClickListener(t -> {
+            final Intent intent = new Intent(this, SettingsActivity.class);
+            this.startActivity(intent);
+        });
         this.btnRandom.setOnClickListener(t -> {
             this.time = this.generateRandomTime();
             this.startTimerActivity();
         });
         this.checkHideTimer.setOnClickListener(t -> this.timerHideCheck = this.checkHideTimer.isChecked());
         this.checkHideTimeLeft.setOnClickListener(t -> this.timeLeftHideCheck = this.checkHideTimeLeft.isChecked());
-        this.btnRandomMission.setOnClickListener(t -> this.generateRandomMission());
-        this.textViewRandomMission.setOnClickListener(t -> this.startMissionDetailActivity());
-    }
-
-    private void startSettingsActivity() {
-        final Intent intent = new Intent(this, SettingsActivity.class);
-        this.startActivity(intent);
-    }
-
-    private void startMissionDetailActivity() {
-        if (this.mission != null) {
-            final Intent intent = new Intent(this, MissionDetailActivity.class);
-            intent.putExtra("mission", this.mission.getCode());
-            this.startActivity(intent);
-        }
-    }
-
-    private void generateRandomMission() {
-        this.mission = Mission.parseCode(this.random.nextInt(4) + 1);
-        this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-        Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        this.btnRandomMission.setOnClickListener(t -> {
+            this.mission = Mission.parseCode(this.random.nextInt(4) + 1);
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
+        this.textViewRandomMission.setOnClickListener(t -> {
+            if (this.mission != null) {
+                final Intent intent = new Intent(this, MissionDetailActivity.class);
+                intent.putExtra("mission", this.mission.getCode());
+                this.startActivity(intent);
+            }
+        });
     }
 
     private String generateRandomTime() {
         final long attackDice = this.random.nextInt(8);
-        final Setting setting = this.settingService.getSetting(this);
+        final Setting setting = SettingService.getInstance().getSetting(this);
         int randomTimer = 75;
         try {
             randomTimer = Integer.parseInt(setting.getRandomTime());
@@ -217,15 +221,11 @@ public class MainActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
-    private void startHistoriqueActivity() {
-        final Intent intent = new Intent(this, HistoriqueActivity.class);
-        this.startActivity(intent);
-    }
-
     /**
-     * Binding of all the fields XML and the fields JAVA
+     * {@inheritDoc}
      */
-    private void findView() {
+    @Override
+    protected void findView() {
         this.timer = this.findViewById(R.id.inputTimer);
         this.btnStart = this.findViewById(R.id.btnStart);
         this.btnHistorique = this.findViewById(R.id.btnHistorique);

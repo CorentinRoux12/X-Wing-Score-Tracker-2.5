@@ -12,11 +12,10 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Round;
 
-public class HistoriqueDetailActivity extends AppCompatActivity {
+public class HistoriqueDetailActivity extends AbstractActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
-    private Game current;
     private TextView finalDate;
     private TextView finalRound;
     private TextView finalTime;
@@ -28,19 +27,15 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //We set the view who will be use for display the datas
+    protected void initContentView() {
         this.setContentView(R.layout.historique_detail_layout);
-        //We set the timer at the time in minutes
-        this.current = (Game) this.getIntent().getSerializableExtra("game");
-        //Bind the xml and the fields
-        this.findView();
-        //Initialization des datas
-        this.initialisationData();
     }
 
-    private void findView() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void findView() {
         this.finalDate = this.findViewById(R.id.finalDate);
         this.finalRound = this.findViewById(R.id.finalRound);
         this.finalTime = this.findViewById(R.id.finalTime);
@@ -49,17 +44,22 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
         this.mission = this.findViewById(R.id.mission);
     }
 
-    private void initialisationData() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initDatas() {
+        Game current = (Game) this.getIntent().getSerializableExtra("game");
         final StringBuilder time = generateTimerAffichage(current.getTimeLeft());
         final StringBuilder finalScore = new StringBuilder();
 
-        finalScore.append(this.current.getPlayer1().getName())
+        finalScore.append(current.getPlayer1().getName())
                 .append(" ")
-                .append(this.current.getPlayer1().getScore().getScoreGlobal())
+                .append(current.getPlayer1().getScore().getScoreGlobal())
                 .append(" - ")
-                .append(this.current.getPlayer2().getScore().getScoreGlobal())
+                .append(current.getPlayer2().getScore().getScoreGlobal())
                 .append(" ")
-                .append(this.current.getPlayer2().getName());
+                .append(current.getPlayer2().getName());
 
         final StringBuilder historique = new StringBuilder();
 
@@ -88,12 +88,12 @@ public class HistoriqueDetailActivity extends AppCompatActivity {
                     .append("      - Mission ").append(round.getScorePlayer2().getScoreMission()).append("\n");
         }
 
-        this.finalDate.setText(this.current.getDate());
-        this.finalRound.setText((String.valueOf(this.current.getRound())));
+        this.finalDate.setText(current.getDate());
+        this.finalRound.setText((String.valueOf(current.getRound())));
         this.finalTime.setText(time.toString());
         this.finalScore.setText(finalScore.toString());
         this.details.setText(historique.toString());
-        this.mission.setText(this.current.getMission().getLibelle());
+        this.mission.setText(current.getMission().getLibelle());
     }
 
     private StringBuilder generateTimerAffichage(long timeLeft) {

@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "fr.corentin.roux.score_tracker"
-        minSdkVersion 17
-        targetSdkVersion 31
-        versionCode 33
-        versionName "1.5.6"
+        minSdkVersion 24
+        targetSdkVersion 32
+        versionCode 40
+        versionName "1.5.9"
         multiDexEnabled true
         ndk {
             // Filter for architectures supported by Flutter.
@@ -67,4 +67,8 @@ dependencies {
 
     def RingtonePickerVersion = '2.0.6'
     implementation 'com.github.DeweyReed:UltimateRingtonePicker:' + RingtonePickerVersion
+
+    // https://mvnrepository.com/artifact/io.vavr/vavr
+    implementation 'io.vavr:vavr:1.0.0-alpha-4'
+
 }

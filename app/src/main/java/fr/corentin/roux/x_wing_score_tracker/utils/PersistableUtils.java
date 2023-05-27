@@ -1,6 +1,7 @@
 package fr.corentin.roux.x_wing_score_tracker.utils;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -13,9 +14,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
+import io.vavr.control.Try;
 
 public class PersistableUtils {
 
@@ -56,13 +59,13 @@ public class PersistableUtils {
      * @return Une liste d'objet {@link Persistable} dans le fichier {@field filename}
      */
     public <T extends Persistable> List<T> get(final String filename, final CollectionType javaType, final Context context) {
-        List<T> result = null;
-        try {
-            result = new ObjectMapper().readValue(context.openFileInput(filename), javaType);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération de liste des données");
-        }
-        return result;
+        return Try.of(() -> filename)
+                .mapTry(file -> context.openFileInput(filename))
+                .mapTry(fileInputStream -> this.mapper.readValue(fileInputStream, javaType))
+                .onFailure(throwable -> Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération de liste des données.", throwable))
+                .filter(List.class::isInstance)
+                .map(List.class::cast)
+                .getOrElse(Collections.emptyList());
     }
 
     /**
@@ -74,16 +77,11 @@ public class PersistableUtils {
      * @return Un objet {@link Persistable} dans le fichier {@field filename}
      */
     public <T extends Persistable> T get(final String filename, final Class<T> clazz, final Context context) {
-        T result = null;
-        try {
-//            T cacheFile = this.mapper.readValue(new File(context.getCacheDir(), filename), clazz);
-//            result = cacheFile;
-            result = new ObjectMapper().readValue(new FileInputStream(new File(context.getFilesDir(), filename)), clazz);
-//            result = new ObjectMapper().readValue(context.openFileInput(filename), clazz);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération des données");
-        }
-        return result;
+        return Try.of(() -> filename)
+                .map(file -> new File(context.getCacheDir(), file))
+                .mapTry(t -> this.mapper.readValue(t.toURI().toURL(), clazz))
+                .onFailure(throwable -> Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération des données.", throwable))
+                .getOrNull();
     }
 
     /**
@@ -115,21 +113,9 @@ public class PersistableUtils {
      * @param object   l'object à écrire
      */
     private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context) {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(new File(context.getFilesDir(),filename));
-//            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
-            new ObjectMapper().writer().writeValue(fos, object);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de l'écriture du fichier json");
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (final IOException e) {
-                Log.e(this.getClass().getSimpleName(), "Erreur lors de l' écriture du fichier json");
-            }
-        }
+        Try.of(() -> filename)
+                .mapTry(file -> context.openFileOutput(file, Context.MODE_PRIVATE))
+                .andThenTry(t -> this.mapper.writer().writeValue(t, object))
+                .onFailure(throwable -> Log.e(this.getClass().getSimpleName(), "Erreur lors de l'écriture du fichier json", throwable));
     }
 }

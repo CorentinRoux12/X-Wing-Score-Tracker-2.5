@@ -34,14 +34,8 @@ public class SettingDao extends ADao<Setting> {
         return instance;
     }
 
-
     @Override
     Class<Setting> getClassType() {
         return Setting.class;
-    }
-
-    @Override
-    Setting defaultObject() {
-        return new Setting();
     }
 }

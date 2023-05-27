@@ -3,6 +3,8 @@ package fr.corentin.roux.x_wing_score_tracker.services;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.material.internal.ContextUtils;
+
 import fr.corentin.roux.x_wing_score_tracker.dao.IDao;
 import fr.corentin.roux.x_wing_score_tracker.dao.SettingDao;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;

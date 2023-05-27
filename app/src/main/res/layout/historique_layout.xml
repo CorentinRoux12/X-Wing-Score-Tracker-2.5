@@ -28,7 +28,7 @@
         <ListView
             android:id="@+id/listHistorique"
             style="@style/Widget.AppCompat.Light.ListView.DropDown"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scrollbars="horizontal|vertical"
             android:paddingLeft="10dp"

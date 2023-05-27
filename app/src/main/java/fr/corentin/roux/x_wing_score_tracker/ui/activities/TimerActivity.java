@@ -3,20 +3,13 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
@@ -25,10 +18,10 @@ import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.model.Player;
 import fr.corentin.roux.x_wing_score_tracker.model.Round;
 import fr.corentin.roux.x_wing_score_tracker.model.Score;
-import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
+import fr.corentin.roux.x_wing_score_tracker.ui.activities.model.TimerActivityModel;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.ShipListAdapter;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
 import fr.corentin.roux.x_wing_score_tracker.utils.UIUtils;
@@ -39,194 +32,130 @@ import lombok.NonNull;
  * <p>
  * Activity for the view of the scoring board
  */
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends AbstractActivity {
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
     private static final String RED = "#9d0208";
     private static final String GREEN = "#2b9348";
-    private final HistoriqueService historiqueService;
-    private final SettingService service = SettingService.getInstance();
-    private Setting setting;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    private boolean end = false;
-    private boolean timerStart = false;
-    private TextView timeClock;
-    private Button btnStartStop;
-    private long timeToSet;
-    private CountDownTimer timer;
-    private TextView roundNumber;
-    private Button btnLessRound;
-    private Button btnPlusRound;
-    private TextView textViewTimeLeft;
-    private Ringtone ringtoneAlarm;
-    private TextView textViewMission;
-    private Game game;
-    private TextView playerOne;
-    private TextView playerTwo;
-    private TextView playerOneList;
-    private TextView playerTwoList;
-    private TextView textViewScorePlayerOne;
-    private TextView textViewScorePlayerTwo;
-    private TextView textViewScorePlayerOneKill;
-    private TextView textViewScorePlayerTwoKill;
-    private TextView textViewScorePlayerOneMission;
-    private TextView textViewScorePlayerTwoMission;
-    private Button btnLessPlayerOneKill;
-    private Button btnPlusPlayerOneKill;
-    private Button btnLessPlayerTwoKill;
-    private Button btnPlusPlayerTwoKill;
-    private Button btnLessPlayerOneMission;
-    private Button btnPlusPlayerOneMission;
-    private Button btnLessPlayerTwoMission;
-    private Button btnPlusPlayerTwoMission;
-    private Button firstPlayer1;
-    private Button firstPlayer2;
-    private TextView firstPlayerName;
-    private int firstPlayerChoice = 0;
-    private boolean alreadyEnd = false;
 
-    private Score scoreRoundJoueur1 = new Score();
-    private Score scoreRoundJoueur2 = new Score();
-    private long timeStartRound = 0;
+    private TimerActivityModel timerActivityModel = new TimerActivityModel();
 
-    private ShipListAdapter shipAdapter1;
-    private ShipListAdapter shipAdapter2;
-    private ListView listShipPlayer1;
-    private ListView listShipPlayer2;
 
-    public TimerActivity() {
-        this.historiqueService = HistoriqueService.getInstance();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //We set the view who will be use for display the datas
+    protected void initContentView() {
         this.setContentView(R.layout.timer_layout);
-        //Init Basic data
-        this.initGame();
-        //Bind the xml and the fields
-        this.findView();
-        //Init des datas de la page
-        this.initDatas();
-        //Initialization of the listeners
-        this.initListeners();
     }
 
-    private void initGame() {
-        this.game = new Game();
-        this.setting = this.service.getSetting(this);
+    @Override
+    protected void initGame() {
+        this.timerActivityModel.setGame(new Game());
+        this.timerActivityModel.setSetting(SettingService.getInstance().getSetting(this));
         //Option d affichage du timer
-        this.game.setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
-        this.game.setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
-        if (setting.getName() != null && !"".equals(setting.getName().trim())) {
-            this.game.getPlayer1().setName(setting.getName());
+        this.timerActivityModel.getGame().setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
+        this.timerActivityModel.getGame().setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
+        if (this.timerActivityModel.getSetting().getName() != null && !"".equals(this.timerActivityModel.getSetting().getName().trim())) {
+            this.timerActivityModel.getGame().getPlayer1().setName(this.timerActivityModel.getSetting().getName());
         }
-        if (setting.getOpponent() != null && !"".equals(setting.getOpponent().trim())) {
-            this.game.getPlayer2().setName(setting.getOpponent());
+        if (this.timerActivityModel.getSetting().getOpponent() != null && !"".equals(this.timerActivityModel.getSetting().getOpponent().trim())) {
+            this.timerActivityModel.getGame().getPlayer2().setName(this.timerActivityModel.getSetting().getOpponent());
         }
         //We set the timer at the time in minutes
-        this.timeToSet = Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES;
-        this.timeStartRound = this.timeToSet;
+        this.timerActivityModel.setTimeToSet(Long.parseLong(String.valueOf(this.getIntent().getSerializableExtra("timer"))) * MINUTES);
+        this.timerActivityModel.setTimeStartRound(this.timerActivityModel.getTimeToSet());
         //On recup la mission active dans le main page
-        this.game.setMission((Mission) this.getIntent().getSerializableExtra("mission"));
+        this.timerActivityModel.getGame().setMission((Mission) this.getIntent().getSerializableExtra("mission"));
         //Set des listes des joueurs dans leurs profils de game
-        this.game.getPlayer1().setShips(this.setting.getListPlayer1());
-        this.game.getPlayer2().setShips(this.setting.getListPlayer2());
+        this.timerActivityModel.getGame().getPlayer1().setShips(this.timerActivityModel.getSetting().getListPlayer1());
+        this.timerActivityModel.getGame().getPlayer2().setShips(this.timerActivityModel.getSetting().getListPlayer2());
     }
 
-    private void initDatas() {
+    @Override
+    protected void findView() {
+        this.timerActivityModel.setTimeClock(this.findViewById(R.id.timeClock));
+        this.timerActivityModel.setBtnStartStop( this.findViewById(R.id.btnStart));
+        this.timerActivityModel.setRoundNumber(this.findViewById(R.id.roundNumber));
+        this.timerActivityModel.setBtnLessRound(this.findViewById(R.id.btnLessRound));
+        this.timerActivityModel.setBtnPlusRound(this.findViewById(R.id.btnPlusRound));
+        this.timerActivityModel.setTextViewTimeLeft(this.findViewById(R.id.textViewTimeLeft));
+        this.timerActivityModel.setTextViewMission(this.findViewById(R.id.textViewMission));
+        //GLOBAL
+        this.timerActivityModel.setPlayerOne(this.findViewById(R.id.playerOne));
+        this.timerActivityModel.setPlayerTwo(this.findViewById(R.id.playerTwo));
+        this.timerActivityModel.setPlayerOneList(this.findViewById(R.id.playerOneList));
+        this.timerActivityModel.setPlayerTwoList(this.findViewById(R.id.playerTwoList));
+        this.timerActivityModel.setTextViewScorePlayerOne(this.findViewById(R.id.scorePlayerOne));
+        this.timerActivityModel.setTextViewScorePlayerTwo(this.findViewById(R.id.scorePlayerTwo));
+        //Kill
+        this.timerActivityModel.setTextViewScorePlayerOneKill(this.findViewById(R.id.scorePlayerOneKill));
+        this.timerActivityModel.setTextViewScorePlayerTwoKill(this.findViewById(R.id.scorePlayerTwoKill));
+        this.timerActivityModel.setBtnLessPlayerOneKill(this.findViewById(R.id.btnLessPlayerOneKill));
+        this.timerActivityModel.setBtnPlusPlayerOneKill(this.findViewById(R.id.btnPlusPlayerOneKill));
+        this.timerActivityModel.setBtnLessPlayerTwoKill(this.findViewById(R.id.btnLessPlayerTwoKill));
+        this.timerActivityModel.setBtnPlusPlayerTwoKill(this.findViewById(R.id.btnPlusPlayerTwoKill));
+        //Mission
+        this.timerActivityModel.setTextViewScorePlayerOneMission(this.findViewById(R.id.scorePlayerOneMission));
+        this.timerActivityModel.setTextViewScorePlayerTwoMission(this.findViewById(R.id.scorePlayerTwoMission));
+        this.timerActivityModel.setBtnLessPlayerOneMission(this.findViewById(R.id.btnLessPlayerOneMission));
+        this.timerActivityModel.setBtnPlusPlayerOneMission(this.findViewById(R.id.btnPlusPlayerOneMission));
+        this.timerActivityModel.setBtnLessPlayerTwoMission(this.findViewById(R.id.btnLessPlayerTwoMission));
+        this.timerActivityModel.setBtnPlusPlayerTwoMission(this.findViewById(R.id.btnPlusPlayerTwoMission));
+
+        this.timerActivityModel.setFirstPlayer1(this.findViewById(R.id.firstPlayer1));
+        this.timerActivityModel.setFirstPlayer2(this.findViewById(R.id.firstPlayer2));
+        this.timerActivityModel.setFirstPlayerName(this.findViewById(R.id.firstPlayerName));
+
+        this.timerActivityModel.setListShipPlayer1(this.findViewById(R.id.listShipPlayer1));
+        this.timerActivityModel.setListShipPlayer2(this.findViewById(R.id.listShipPlayer2));
+    }
+
+    @Override
+    protected void initDatas() {
         //Init Ring
         this.initRing();
         //Update of the view for the first time => set the fields
         this.updateTimer();
-        if (this.game.isHideTimer()) {
-            this.timeClock.setText("Secret Time !!");
-            this.textViewTimeLeft.setText("");
+        if (this.timerActivityModel.getGame().isHideTimer()) {
+            this.timerActivityModel.getTimeClock().setText("Secret Time !!");
+            this.timerActivityModel.getTextViewTimeLeft().setText("");
         }
-        if (this.game.isHideTimeLeft() && !this.game.isHideTimer()) {
-            this.timeClock.setText(this.generateTimeLeft((int) this.timeToSet));
-            this.textViewTimeLeft.setText("Time");
+        if (this.timerActivityModel.getGame().isHideTimeLeft() && !this.timerActivityModel.getGame().isHideTimer()) {
+            this.timerActivityModel.getTimeClock().setText(this.generateTimeLeft((int) this.timerActivityModel.getTimeToSet()));
+            this.timerActivityModel.getTextViewTimeLeft().setText("Time");
         }
-        final String nameP1 = this.game.getPlayer1().getName();
+        final String nameP1 = this.timerActivityModel.getGame().getPlayer1().getName();
         if (!"".equals(nameP1)) {
-            this.playerOne.setText(nameP1);
-            this.playerOneList.setText(nameP1);
+            this.timerActivityModel.getPlayerOne().setText(nameP1);
+            this.timerActivityModel.getPlayerOneList().setText(nameP1);
         }
-        final String nameP2 = this.game.getPlayer2().getName();
+        final String nameP2 = this.timerActivityModel.getGame().getPlayer2().getName();
         if (!"".equals(nameP2)) {
-            this.playerTwo.setText(nameP2);
-            this.playerTwoList.setText(nameP2);
+            this.timerActivityModel.getPlayerTwo().setText(nameP2);
+            this.timerActivityModel.getPlayerTwoList().setText(nameP2);
         }
-        this.firstPlayer1.setText(game.getPlayer1().getName());
-        this.firstPlayer2.setText(game.getPlayer2().getName());
+        this.timerActivityModel.getFirstPlayer1().setText(this.timerActivityModel.getGame().getPlayer1().getName());
+        this.timerActivityModel.getFirstPlayer2().setText(this.timerActivityModel.getGame().getPlayer2().getName());
         //Init data
         this.initMission();
         //Init des adapters
-        this.shipAdapter1 = new ShipListAdapter(this, game.getPlayer1());
-        this.shipAdapter2 = new ShipListAdapter(this, game.getPlayer2());
+        this.timerActivityModel.setShipAdapter1(new ShipListAdapter(this, this.timerActivityModel.getGame().getPlayer1()));
+        this.timerActivityModel.setShipAdapter2(new ShipListAdapter(this, this.timerActivityModel.getGame().getPlayer2()));
 
-        this.listShipPlayer1.setAdapter(this.shipAdapter1);
-        this.listShipPlayer2.setAdapter(this.shipAdapter2);
+        this.timerActivityModel.getListShipPlayer1().setAdapter(this.timerActivityModel.getShipAdapter1());
+        this.timerActivityModel.getListShipPlayer2().setAdapter(this.timerActivityModel.getShipAdapter2());
 
-        UIUtils.setListViewHeightBasedOnItems(listShipPlayer1);
-        UIUtils.setListViewHeightBasedOnItems(listShipPlayer2);
+        UIUtils.setListViewHeightBasedOnItems(timerActivityModel.getListShipPlayer1());
+        UIUtils.setListViewHeightBasedOnItems(timerActivityModel.getListShipPlayer2());
 
         //whenever the data changes
-        shipAdapter1.notifyDataSetChanged();
-        shipAdapter2.notifyDataSetChanged();
+        this.timerActivityModel.getShipAdapter1().notifyDataSetChanged();
+        this.timerActivityModel.getShipAdapter2().notifyDataSetChanged();
     }
 
-    private void initMission() {
-        if (this.game.getMission() != null && !Mission.NO_MISSION.equals(this.game.getMission())) {
-            this.textViewMission.setText(this.game.getMission().getLibelle());
-        }
-    }
-
-    private void initRing() {
-        final Uri alarmTone = this.setting.getPathRingTone() != null ?
-                Uri.parse(this.setting.getPathRingTone()) :
-                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-
-        this.ringtoneAlarm = RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone);
-        this.ringtoneAlarm.setStreamType(AudioManager.STREAM_ALARM);
-    }
-
-    /**
-     * Update the timer with the time left
-     */
-    private void updateTimer() {
-        final StringBuilder timeLeft = this.generateTimeLeft((int) this.timeToSet);
-
-        if (!this.game.isHideTimeLeft() && !this.game.isHideTimer()) {
-            this.timeClock.setText(timeLeft.toString());
-        }
-    }
-
-    private StringBuilder generateTimeLeft(final int timeToSet) {
-        final int minutes = timeToSet / MINUTES;
-        final int secondes = timeToSet % MINUTES / SECONDES;
-
-        final StringBuilder timeLeft = new StringBuilder()
-                .append(minutes)
-                .append(":");
-        if (secondes < 10) {
-            timeLeft.append("0");
-        }
-        timeLeft.append(secondes);
-        return timeLeft;
-    }
-
-    /**
-     * Initialization of the listeners for each interaction in the view
-     */
-    private void initListeners() {
-        this.btnStartStop.setOnClickListener(t -> {
-            if (this.timerStart) {
+    @Override
+    protected void initListeners() {
+        this.timerActivityModel.getBtnStartStop().setOnClickListener(t -> {
+            if (this.timerActivityModel.isTimerStart()) {
                 this.stopTimer();
                 this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -244,29 +173,70 @@ public class TimerActivity extends AppCompatActivity {
         //Init les listeners pour la gestion des rounds
         this.roundListeners();
 
-        this.textViewMission.setOnClickListener(t -> {
-            if (Mission.NO_MISSION.equals(this.game.getMission())) {
+        this.timerActivityModel.getTextViewMission().setOnClickListener(t -> {
+            if (Mission.NO_MISSION.equals(this.timerActivityModel.getGame().getMission())) {
                 Toast.makeText(this, "No Mission for this game !!", Toast.LENGTH_SHORT).show();
             } else {
                 final Intent intent = new Intent(this, MissionDetailActivity.class);
-                intent.putExtra("mission", this.game.getMission().getCode());
+                intent.putExtra("mission", this.timerActivityModel.getGame().getMission().getCode());
                 this.startActivity(intent);
             }
         });
     }
 
 
+    private void initMission() {
+        if (this.timerActivityModel.getGame().getMission() != null && !Mission.NO_MISSION.equals(this.timerActivityModel.getGame().getMission())) {
+            this.timerActivityModel.getTextViewMission().setText(this.timerActivityModel.getGame().getMission().getLibelle());
+        }
+    }
+
+    private void initRing() {
+        final Uri alarmTone = this.timerActivityModel.getSetting().getPathRingTone() != null ?
+                Uri.parse(this.timerActivityModel.getSetting().getPathRingTone()) :
+                RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+
+        this.timerActivityModel.setRingtoneAlarm(RingtoneManager.getRingtone(this.getApplicationContext(), alarmTone));
+        this.timerActivityModel.getRingtoneAlarm().setStreamType(AudioManager.STREAM_ALARM);
+    }
+
+    /**
+     * Update the timer with the time left
+     */
+    private void updateTimer() {
+        final StringBuilder timeLeft = this.generateTimeLeft((int) this.timerActivityModel.getTimeToSet());
+
+        if (!this.timerActivityModel.getGame().isHideTimeLeft() && !this.timerActivityModel.getGame().isHideTimer()) {
+            this.timerActivityModel.getTimeClock().setText(timeLeft.toString());
+        }
+    }
+
+    private StringBuilder generateTimeLeft(final int timeToSet) {
+        final int minutes = timeToSet / MINUTES;
+        final int secondes = timeToSet % MINUTES / SECONDES;
+
+        final StringBuilder timeLeft = new StringBuilder()
+                .append(minutes)
+                .append(":");
+        if (secondes < 10) {
+            timeLeft.append("0");
+        }
+        timeLeft.append(secondes);
+        return timeLeft;
+    }
+
+
     private void checkBoxListeners() {
-        this.firstPlayer1.setOnClickListener(t -> {
-            if (this.firstPlayerChoice != 1) {
-                this.firstPlayerChoice = 1;
-                this.firstPlayerName.setText(game.getPlayer1().getName());
+        this.timerActivityModel.getFirstPlayer1().setOnClickListener(t -> {
+            if (this.timerActivityModel.getFirstPlayerChoice() != 1) {
+                this.timerActivityModel.setFirstPlayerChoice(1);
+                this.timerActivityModel.getFirstPlayerName().setText(timerActivityModel.getGame().getPlayer1().getName());
             }
         });
-        this.firstPlayer2.setOnClickListener(t -> {
-            if (this.firstPlayerChoice != 2) {
-                this.firstPlayerChoice = 2;
-                this.firstPlayerName.setText(game.getPlayer2().getName());
+        this.timerActivityModel.getFirstPlayer2().setOnClickListener(t -> {
+            if (this.timerActivityModel.getFirstPlayerChoice() != 2) {
+                this.timerActivityModel.setFirstPlayerChoice(2);
+                this.timerActivityModel.getFirstPlayerName().setText(timerActivityModel.getGame().getPlayer2().getName());
             }
         });
     }
@@ -283,37 +253,37 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playerOneListenersKill() {
-        this.btnLessPlayerOneKill.setOnClickListener(t -> {
-            this.scoreRoundJoueur1.lessScoreKill(1);
-            this.game.getPlayer1().lessScoreKill(1);
+        this.timerActivityModel.getBtnLessPlayerOneKill().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur1().lessScoreKill(1);
+            this.timerActivityModel.getGame().getPlayer1().lessScoreKill(1);
             this.updateScorePlayerOne();
         });
 
-        this.btnPlusPlayerOneKill.setOnClickListener(t -> {
-            this.scoreRoundJoueur1.addScoreKill(1);
-            this.game.getPlayer1().addScoreKill(1);
+        this.timerActivityModel.getBtnPlusPlayerOneKill().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur1().addScoreKill(1);
+            this.timerActivityModel.getGame().getPlayer1().addScoreKill(1);
             this.updateScorePlayerOne();
         });
     }
 
     private void playerOneListenersMission() {
-        this.btnLessPlayerOneMission.setOnClickListener(t -> {
-            this.scoreRoundJoueur1.lessScoreMission(1);
-            this.game.getPlayer1().lessScoreMission(1);
+        this.timerActivityModel.getBtnLessPlayerOneMission().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur1().lessScoreMission(1);
+            this.timerActivityModel.getGame().getPlayer1().lessScoreMission(1);
             this.updateScorePlayerOne();
         });
 
-        this.btnPlusPlayerOneMission.setOnClickListener(t -> {
-            this.scoreRoundJoueur1.addScoreMission(1);
-            this.game.getPlayer1().addScoreMission(1);
+        this.timerActivityModel.getBtnPlusPlayerOneMission().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur1().addScoreMission(1);
+            this.timerActivityModel.getGame().getPlayer1().addScoreMission(1);
             this.updateScorePlayerOne();
         });
     }
 
     private void updateScorePlayerOne() {
-        this.textViewScorePlayerOneKill.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreKill()));
-        this.textViewScorePlayerOneMission.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreMission()));
-        this.textViewScorePlayerOne.setText(String.valueOf(this.game.getPlayer1().getScore().getScoreGlobal()));
+        this.timerActivityModel.getTextViewScorePlayerOneKill().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer1().getScore().getScoreKill()));
+        this.timerActivityModel.getTextViewScorePlayerOneMission().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer1().getScore().getScoreMission()));
+        this.timerActivityModel.getTextViewScorePlayerOne().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer1().getScore().getScoreGlobal()));
     }
 
     private void playerTwoListeners() {
@@ -323,87 +293,87 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void playerTwoListenersKill() {
-        this.btnLessPlayerTwoKill.setOnClickListener(t -> {
-            this.scoreRoundJoueur2.lessScoreKill(1);
-            this.game.getPlayer2().lessScoreKill(1);
+        this.timerActivityModel.getBtnLessPlayerTwoKill().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur2().lessScoreKill(1);
+            this.timerActivityModel.getGame().getPlayer2().lessScoreKill(1);
             this.updateScorePlayerTwo();
         });
 
-        this.btnPlusPlayerTwoKill.setOnClickListener(t -> {
-            this.scoreRoundJoueur2.addScoreKill(1);
-            this.game.getPlayer2().addScoreKill(1);
+        this.timerActivityModel.getBtnPlusPlayerTwoKill().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur2().addScoreKill(1);
+            this.timerActivityModel.getGame().getPlayer2().addScoreKill(1);
             this.updateScorePlayerTwo();
         });
     }
 
     private void playerTwoListenersMission() {
-        this.btnLessPlayerTwoMission.setOnClickListener(t -> {
-            this.scoreRoundJoueur2.lessScoreMission(1);
-            this.game.getPlayer2().lessScoreMission(1);
+        this.timerActivityModel.getBtnLessPlayerTwoMission().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur2().lessScoreMission(1);
+            this.timerActivityModel.getGame().getPlayer2().lessScoreMission(1);
             this.updateScorePlayerTwo();
         });
 
-        this.btnPlusPlayerTwoMission.setOnClickListener(t -> {
-            this.scoreRoundJoueur2.addScoreMission(1);
-            this.game.getPlayer2().addScoreMission(1);
+        this.timerActivityModel.getBtnPlusPlayerTwoMission().setOnClickListener(t -> {
+            this.timerActivityModel.getScoreRoundJoueur2().addScoreMission(1);
+            this.timerActivityModel.getGame().getPlayer2().addScoreMission(1);
             this.updateScorePlayerTwo();
         });
     }
 
     private void updateScorePlayerTwo() {
-        this.textViewScorePlayerTwoKill.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreKill()));
-        this.textViewScorePlayerTwoMission.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreMission()));
-        this.textViewScorePlayerTwo.setText(String.valueOf(this.game.getPlayer2().getScore().getScoreGlobal()));
+        this.timerActivityModel.getTextViewScorePlayerTwoKill().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer2().getScore().getScoreKill()));
+        this.timerActivityModel.getTextViewScorePlayerTwoMission().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer2().getScore().getScoreMission()));
+        this.timerActivityModel.getTextViewScorePlayerTwo().setText(String.valueOf(this.timerActivityModel.getGame().getPlayer2().getScore().getScoreGlobal()));
     }
 
     private void roundListeners() {
-        this.btnLessRound.setOnClickListener(t -> removeRound());
-        this.btnPlusRound.setOnClickListener(t -> this.addRound());
+        this.timerActivityModel.getBtnLessRound().setOnClickListener(t -> removeRound());
+        this.timerActivityModel.getBtnPlusRound().setOnClickListener(t -> this.addRound());
     }
 
     private void removeRound() {
-        if (this.game.getRound() > 0) {
-            this.game.removeRound();
-            this.roundNumber.setText(String.valueOf(this.game.getRound()));
+        if (this.timerActivityModel.getGame().getRound() > 0) {
+            this.timerActivityModel.getGame().removeRound();
+            this.timerActivityModel.getRoundNumber().setText(String.valueOf(this.timerActivityModel.getGame().getRound()));
         }
     }
 
     private void addRound() {
         this.updateRoundDetail();
-        this.game.addRound();
-        if (this.game.getRound() == 12) {
+        this.timerActivityModel.getGame().addRound();
+        if (this.timerActivityModel.getGame().getRound() == 12) {
             Toast.makeText(TimerActivity.this, "LAST TURN !!", Toast.LENGTH_LONG).show();
         }
-        this.roundNumber.setText(String.valueOf(this.game.getRound()));
+        this.timerActivityModel.getRoundNumber().setText(String.valueOf(this.timerActivityModel.getGame().getRound()));
     }
 
 
     private void updateRoundDetail() {
         final Round round = new Round();
-        round.setRoundNumber(this.roundNumber.getText().toString());
-        round.setFirstPlayer(this.firstPlayerName.getText().toString());
-        round.setScorePlayer1(this.scoreRoundJoueur1);
-        round.setScorePlayer2(this.scoreRoundJoueur2);
-        round.setTime(this.timeStartRound - this.timeToSet);
-        this.game.getRounds().add(round);
+        round.setRoundNumber(this.timerActivityModel.getRoundNumber().getText().toString());
+        round.setFirstPlayer(this.timerActivityModel.getFirstPlayerName().getText().toString());
+        round.setScorePlayer1(this.timerActivityModel.getScoreRoundJoueur1());
+        round.setScorePlayer2(this.timerActivityModel.getScoreRoundJoueur2());
+        round.setTime(this.timerActivityModel.getTimeStartRound() - this.timerActivityModel.getTimeToSet());
+        this.timerActivityModel.getGame().getRounds().add(round);
         //Reset des scores du round post save
-        this.timeStartRound = this.timeToSet;
-        this.scoreRoundJoueur1 = new Score();
-        this.scoreRoundJoueur2 = new Score();
+        this.timerActivityModel.setTimeStartRound(this.timerActivityModel.getTimeToSet());
+        this.timerActivityModel.setScoreRoundJoueur1(new Score());
+        this.timerActivityModel.setScoreRoundJoueur2(new Score());
     }
 
     /**
      * the trigger for start the timer
      */
     private void startTimer() {
-        this.timer = new CountDownTimer(this.timeToSet, SECONDES) {
+        this.timerActivityModel.setTimer( new CountDownTimer(this.timerActivityModel.getTimeToSet(), SECONDES) {
             /**
              * trigger every {@fields SECONDES} millisecondes
              * {@inheritDoc}
              */
             @Override
-            public void onTick(final long l) {
-                TimerActivity.this.timeToSet = l;
+            public void onTick(final long time) {
+                TimerActivity.this.timerActivityModel.setTimeToSet(time);
                 TimerActivity.this.updateTimer();
             }
 
@@ -416,11 +386,11 @@ public class TimerActivity extends AppCompatActivity {
                 Toast.makeText(TimerActivity.this, "TIME OVER !!", Toast.LENGTH_LONG).show();
                 TimerActivity.this.playSound();
             }
-        }.start();
-        this.btnStartStop.setText(this.getString(R.string.stop));
-        this.btnStartStop.setBackgroundColor(Color.parseColor(RED));
-        this.timerStart = true;
-        if (this.game.getRound() == 0) {
+        }.start());
+        this.timerActivityModel.getBtnStartStop().setText(this.getString(R.string.stop));
+        this.timerActivityModel.getBtnStartStop().setBackgroundColor(Color.parseColor(RED));
+        this.timerActivityModel.setTimerStart(true);
+        if (this.timerActivityModel.getGame().getRound() == 0) {
             this.addRound();
         }
     }
@@ -429,63 +399,23 @@ public class TimerActivity extends AppCompatActivity {
      * the trigger for stop the timer
      */
     private void stopTimer() {
-        if (timer != null) {
-            this.timer.cancel();
+        if (timerActivityModel.getTimer() != null) {
+            this.timerActivityModel.getTimer().cancel();
         }
-        this.btnStartStop.setText(this.getString(R.string.start));
-        this.btnStartStop.setBackgroundColor(Color.parseColor(GREEN));
-        if (timerStart) {
-            this.timerStart = false;
-            if (this.ringtoneAlarm.isPlaying()) {
-                this.ringtoneAlarm.stop();
+        this.timerActivityModel.getBtnStartStop().setText(this.getString(R.string.start));
+        this.timerActivityModel.getBtnStartStop().setBackgroundColor(Color.parseColor(GREEN));
+        if (timerActivityModel.isTimerStart()) {
+            this.timerActivityModel.setTimerStart(false);
+            if (this.timerActivityModel.getRingtoneAlarm().isPlaying()) {
+                this.timerActivityModel.getRingtoneAlarm().stop();
             }
         }
     }
 
-    /**
-     * Binding of all the fields XML and the fields JAVA
-     */
-    private void findView() {
-        this.timeClock = this.findViewById(R.id.timeClock);
-        this.btnStartStop = this.findViewById(R.id.btnStart);
-        this.roundNumber = this.findViewById(R.id.roundNumber);
-        this.btnLessRound = this.findViewById(R.id.btnLessRound);
-        this.btnPlusRound = this.findViewById(R.id.btnPlusRound);
-        this.textViewTimeLeft = this.findViewById(R.id.textViewTimeLeft);
-        this.textViewMission = this.findViewById(R.id.textViewMission);
-        //GLOBAL
-        this.playerOne = this.findViewById(R.id.playerOne);
-        this.playerTwo = this.findViewById(R.id.playerTwo);
-        this.playerOneList = this.findViewById(R.id.playerOneList);
-        this.playerTwoList = this.findViewById(R.id.playerTwoList);
-        this.textViewScorePlayerOne = this.findViewById(R.id.scorePlayerOne);
-        this.textViewScorePlayerTwo = this.findViewById(R.id.scorePlayerTwo);
-        //Kill
-        this.textViewScorePlayerOneKill = this.findViewById(R.id.scorePlayerOneKill);
-        this.textViewScorePlayerTwoKill = this.findViewById(R.id.scorePlayerTwoKill);
-        this.btnLessPlayerOneKill = this.findViewById(R.id.btnLessPlayerOneKill);
-        this.btnPlusPlayerOneKill = this.findViewById(R.id.btnPlusPlayerOneKill);
-        this.btnLessPlayerTwoKill = this.findViewById(R.id.btnLessPlayerTwoKill);
-        this.btnPlusPlayerTwoKill = this.findViewById(R.id.btnPlusPlayerTwoKill);
-        //Mission
-        this.textViewScorePlayerOneMission = this.findViewById(R.id.scorePlayerOneMission);
-        this.textViewScorePlayerTwoMission = this.findViewById(R.id.scorePlayerTwoMission);
-        this.btnLessPlayerOneMission = this.findViewById(R.id.btnLessPlayerOneMission);
-        this.btnPlusPlayerOneMission = this.findViewById(R.id.btnPlusPlayerOneMission);
-        this.btnLessPlayerTwoMission = this.findViewById(R.id.btnLessPlayerTwoMission);
-        this.btnPlusPlayerTwoMission = this.findViewById(R.id.btnPlusPlayerTwoMission);
-
-        this.firstPlayer1 = this.findViewById(R.id.firstPlayer1);
-        this.firstPlayer2 = this.findViewById(R.id.firstPlayer2);
-        this.firstPlayerName = this.findViewById(R.id.firstPlayerName);
-
-        this.listShipPlayer1 = this.findViewById(R.id.listShipPlayer1);
-        this.listShipPlayer2 = this.findViewById(R.id.listShipPlayer2);
-    }
 
     @Override
     public void onBackPressed() {
-        if (!this.end) {
+        if (!this.timerActivityModel.isEnd()) {
             final EndDialogTimer endDialogTimer = new EndDialogTimer(this);
             endDialogTimer.show(this.getSupportFragmentManager(), "dialogHelp");
             return;
@@ -496,16 +426,16 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         this.updateRoundDetail();
-        this.game.setTimeLeft(this.timeToSet);
-        this.game.setDate(this.dateFormat.format(new Date()));
+        this.timerActivityModel.getGame().setTimeLeft(this.timerActivityModel.getTimeToSet());
+        this.timerActivityModel.getGame().setDate(this.timerActivityModel.getDateFormat().format(new Date()));
 
-        this.historiqueService.saveNewGame(this.getBaseContext(), this.game);
+        HistoriqueService.getInstance().saveNewGame(this.getBaseContext(), this.timerActivityModel.getGame());
 
-        if (timer != null) {
-            this.timer.cancel();
+        if (timerActivityModel.getTimer() != null) {
+            this.timerActivityModel.getTimer().cancel();
         }
-        if (this.ringtoneAlarm.isPlaying()) {
-            this.ringtoneAlarm.stop();
+        if (this.timerActivityModel.getRingtoneAlarm().isPlaying()) {
+            this.timerActivityModel.getRingtoneAlarm().stop();
         }
 
         super.onDestroy();
@@ -513,66 +443,27 @@ public class TimerActivity extends AppCompatActivity {
 
 
     private void playSound() {
-        if (this.alreadyEnd) {
+        if (this.timerActivityModel.isAlreadyEnd()) {
             return;
         }
-        this.alreadyEnd = true;
-        this.ringtoneAlarm.play();
+        this.timerActivityModel.setAlreadyEnd(true);
+        this.timerActivityModel.getRingtoneAlarm().play();
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("roundNumber", this.roundNumber.getText().toString());
-        outState.putString("textViewScorePlayerOne", this.textViewScorePlayerOne.getText().toString());
-        outState.putString("textViewScorePlayerOneKill", this.textViewScorePlayerOneKill.getText().toString());
-        outState.putString("textViewScorePlayerOneMission", this.textViewScorePlayerOneMission.getText().toString());
-        outState.putString("textViewScorePlayerTwo", this.textViewScorePlayerTwo.getText().toString());
-        outState.putString("textViewScorePlayerTwoKill", this.textViewScorePlayerTwoKill.getText().toString());
-        outState.putString("textViewScorePlayerTwoMission", this.textViewScorePlayerTwoMission.getText().toString());
-        outState.putString("firstPlayerName", this.firstPlayerName.getText().toString());
-        outState.putString("timeClock", this.timeClock.getText().toString());
-        outState.putString("textViewTimeLeft", this.textViewTimeLeft.getText().toString());
-        outState.putString("playerOne", this.playerOne.getText().toString());
-        outState.putString("playerTwo", this.playerTwo.getText().toString());
-        outState.putString("firstPlayer1", this.firstPlayer1.getText().toString());
-        outState.putString("firstPlayer2", this.firstPlayer2.getText().toString());
-
-        outState.putSerializable("game", this.game);
-        outState.putBoolean("timerStart", this.timerStart);
-        outState.putBoolean("alreadyEnd", this.alreadyEnd);
-        outState.putLong("timeToSet", this.timeToSet);
-
+        outState.putSerializable("timerActivityModel", this.timerActivityModel);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        this.roundNumber.setText(savedInstanceState.getString("roundNumber"));
-        this.textViewScorePlayerOne.setText(savedInstanceState.getString("textViewScorePlayerOne"));
-        this.textViewScorePlayerOneKill.setText(savedInstanceState.getString("textViewScorePlayerOneKill"));
-        this.textViewScorePlayerOneMission.setText(savedInstanceState.getString("textViewScorePlayerOneMission"));
-        this.textViewScorePlayerTwo.setText(savedInstanceState.getString("textViewScorePlayerTwo"));
-        this.textViewScorePlayerTwoKill.setText(savedInstanceState.getString("textViewScorePlayerTwoKill"));
-        this.textViewScorePlayerTwoMission.setText(savedInstanceState.getString("textViewScorePlayerTwoMission"));
-        this.firstPlayerName.setText(savedInstanceState.getString("firstPlayerName"));
-        this.timeClock.setText(savedInstanceState.getString("timeClock"));
-        this.textViewTimeLeft.setText(savedInstanceState.getString("textViewTimeLeft"));
-        this.playerOne.setText(savedInstanceState.getString("playerOne"));
-        this.playerTwo.setText(savedInstanceState.getString("playerTwo"));
-        this.playerOneList.setText(savedInstanceState.getString("playerOne"));
-        this.playerTwoList.setText(savedInstanceState.getString("playerTwo"));
-        this.firstPlayer1.setText(savedInstanceState.getString("firstPlayer1"));
-        this.firstPlayer2.setText(savedInstanceState.getString("firstPlayer2"));
+        this.timerActivityModel = (TimerActivityModel) savedInstanceState.getSerializable("timerActivityModel");
 
-        this.game = (Game) savedInstanceState.getSerializable("game");
-        this.timerStart = savedInstanceState.getBoolean("timerStart");
-        this.alreadyEnd = savedInstanceState.getBoolean("alreadyEnd");
-        this.timeToSet = savedInstanceState.getLong("timeToSet");
-
-        if (timerStart) {
+        if (this.timerActivityModel.isTimerStart()) {
             this.startTimer();
         } else {
             this.stopTimer();
@@ -585,18 +476,18 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     public Game getGame() {
-        return game;
+        return timerActivityModel.getGame();
     }
 
     public void setEnd(boolean end) {
-        this.end = end;
+        this.timerActivityModel.setEnd(end);
     }
 
     public void changeScoreByOpponentPlayer(Player player, Ship current, Ship.Statut oldStatut) {
-        if (player == game.getPlayer1()) {
-            changeScoreByPlayer(game.getPlayer2(), current, oldStatut);
+        if (player == timerActivityModel.getGame().getPlayer1()) {
+            changeScoreByPlayer(timerActivityModel.getGame().getPlayer2(), current, oldStatut);
         } else {
-            changeScoreByPlayer(game.getPlayer1(), current, oldStatut);
+            changeScoreByPlayer(timerActivityModel.getGame().getPlayer1(), current, oldStatut);
         }
     }
 

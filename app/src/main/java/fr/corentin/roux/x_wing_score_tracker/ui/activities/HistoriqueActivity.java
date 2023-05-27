@@ -1,53 +1,59 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
-import android.os.Bundle;
 import android.widget.ListView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Games;
 import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.HistoriqueAdapter;
 
-public class HistoriqueActivity extends AppCompatActivity {
+public class HistoriqueActivity extends AbstractActivity {
 
-    private final HistoriqueService service;
-    private HistoriqueAdapter adapter;
+    private HistoriqueAdapter historiqueAdapter;
     private ListView listHistorique;
+    private Games games = null;
 
-    public HistoriqueActivity() {
-        this.service = HistoriqueService.getInstance();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initContentView() {
+        this.setContentView(R.layout.historique_layout);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.setContentView(R.layout.historique_layout);
-
-        this.findView();
-
-        Games games = this.service.getAllGames(this.getBaseContext());
-        if (games == null) {
-            games = new Games();
-        }
-        this.adapter = new HistoriqueAdapter(this, games);
-        this.listHistorique.setAdapter(this.adapter);
-    }
-
-    private void findView() {
+    protected void findView() {
         this.listHistorique = this.findViewById(R.id.listHistorique);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initDatas() {
+        this.games = HistoriqueService.getInstance().getAllGames(this.getBaseContext());
+        if (this.games == null) {
+            this.games = new Games();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initAdapters() {
+        this.historiqueAdapter = new HistoriqueAdapter(this, games);
+        this.listHistorique.setAdapter(this.historiqueAdapter);
+    }
+
     public void deleteGame(final int pos) {
-        final Games games = this.service.getAllGames(this.getBaseContext());
+        final Games games = HistoriqueService.getInstance().getAllGames(this.getBaseContext());
         games.getGames().remove(pos);
-        this.adapter.getGames().remove(pos);
-        this.service.saveGames(games, this);
-        this.adapter.notifyDataSetChanged();
+        this.historiqueAdapter.getGames().remove(pos);
+        HistoriqueService.getInstance().saveGames(games, this);
+        this.historiqueAdapter.notifyDataSetChanged();
     }
 }

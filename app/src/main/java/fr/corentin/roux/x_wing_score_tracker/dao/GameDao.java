@@ -8,7 +8,7 @@ public class GameDao extends ADao<Games> {
     /**
      * Nom du fichier JSON utilisé pour sauvegarder les dossiers agricultures
      */
-    private static final String FILENAME = "games.json";
+    private static final String FILENAME = "historique.json";
     /**
      * L'instance de la classe
      */
@@ -37,10 +37,4 @@ public class GameDao extends ADao<Games> {
     Class<Games> getClassType() {
         return Games.class;
     }
-
-    @Override
-    Games defaultObject() {
-        return new Games();
-    }
-
 }

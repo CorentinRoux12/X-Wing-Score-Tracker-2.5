@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.JsonReader;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -33,6 +35,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
@@ -41,11 +46,12 @@ import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.AdapterViewUtils;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
+import io.vavr.control.Try;
 import xyz.aprildown.ultimatemusicpicker.MusicPickerListener;
 import xyz.aprildown.ultimatemusicpicker.UltimateMusicPicker;
 
 @SuppressLint("SetTextI18n")
-public class SettingsActivity extends AppCompatActivity implements MusicPickerListener {
+public class SettingsActivity extends AbstractActivity implements MusicPickerListener {
 
     private final SettingService service = SettingService.getInstance();
 
@@ -67,20 +73,21 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
     private Button resetOpponentListImport;
     private Button resetMyListImport;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** Permet de set une liste de ship dans les settings joueur 1 */
+    private final Consumer<List<Ship>> setListPlayer1 = s -> this.setting.setListPlayer1(s);
+
+    /** Permet de set une liste de ship dans les settings joueur 2 */
+    private final Consumer<List<Ship>> setListPlayer2 = s -> this.setting.setListPlayer2(s);
+
+    private final BiConsumer<Consumer<List<Ship>>, String> setListPlayers = (settingList, player) -> Try.of(() -> (ClipboardManager) getSystemService(CLIPBOARD_SERVICE))
+            .mapTry(this::extractList)
+            .andThenTry(settingList::accept)
+            .onSuccess(ships -> Toast.makeText(this, "XWS save for : " + player, Toast.LENGTH_SHORT).show())
+            .onFailure(throwable -> Toast.makeText(this, "XWS invalid", Toast.LENGTH_SHORT).show());
+
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void initContentView() {
         this.setContentView(R.layout.settings_layout);
-
-        this.findView();
-        //Init des datas de la vue
-        this.initData();
-        //Call des listeners les init
-        this.listeners();
     }
 
     @Override
@@ -101,7 +108,8 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
         super.onDestroy();
     }
 
-    private void initData() {
+    @Override
+    protected void initDatas() {
         this.setting = this.service.getSetting(this);
 
         this.formatLanguage();
@@ -116,7 +124,8 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
         this.darkModeBtn.setText("Dark Mode : " + (Boolean.TRUE.equals(enabledDarkMode) ? "Yes" : "No"));
     }
 
-    private void listeners() {
+    @Override
+    protected void initListeners() {
         this.darkModeBtn.setOnClickListener(t -> {
             if (enabledDarkMode == setting.getEnabledDarkTheme()) {
                 this.enabledDarkMode = !this.enabledDarkMode;
@@ -130,45 +139,16 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
             }
         });
 
-        this.alarmeSong.setOnClickListener(t -> {
-            try {
-                new UltimateMusicPicker()
-                        // Picker activity action bar title or dialog title
-                        .windowTitle("Alarm Selection")
-
-                        // Add a extra default item
-                        //.defaultUri(uri)
-                        // Add a default item and change the default item name("Default" is used otherwise)
-                        //.defaultTitleAndUri("My default name", uri)
-
-                        // There's a "silent" item by default, use this line to remove it.
-                        .removeSilent()
-
-                        // Select this uri
-                        //.selectUri(uri)
-
-                        // Add some other music items(from R.raw or app's asset)
-                        //.additional("Myself Music", uri)
-                        //.additional("Another Music", uri)
-
-                        // Music preview stream type(AudioManager.STREAM_MUSIC is used by default)
-                        .streamType(AudioManager.STREAM_ALARM)
-
-                        // Show different kinds of system ringtones. Calling order determines their display order.
-                        .ringtone()
-                        .notification()
-                        .alarm()
-                        // Show music files from external storage. Requires READ_EXTERNAL_STORAGE permission.
-                        .music()
-
-                        // Show a picker dialog
-                        .goWithDialog(getSupportFragmentManager());
-            } catch (Throwable throwable) {
-                Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show();
-            }
-            // Or show a picker activity
-            //.goWithActivity(this, 0, MusicPickerActivity::class.java)
-        });
+        this.alarmeSong.setOnClickListener(click -> Try.of(UltimateMusicPicker::new)
+                .map(alarm -> alarm.windowTitle("Alarm Selection"))
+                .map(UltimateMusicPicker::removeSilent)
+                .map(alarm -> alarm.streamType(AudioManager.STREAM_ALARM))
+                .map(UltimateMusicPicker::ringtone)
+                .map(UltimateMusicPicker::notification)
+                .map(UltimateMusicPicker::alarm)
+                .map(UltimateMusicPicker::music)
+                .andThenTry(alarm -> alarm.goWithDialog(getSupportFragmentManager()))
+                .onFailure(throwable -> Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show()));
 
         this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -189,29 +169,15 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
             }
         });
 
-        this.myListImport.setOnClickListener(t -> {
-            try {
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                this.setting.setListPlayer1(extractList(clipboardManager));
-                Toast.makeText(this, "XWS save for : " + inputName.getText().toString(), Toast.LENGTH_SHORT).show();
-            } catch (Exception exception) {
-                Toast.makeText(this, "XWS invalid", Toast.LENGTH_SHORT).show();
-            }
-        });
-        this.opponentListImport.setOnClickListener(t -> {
-            try {
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                this.setting.setListPlayer2(extractList(clipboardManager));
-                Toast.makeText(this, "XWS save for : " + inputOpponent.getText().toString(), Toast.LENGTH_SHORT).show();
-            } catch (Exception exception) {
-                Toast.makeText(this, "XWS invalid", Toast.LENGTH_SHORT).show();
-            }
-        });
-        resetOpponentListImport.setOnClickListener(t -> {
+        this.myListImport.setOnClickListener(click -> setListPlayers.accept(setListPlayer1, inputName.getText().toString()));
+        this.opponentListImport.setOnClickListener(click -> setListPlayers.accept(setListPlayer2, inputOpponent.getText().toString()));
+
+
+        this.resetOpponentListImport.setOnClickListener(click -> {
             this.setting.setListPlayer2(Collections.emptyList());
             Toast.makeText(this, "XWS reset for : " + inputOpponent.getText().toString(), Toast.LENGTH_SHORT).show();
         });
-        resetMyListImport.setOnClickListener(t -> {
+        this.resetMyListImport.setOnClickListener(t -> {
             this.setting.setListPlayer1(Collections.emptyList());
             Toast.makeText(this, "XWS reset for : " + inputName.getText().toString(), Toast.LENGTH_SHORT).show();
         });
@@ -254,7 +220,8 @@ public class SettingsActivity extends AppCompatActivity implements MusicPickerLi
 //        this.startActivity(intent);
     }
 
-    private void findView() {
+    @Override
+    protected void findView() {
         this.inputTime = this.findViewById(R.id.inputTime);
         this.inputVolatility = this.findViewById(R.id.inputVolatility);
         this.language = this.findViewById(R.id.language);
