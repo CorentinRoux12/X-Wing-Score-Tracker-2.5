@@ -82,7 +82,6 @@ public class MainActivity extends AbstractActivity
             super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
         } catch (Exception e)
         {
-//            Toast.makeText(this, "Hello There !!", Toast.LENGTH_SHORT).show();
             super.attachBaseContext(newBase);
         }
     }

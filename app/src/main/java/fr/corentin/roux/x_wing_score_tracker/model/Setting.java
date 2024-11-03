@@ -162,4 +162,5 @@ public class Setting implements Persistable, Serializable
     {
         this.diceCounter = diceCounter;
     }
+
 }

@@ -354,4 +354,5 @@ public class Game implements Persistable, Serializable {
     {
         this.diceJson = diceJson;
     }
+
 }

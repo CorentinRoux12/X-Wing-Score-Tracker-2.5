@@ -8,8 +8,10 @@ import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.dao.DaoRoom;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import io.vavr.control.Try;
 
-public class GameService {
+public class GameService
+{
 
     /**
      * L'instance de la classe
@@ -21,7 +23,8 @@ public class GameService {
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
      */
-    private GameService() {
+    private GameService()
+    {
         Log.d(this.getClass().getSimpleName(), "Génération du singleton.");
     }
 
@@ -30,29 +33,38 @@ public class GameService {
      *
      * @return l'instance créer de la classe
      */
-    public static GameService getInstance() {
-        if (instance == null) {
+    public static GameService getInstance()
+    {
+        if (instance == null)
+        {
             instance = new GameService();
         }
         return instance;
     }
 
 
-    public List<Game> getAll(final Context context) {
-        return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findAll();
+    public List<Game> getAll(final Context context)
+    {
+        return Try.of(() -> daoRoom.getDatabaseAccess(context).iGameDaoRoom().findAll())
+                .getOrElse(List.of());
     }
 
-    public Game getById(final Context context, final int id) {
-        return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findById(id);
+    public Game getById(final Context context, final int id)
+    {
+        return Try.of(() -> daoRoom.getDatabaseAccess(context).iGameDaoRoom().findById(id))
+                .getOrElse(new Game());
     }
 
-    public void save(final Context context, final Game... game) {
+    public void save(final Context context, final Game... game)
+    {
         Arrays.stream(game)
                 .map(Game::serializeForSave)
-                .forEach(gameSanitize -> daoRoom.getDatabaseAccess(context).iGameDaoRoom().save(gameSanitize));
+                .forEach(gameSanitize -> Try.of(() -> daoRoom.getDatabaseAccess(context))
+                        .andThenTry(t-> t.iGameDaoRoom().save(gameSanitize)));
     }
 
-    public void delete(final Context context, final Game game) {
+    public void delete(final Context context, final Game game)
+    {
         daoRoom.getDatabaseAccess(context).iGameDaoRoom().delete(game);
     }
 
