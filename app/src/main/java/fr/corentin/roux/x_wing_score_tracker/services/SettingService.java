@@ -3,10 +3,7 @@ package fr.corentin.roux.x_wing_score_tracker.services;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.android.material.internal.ContextUtils;
-
-import fr.corentin.roux.x_wing_score_tracker.dao.IDao;
-import fr.corentin.roux.x_wing_score_tracker.dao.SettingDao;
+import fr.corentin.roux.x_wing_score_tracker.dao.DaoRoom;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 
 public class SettingService {
@@ -16,7 +13,7 @@ public class SettingService {
      */
     private static SettingService instance;
 
-    private final IDao<Setting> repository = SettingDao.getInstance();
+    private final DaoRoom daoRoom = DaoRoom.getInstance();
 
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
@@ -37,11 +34,15 @@ public class SettingService {
         return instance;
     }
 
-    public Setting getSetting(final Context context) {
-        return this.repository.findFirst(context);
+    public Setting get(final Context context) {
+        return daoRoom.getDatabaseAccess(context).iSettingDaoRoom().findAll().stream()
+                .findFirst()
+                .orElse(new Setting());
     }
 
     public void save(final Context context, final Setting setting) {
-        this.repository.save(setting, context);
+        daoRoom.getDatabaseAccess(context).iSettingDaoRoom().save(setting);
     }
+
+
 }

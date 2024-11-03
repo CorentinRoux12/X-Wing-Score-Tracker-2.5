@@ -49,4 +49,7 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="set_alarme">Set Alarm</string>
     <string name="list">List</string>
+    <string name="dicelibelle">Dices</string>
+    <string name="attackdice">Red</string>
+    <string name="defensedice">Green</string>
 </resources>

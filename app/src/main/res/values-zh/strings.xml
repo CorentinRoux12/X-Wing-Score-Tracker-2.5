@@ -49,5 +49,6 @@
     <string name="dark_mode">深色模式</string>
     <string name="set_alarme">设置闹钟</string>
     <string name="list">列表</string>
+    <string name="dicelibelle">骰子</string>
 
 </resources>

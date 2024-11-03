@@ -49,5 +49,6 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="set_alarme">Régler l\'Alarme</string>
     <string name="list">Liste</string>
+    <string name="dicelibelle">Dés</string>
 
 </resources>

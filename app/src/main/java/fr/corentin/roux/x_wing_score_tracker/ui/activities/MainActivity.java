@@ -2,17 +2,12 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,14 +15,11 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
-import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 
@@ -59,7 +51,7 @@ public class MainActivity extends AbstractActivity {
      */
     @Override
     protected void initDatas() {
-        this.setting = SettingService.getInstance().getSetting(this);
+        this.setting = SettingService.getInstance().get(this);
     }
 
     /**
@@ -76,8 +68,13 @@ public class MainActivity extends AbstractActivity {
      */
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.setting = SettingService.getInstance().getSetting(newBase);
-        super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
+        try {
+            this.setting = SettingService.getInstance().get(newBase);
+            super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
+        } catch (Exception e) {
+//            Toast.makeText(this, "Hello There !!", Toast.LENGTH_SHORT).show();
+            super.attachBaseContext(newBase);
+        }
     }
 
 
@@ -154,7 +151,7 @@ public class MainActivity extends AbstractActivity {
 
     private String generateRandomTime() {
         final long attackDice = this.random.nextInt(8);
-        final Setting setting = SettingService.getInstance().getSetting(this);
+        final Setting setting = SettingService.getInstance().get(this);
         int randomTimer = 75;
         try {
             randomTimer = Integer.parseInt(setting.getRandomTime());

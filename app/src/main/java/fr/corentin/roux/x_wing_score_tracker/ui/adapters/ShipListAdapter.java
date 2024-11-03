@@ -1,6 +1,7 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -9,13 +10,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Player;
 import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
+import io.vavr.control.Try;
 
 public class ShipListAdapter extends BaseAdapter {
     private static final String RED = "#9d0208";
@@ -26,14 +34,41 @@ public class ShipListAdapter extends BaseAdapter {
     private final Context context;
     private final LayoutInflater inflater;
     private final TimerActivity activity;
-    private final Player player;
+    private final String player;
 
-    public ShipListAdapter(TimerActivity activity, Player player) {
+    public ShipListAdapter(TimerActivity activity, String name, String xws) {
         this.activity = activity;
         this.context = activity.getBaseContext();
-        this.player = player;
-        this.ships = player.getShips();
+        this.player = name;
         this.inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+        this.ships = Try.of(() -> xws)
+                .mapTry(this::extractList)
+                .onFailure(throwable -> Toast.makeText(activity, "XWS invalid", Toast.LENGTH_SHORT).show())
+                .getOrElse(Collections.emptyList());
+    }
+
+    private List<Ship> extractList(String xws) throws JSONException {
+        final List<Ship> listPlayer = new ArrayList<>();
+        final JSONArray pilots = new JSONArray(xws);
+        for (int i = 0; i < pilots.length(); i++) {
+            final JSONObject pilot = pilots.getJSONObject(i);
+            String name;
+            try {
+                name = pilot.getString("name");//e
+            } catch (Exception e) {
+                name = pilot.getString("e");
+            }
+            int point;
+            try {
+                point = pilot.getInt("points");//f
+            } catch (Exception e) {
+                point = pilot.getInt("f");//f
+            }
+            listPlayer.add(new Ship(name, point));
+        }
+        return listPlayer;
     }
 
     @Override
@@ -74,12 +109,10 @@ public class ShipListAdapter extends BaseAdapter {
         Ship current = (Ship) this.getItem(position);
         Ship.Statut oldStatut = current.changeStatut();
         holder.changeColor(current.getStatut());
-        this.activity.changeScoreByOpponentPlayer(player,current, oldStatut);
+        this.activity.changeScore(player, current, oldStatut);
         this.activity.updateScorePlayers();
         this.notifyDataSetChanged();
     }
-
-
 
     private void initialisationData(ViewHolder holder, int position) {
         final Ship current = (Ship) this.getItem(position);

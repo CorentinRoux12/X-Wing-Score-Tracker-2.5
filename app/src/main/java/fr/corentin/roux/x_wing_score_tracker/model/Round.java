@@ -2,32 +2,33 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-public class Round implements Serializable {
+@Deprecated
+public class Round implements Persistable, Serializable {
 
     /**
      * Numéro du round
      */
-    private String roundNumber;
+    private String roundNumber; //e
 
     /**
      * Score du round du Joueur1
      */
-    private Score scorePlayer1;
+    private Score scorePlayer1;//f
 
     /**
      * Score du round du Joueur2
      */
-    private Score scorePlayer2;
+    private Score scorePlayer2;//g
 
     /**
      * Nom du premier joueur du round
      */
-    private String firstPlayer;
+    private String firstPlayer;//h
 
     /**
      * Temps du round
      */
-    private long time;
+    private long time;//i
 
     public Round() {
     }

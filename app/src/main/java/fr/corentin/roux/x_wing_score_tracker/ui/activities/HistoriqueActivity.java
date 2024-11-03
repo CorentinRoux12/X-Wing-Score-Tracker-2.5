@@ -2,16 +2,19 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Games;
-import fr.corentin.roux.x_wing_score_tracker.services.HistoriqueService;
+import fr.corentin.roux.x_wing_score_tracker.model.Game;
+import fr.corentin.roux.x_wing_score_tracker.services.GameService;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.HistoriqueAdapter;
 
 public class HistoriqueActivity extends AbstractActivity {
 
     private HistoriqueAdapter historiqueAdapter;
     private ListView listHistorique;
-    private Games games = null;
+    private List<Game> games =  new ArrayList<>();
 
     /**
      * {@inheritDoc}
@@ -34,9 +37,9 @@ public class HistoriqueActivity extends AbstractActivity {
      */
     @Override
     protected void initDatas() {
-        this.games = HistoriqueService.getInstance().getAllGames(this.getBaseContext());
+        this.games = GameService.getInstance().getAll(this.getBaseContext());
         if (this.games == null) {
-            this.games = new Games();
+            this.games = new ArrayList<>();
         }
     }
 
@@ -50,10 +53,11 @@ public class HistoriqueActivity extends AbstractActivity {
     }
 
     public void deleteGame(final int pos) {
-        final Games games = HistoriqueService.getInstance().getAllGames(this.getBaseContext());
-        games.getGames().remove(pos);
+        final List<Game> games = GameService.getInstance().getAll(this.getBaseContext());
+        Game gameToRemove = games.get(pos);
+        GameService.getInstance().delete(this, gameToRemove);
         this.historiqueAdapter.getGames().remove(pos);
-        HistoriqueService.getInstance().saveGames(games, this);
+//        GameService.getInstance().save(this,games);
         this.historiqueAdapter.notifyDataSetChanged();
     }
 }

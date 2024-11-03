@@ -44,8 +44,7 @@ public class MissionDetailActivity extends AbstractActivity {
             resource += mission.getRessource();
             resource += mission.getExtension();
 
-            this.pdfView.fitToWidth();
-            this.pdfView.documentFitsView();
+            this.pdfView.fitToWidth(1);
             this.pdfView.fromAsset(resource)
                     .enableSwipe(true)
                     .enableDoubletap(true)

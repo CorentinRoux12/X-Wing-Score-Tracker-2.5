@@ -3,8 +3,6 @@ package fr.corentin.roux.x_wing_score_tracker.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
 import java.util.Locale;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Language;

@@ -10,9 +10,11 @@ import androidx.fragment.app.DialogFragment;
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
+import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
 import lombok.Getter;
 
@@ -47,8 +49,10 @@ public class MissionDialog extends DialogFragment {
             } else { // Default Package => English
                 resource = "en/";
             }
-            resource += this.timerActivity.getGame().getMission().getRessource();
-            resource += this.timerActivity.getGame().getMission().getExtension();
+            if (Objects.nonNull(this.timerActivity.getGame().getMission()) && Objects.nonNull(Mission.parseLibelle(this.timerActivity.getGame().getMission()))) {
+                resource += Mission.parseLibelle(this.timerActivity.getGame().getMission()).getRessource();
+                resource += Mission.parseLibelle(this.timerActivity.getGame().getMission()).getExtension();
+            }
 
             this.pdfView.fromAsset(resource)
                     .enableSwipe(true)
