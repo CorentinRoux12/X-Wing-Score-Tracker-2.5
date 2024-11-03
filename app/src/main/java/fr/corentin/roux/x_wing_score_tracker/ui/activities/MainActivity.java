@@ -28,7 +28,8 @@ import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
  * <p>
  * The Main view at the start of the application
  */
-public class MainActivity extends AbstractActivity {
+public class MainActivity extends AbstractActivity
+{
 
     private final Random random = new Random();
     private TextInputEditText timer;
@@ -41,6 +42,10 @@ public class MainActivity extends AbstractActivity {
     private boolean timerHideCheck = false;
     private boolean timeLeftHideCheck = false;
     private String time;
+    private Button btnAssault;
+    private Button btnChance;
+    private Button btnSalvage;
+    private Button btnScramble;
     private Button btnRandomMission;
     private TextView textViewRandomMission;
     private Mission mission;
@@ -50,7 +55,8 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void initDatas() {
+    protected void initDatas()
+    {
         this.setting = SettingService.getInstance().get(this);
     }
 
@@ -58,7 +64,8 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void initContentView() {
+    protected void initContentView()
+    {
         this.setContentView(R.layout.main_layout);
     }
 
@@ -67,11 +74,14 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void attachBaseContext(Context newBase) {
-        try {
+    protected void attachBaseContext(Context newBase)
+    {
+        try
+        {
             this.setting = SettingService.getInstance().get(newBase);
             super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
 //            Toast.makeText(this, "Hello There !!", Toast.LENGTH_SHORT).show();
             super.attachBaseContext(newBase);
         }
@@ -82,10 +92,12 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void onPostResume() {
+    protected void onPostResume()
+    {
         super.onPostResume();
 
-        if (this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).getBoolean("settingsChange", true)) {
+        if (this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).getBoolean("settingsChange", true))
+        {
             this.getSharedPreferences("settingChange", Context.MODE_PRIVATE).edit().putBoolean("settingsChange", false).apply();
             this.recreate();
         }
@@ -96,13 +108,15 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void initDefaultValue() {
+    protected void initDefaultValue()
+    {
         this.checkHideTimer.setChecked(false);
         this.checkHideTimeLeft.setChecked(false);
         this.timerHideCheck = false;
         this.timeLeftHideCheck = false;
 
-        if (setting.getEnabledDarkTheme() != null) {
+        if (setting.getEnabledDarkTheme() != null)
+        {
             AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(setting.getEnabledDarkTheme()) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
@@ -111,12 +125,15 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void initListeners() {
+    protected void initListeners()
+    {
         this.btnStart.setOnClickListener(t -> {
-            if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().equals("")) {
+            if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().equals(""))
+            {
                 this.time = this.timer.getText().toString();
                 this.startTimerActivity();
-            } else {
+            } else
+            {
                 Toast.makeText(this, "Timer is not correctly set !!", Toast.LENGTH_LONG).show();
             }
         });
@@ -140,8 +157,29 @@ public class MainActivity extends AbstractActivity {
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
             Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
         });
+        this.btnAssault.setOnClickListener(t -> {
+            this.mission = Mission.SATELLITE;
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
+        this.btnChance.setOnClickListener(t -> {
+            this.mission = Mission.ENGAGEMENT;
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
+        this.btnSalvage.setOnClickListener(t -> {
+            this.mission = Mission.SALVAGE;
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
+        this.btnScramble.setOnClickListener(t -> {
+            this.mission = Mission.SCRAMBLE;
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
         this.textViewRandomMission.setOnClickListener(t -> {
-            if (this.mission != null) {
+            if (this.mission != null)
+            {
                 final Intent intent = new Intent(this, MissionDetailActivity.class);
                 intent.putExtra("mission", this.mission.getCode());
                 this.startActivity(intent);
@@ -149,22 +187,26 @@ public class MainActivity extends AbstractActivity {
         });
     }
 
-    private String generateRandomTime() {
+    private String generateRandomTime()
+    {
         final long attackDice = this.random.nextInt(8);
         final Setting setting = SettingService.getInstance().get(this);
         int randomTimer = 75;
-        try {
+        try
+        {
             randomTimer = Integer.parseInt(setting.getRandomTime());
             int cpt = Integer.parseInt(setting.getVolatilityTime());
             cpt = Math.abs(cpt);
             final List<Long> defenseDice = new ArrayList<>();
-            for (int i = 0; i < cpt; i++) {
+            for (int i = 0; i < cpt; i++)
+            {
                 defenseDice.add((long) this.random.nextInt(8));
             }
             randomTimer = this.calculVolatility(attackDice, defenseDice, randomTimer);
             randomTimer = Math.abs(randomTimer);
             return String.valueOf(randomTimer);
-        } catch (final Exception e) {
+        } catch (final Exception e)
+        {
             Log.e(this.getClass().getSimpleName(), "Erreur de parsing de la volatilité.");
             final long defenseDice1 = this.random.nextInt(8);
             final long defenseDice2 = this.random.nextInt(8);
@@ -178,38 +220,48 @@ public class MainActivity extends AbstractActivity {
         }
     }
 
-    private int calculVolatility(final long attackDice, final List<Long> defenseDice, int basicTime) {
+    private int calculVolatility(final long attackDice, final List<Long> defenseDice, int basicTime)
+    {
         //Defense
         //0&1&2 = Blank
         //3&4 = Eyes
         //5-7 = Evades
-        if (0L == attackDice || 1L == attackDice) {//0&1 = Blank
-            for (final Long valueDefenseDice : defenseDice) {
+        if (0L == attackDice || 1L == attackDice)
+        {//0&1 = Blank
+            for (final Long valueDefenseDice : defenseDice)
+            {
                 basicTime = this.downGradeTime(basicTime, valueDefenseDice);
             }
-        } else if (4L <= attackDice) { //4-7 = Hit&Crit
-            for (final Long valueDefenseDice : defenseDice) {
+        } else if (4L <= attackDice)
+        { //4-7 = Hit&Crit
+            for (final Long valueDefenseDice : defenseDice)
+            {
                 basicTime = this.upgradeTime(basicTime, valueDefenseDice);
             }
         }
         return basicTime;
     }
 
-    private int upgradeTime(int basicTime, final Long valueDefenseDice) {
-        if (valueDefenseDice >= 3L) {
+    private int upgradeTime(int basicTime, final Long valueDefenseDice)
+    {
+        if (valueDefenseDice >= 3L)
+        {
             basicTime++;
         }
         return basicTime;
     }
 
-    private int downGradeTime(int basicTime, final Long valueDefenseDice) {
-        if (valueDefenseDice >= 3L) {
+    private int downGradeTime(int basicTime, final Long valueDefenseDice)
+    {
+        if (valueDefenseDice >= 3L)
+        {
             basicTime--;
         }
         return basicTime;
     }
 
-    private void startTimerActivity() {
+    private void startTimerActivity()
+    {
         final Intent intent = new Intent(this, TimerActivity.class);
         intent.putExtra("hideTimeLeft", this.timeLeftHideCheck);
         intent.putExtra("hideTimer", this.timerHideCheck);
@@ -222,7 +274,8 @@ public class MainActivity extends AbstractActivity {
      * {@inheritDoc}
      */
     @Override
-    protected void findView() {
+    protected void findView()
+    {
         this.timer = this.findViewById(R.id.inputTimer);
         this.btnStart = this.findViewById(R.id.btnStart);
         this.btnHistorique = this.findViewById(R.id.btnHistorique);
@@ -230,6 +283,10 @@ public class MainActivity extends AbstractActivity {
         this.btnRandom = this.findViewById(R.id.btnRandom);
         this.checkHideTimer = this.findViewById(R.id.checkHideTimer);
         this.btnRandomMission = this.findViewById(R.id.btnRandomMission);
+        this.btnAssault = this.findViewById(R.id.btnAssault);
+        this.btnChance = this.findViewById(R.id.btnChance);
+        this.btnSalvage = this.findViewById(R.id.btnSalvage);
+        this.btnScramble = this.findViewById(R.id.btnScramble);
         this.textViewRandomMission = this.findViewById(R.id.textViewRandomMission);
         this.checkHideTimeLeft = this.findViewById(R.id.checkHideTimeLeft);
     }

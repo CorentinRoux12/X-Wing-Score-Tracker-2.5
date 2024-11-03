@@ -17,8 +17,8 @@
     <string name="lessless">--</string>
     <string name="plusplus">++</string>
     <string name="plusplus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="less1">-1</string>
+    <string name="plus1">+</string>
+    <string name="less1">-</string>
     <string name="lessless2">-2</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
@@ -50,5 +50,16 @@
     <string name="set_alarme">Ajustar alarma</string>
     <string name="list">Lista</string>
     <string name="dicelibelle">Dados</string>
+    <string name="attackdice">Dados de ataque</string>
+    <string name="defensedice">Dados de defensa</string>
+    <string name="assault">Agresión</string>
+    <string name="blank">Blanco</string>
+    <string name="eye">Ojo</string>
+    <string name="hit">Golpear</string>
+    <string name="crit">Crítico</string>
+    <string name="evade">Evadir</string>
+    <string name="chance">Oportunidad</string>
+    <string name="salvage">Salvar</string>
+    <string name="scramble">Lucha</string>
 
 </resources>

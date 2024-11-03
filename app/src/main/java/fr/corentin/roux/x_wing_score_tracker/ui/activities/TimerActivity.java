@@ -9,8 +9,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +55,10 @@ public class TimerActivity extends AbstractActivity
 
     private CountDownTimer timer;
     private Ringtone ringtoneAlarm;
+    private LinearLayout linearDiceLayout;
+    private LinearLayout linearListLayout;
+    private LinearLayout linearListLayout1;
+    private LinearLayout linearListLayout2;
 
     private TextView timeClock;
     private TextView roundNumber;
@@ -202,6 +208,22 @@ public class TimerActivity extends AbstractActivity
         }
         this.firstPlayer1.setText(this.timerActivityModel.getGame().getNamePlayer1());
         this.firstPlayer2.setText(this.timerActivityModel.getGame().getNamePlayer2());
+        //Dice
+        if (Boolean.FALSE.equals(this.timerActivityModel.getSetting().getDiceCounter()))
+        {
+            this.linearDiceLayout.setVisibility(View.GONE);
+        }
+        //List
+        if (this.timerActivityModel.getSetting().getListPlayer1().isBlank() && this.timerActivityModel.getSetting().getListPlayer2().isBlank())
+        {
+            this.linearListLayout.setVisibility(View.GONE);
+        } else if (this.timerActivityModel.getSetting().getListPlayer1().isBlank())
+        {
+            this.linearListLayout1.setVisibility(View.GONE);
+        } else if (this.timerActivityModel.getSetting().getListPlayer2().isBlank())
+        {
+            this.linearListLayout2.setVisibility(View.GONE);
+        }
         //Init data
         this.initMission();
         //Init des adapters
@@ -810,6 +832,7 @@ public class TimerActivity extends AbstractActivity
         this.btnLessPlayerTwoMission = (this.findViewById(R.id.btnLessPlayerTwoMission));
         this.btnPlusPlayerTwoMission = (this.findViewById(R.id.btnPlusPlayerTwoMission));
         //Dice
+        this.linearDiceLayout = (this.findViewById(R.id.linearDiceLayout));
         this.totalRedPlayerOne = (this.findViewById(R.id.totalRedPlayerOne));
         this.totalRedPlayerTwo = (this.findViewById(R.id.totalRedPlayerTwo));
         this.totalGreenPlayerOne = (this.findViewById(R.id.totalGreenPlayerOne));
@@ -861,6 +884,9 @@ public class TimerActivity extends AbstractActivity
         this.firstPlayer2 = (this.findViewById(R.id.firstPlayer2));
         this.firstPlayerName = (this.findViewById(R.id.firstPlayerName));
 
+        this.linearListLayout = (this.findViewById(R.id.linearListLayout));
+        this.linearListLayout1 = (this.findViewById(R.id.linearListLayout1));
+        this.linearListLayout2 = (this.findViewById(R.id.linearListLayout2));
         this.listShipPlayer1 = (this.findViewById(R.id.listShipPlayer1));
         this.listShipPlayer2 = (this.findViewById(R.id.listShipPlayer2));
     }

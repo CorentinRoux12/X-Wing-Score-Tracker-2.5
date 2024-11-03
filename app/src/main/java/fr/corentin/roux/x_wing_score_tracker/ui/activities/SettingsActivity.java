@@ -120,6 +120,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
         this.checkboxDiceCounter.setChecked(this.setting.getDiceCounter());
 
         this.enabledDarkMode = this.setting.getEnabledDarkTheme();
+        this.enabledDiceCount = this.setting.getDiceCounter();
         this.pathRingTone = this.setting.getPathRingTone();
         this.darkModeBtn.setText("Dark Mode : " + (Boolean.TRUE.equals(enabledDarkMode) ? "Yes" : "No"));
     }
@@ -277,6 +278,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
         this.setting.setVolatilityTime(this.inputVolatility.getText().toString());
         this.setting.setName(this.inputName.getText().toString());
         this.setting.setOpponent(this.inputOpponent.getText().toString());
+        this.setting.setDiceCounter(this.enabledDiceCount);
         this.setting.setEnabledDarkTheme(this.enabledDarkMode);
         this.setting.setPathRingTone(this.pathRingTone);
         this.service.save(this, this.setting);
