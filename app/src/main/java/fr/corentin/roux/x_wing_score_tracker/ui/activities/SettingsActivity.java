@@ -245,8 +245,6 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     {
         Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
         this.recreate();
-//        final Intent intent = new Intent(this, SettingsActivity.class);
-//        this.startActivity(intent);
     }
 
     @Override
@@ -269,7 +267,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     private void saveSettings()
     {
         String time = this.inputTime.getText().toString();
-        if ("".equals(time.trim()))
+        if (time.trim().isEmpty())
         {
             time = "75";
         }

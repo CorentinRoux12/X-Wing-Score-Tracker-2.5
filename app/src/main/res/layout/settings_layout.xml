@@ -136,7 +136,6 @@
                 app:layout_constraintRight_toRightOf="parent">
 
                 <TextView
-                    android:id="@+id/myList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"

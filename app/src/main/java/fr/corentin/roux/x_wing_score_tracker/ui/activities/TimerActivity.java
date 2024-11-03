@@ -159,11 +159,11 @@ public class TimerActivity extends AbstractActivity
         //Option d affichage du timer
         this.timerActivityModel.getGame().setHideTimeLeft((boolean) this.getIntent().getSerializableExtra("hideTimeLeft"));
         this.timerActivityModel.getGame().setHideTimer((boolean) this.getIntent().getSerializableExtra("hideTimer"));
-        if (this.timerActivityModel.getSetting().getName() != null && !"".equals(this.timerActivityModel.getSetting().getName().trim()))
+        if (this.timerActivityModel.getSetting().getName() != null && !this.timerActivityModel.getSetting().getName().trim().isEmpty())
         {
             this.timerActivityModel.getGame().setNamePlayer1(this.timerActivityModel.getSetting().getName());
         }
-        if (this.timerActivityModel.getSetting().getOpponent() != null && !"".equals(this.timerActivityModel.getSetting().getOpponent().trim()))
+        if (this.timerActivityModel.getSetting().getOpponent() != null && !this.timerActivityModel.getSetting().getOpponent().trim().isEmpty())
         {
             this.timerActivityModel.getGame().setNamePlayer2(this.timerActivityModel.getSetting().getOpponent());
         }

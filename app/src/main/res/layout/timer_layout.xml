@@ -101,7 +101,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/firstPlayerShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -279,7 +278,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -506,7 +504,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
 
                 <TextView
-                    android:id="@+id/DiceLibelle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -519,7 +516,6 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutRedTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -540,7 +536,6 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/RedLibelle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -565,7 +560,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutAttackDicesCrit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -649,7 +643,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutAttackDicesHit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -734,7 +727,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutAttackDicesEye"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -819,7 +811,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutAttackDicesBlank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -905,7 +896,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutGreenTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -926,7 +916,6 @@
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/GreenLibelle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -952,7 +941,6 @@
 
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutDefenseDicesEvade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -1036,7 +1024,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutDefenseDicesEye"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -1121,7 +1108,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayoutDefenseDicesBlank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -1218,7 +1204,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearDiceLayout">
 
                 <TextView
-                    android:id="@+id/List"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -1260,7 +1245,6 @@
                                 android:textStyle="bold" />
 
                             <LinearLayout
-                                android:id="@+id/listShip1Layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal">
@@ -1308,7 +1292,6 @@
                                 android:textStyle="bold" />
 
                             <LinearLayout
-                                android:id="@+id/listShip2Layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal">

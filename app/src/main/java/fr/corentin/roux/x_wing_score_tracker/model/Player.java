@@ -5,5 +5,5 @@ import java.io.Serializable;
 public enum Player implements Serializable, Persistable
 {
     ONE,
-    TWO;
+    TWO
 }

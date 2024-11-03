@@ -128,7 +128,7 @@ public class MainActivity extends AbstractActivity
     protected void initListeners()
     {
         this.btnStart.setOnClickListener(t -> {
-            if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().equals(""))
+            if (this.timer != null && this.timer.getText() != null && !this.timer.getText().toString().isEmpty())
             {
                 this.time = this.timer.getText().toString();
                 this.startTimerActivity();
@@ -212,7 +212,7 @@ public class MainActivity extends AbstractActivity
             final long defenseDice2 = this.random.nextInt(8);
             final long defenseDice3 = this.random.nextInt(8);
             final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
-            int basicTime = setting.getRandomTime() != null && !setting.getRandomTime().trim().equals("") ?
+            int basicTime = setting.getRandomTime() != null && !setting.getRandomTime().trim().isEmpty() ?
                     randomTimer :
                     75;
             basicTime = this.calculVolatility(attackDice, defenseDice, basicTime);

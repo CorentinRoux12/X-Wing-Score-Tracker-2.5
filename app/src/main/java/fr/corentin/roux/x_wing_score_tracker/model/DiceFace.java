@@ -10,15 +10,15 @@ public enum DiceFace
     DEFENSE_EYE("DEFENSE_EYE", 0.25, "Defense Eye", 6, false),
     DEFENSE_EVADE("DEFENSE_EVADE", 0.375, "Defense Evade", 5, false);
 
-    private String libelle;
+    private final String libelle;
 
-    private Double proba;
+    private final Double proba;
 
-    private String printLibelle;
+    private final String printLibelle;
 
-    private Integer ordre;
+    private final Integer ordre;
 
-    private boolean isAttack;
+    private final boolean isAttack;
 
     DiceFace(String libelle, Double proba, String printLibelle, Integer ordre, boolean isAttack)
     {

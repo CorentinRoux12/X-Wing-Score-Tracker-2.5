@@ -49,10 +49,6 @@ public class DiceCounter
         this.totalAttackPlayer2 = this.attackCritPlayer2 + this.attackHitPlayer2 + this.attackEyePlayer2 + this.attackBlankPlayer2;
         this.totalDefensePlayer2 = this.defenseEvadePlayer2 + this.defenseEyePlayer2 + this.defenseBlankPlayer2;
     }
-    //TODO a faire plus tard avec des champs spécialisé dessus
-    // final Integer totalAttackPlayer1 = attackCritPlayer1 + attackHitPlayer1 + attackEyePlayer1 + attackBlankPlayer1 + defenseEvadePlayer1 + defenseEyePlayer1 + defenseBlankPlayer1;
-    //        final Integer totalAttackPlayer2 = attackCritPlayer2 + attackHitPlayer2 + attackEyePlayer2 + attackBlankPlayer2 + defenseEvadePlayer2 + defenseEyePlayer2 + defenseBlankPlayer2;
-
 
     public void append(DiceCounter diceCounter)
     {

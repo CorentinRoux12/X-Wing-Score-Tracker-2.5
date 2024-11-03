@@ -67,6 +67,6 @@ public class Ship implements Persistable, Serializable {
     public enum Statut implements Persistable, Serializable {
         FULL,
         HALF,
-        DEAD;
+        DEAD
     }
 }
