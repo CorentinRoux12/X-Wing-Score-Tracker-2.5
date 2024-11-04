@@ -2,7 +2,8 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-public class Score implements Serializable {
+@Deprecated
+public class Score implements Persistable, Serializable {
 
     private int scoreGlobal = 0;
 

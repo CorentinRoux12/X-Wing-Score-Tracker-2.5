@@ -12,14 +12,8 @@
     <string name="_0">0</string>
     <string name="minutes">Minutes</string>
     <string name="Historical">Historical</string>
-    <string name="delete">Delete</string>
-    <string name="mission_rules">Mission Rules</string>
-    <string name="lessless">--</string>
-    <string name="plusplus">++</string>
-    <string name="plusplus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="less1">-1</string>
-    <string name="lessless2">-2</string>
+    <string name="plus1">+</string>
+    <string name="less1">-</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="settings">Settings</string>
@@ -49,4 +43,17 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="set_alarme">Set Alarm</string>
     <string name="list">List</string>
+    <string name="dicelibelle">Dices</string>
+    <string name="attackdice">Red</string>
+    <string name="defensedice">Green</string>
+    <string name="blank">Blank</string>
+    <string name="eye">Eye</string>
+    <string name="hit">Hit</string>
+    <string name="crit">Crit</string>
+    <string name="evade">Evade</string>
+    <string name="assault">Assault</string>
+    <string name="chance">Chance</string>
+    <string name="salvage">Salvage</string>
+    <string name="scramble">Scramble</string>
+    <string name="_75" translatable="false">75</string>
 </resources>

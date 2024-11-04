@@ -1,10 +1,17 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
-public class Setting implements Persistable, Serializable {
+import java.io.Serializable;
+
+@Entity
+public class Setting implements Persistable, Serializable
+{
+
+    @PrimaryKey//(autoGenerate = true)
+    private Integer id = 1;
 
     private String name;
 
@@ -20,14 +27,20 @@ public class Setting implements Persistable, Serializable {
 
     private String pathRingTone = "";
 
-   private List<Ship> listPlayer1 = new ArrayList<>();
+    private String listPlayer1 = "";
 
-   private List<Ship> listPlayer2 = new ArrayList<>();
+    private String listPlayer2 = "";
 
-    public Setting() {
+    private Boolean diceCounter = Boolean.TRUE;
+
+    public Setting()
+    {
     }
 
-    public Setting(String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, List<Ship> listPlayer1, List<Ship> listPlayer2) {
+    @Ignore
+    public Setting(Integer id, String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, String listPlayer1, String listPlayer2, Boolean diceCounter)
+    {
+        this.id = id;
         this.name = name;
         this.opponent = opponent;
         this.language = language;
@@ -37,77 +50,117 @@ public class Setting implements Persistable, Serializable {
         this.pathRingTone = pathRingTone;
         this.listPlayer1 = listPlayer1;
         this.listPlayer2 = listPlayer2;
+        this.diceCounter = diceCounter;
     }
 
-    public String getName() {
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
+
+    public String getName()
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public String getOpponent() {
+    public String getOpponent()
+    {
         return opponent;
     }
 
-    public void setOpponent(String opponent) {
+    public void setOpponent(String opponent)
+    {
         this.opponent = opponent;
     }
 
-    public String getLanguage() {
+    public String getLanguage()
+    {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(String language)
+    {
         this.language = language;
     }
 
-    public String getRandomTime() {
+    public String getRandomTime()
+    {
         return randomTime;
     }
 
-    public void setRandomTime(String randomTime) {
+    public void setRandomTime(String randomTime)
+    {
         this.randomTime = randomTime;
     }
 
-    public String getVolatilityTime() {
+    public String getVolatilityTime()
+    {
         return volatilityTime;
     }
 
-    public void setVolatilityTime(String volatilityTime) {
+    public void setVolatilityTime(String volatilityTime)
+    {
         this.volatilityTime = volatilityTime;
     }
 
-    public Boolean getEnabledDarkTheme() {
+    public Boolean getEnabledDarkTheme()
+    {
         return enabledDarkTheme;
     }
 
-    public void setEnabledDarkTheme(Boolean enabledDarkTheme) {
+    public void setEnabledDarkTheme(Boolean enabledDarkTheme)
+    {
         this.enabledDarkTheme = enabledDarkTheme;
     }
 
-    public String getPathRingTone() {
+    public String getPathRingTone()
+    {
         return pathRingTone;
     }
 
-    public void setPathRingTone(String pathRingTone) {
+    public void setPathRingTone(String pathRingTone)
+    {
         this.pathRingTone = pathRingTone;
     }
 
-    public List<Ship> getListPlayer1() {
+    public String getListPlayer1()
+    {
         return listPlayer1;
     }
 
-    public void setListPlayer1(List<Ship> listPlayer1) {
+    public void setListPlayer1(String listPlayer1)
+    {
         this.listPlayer1 = listPlayer1;
     }
 
-    public List<Ship> getListPlayer2() {
+    public String getListPlayer2()
+    {
         return listPlayer2;
     }
 
-    public void setListPlayer2(List<Ship> listPlayer2) {
+    public void setListPlayer2(String listPlayer2)
+    {
         this.listPlayer2 = listPlayer2;
     }
+
+    public Boolean getDiceCounter()
+    {
+        return diceCounter;
+    }
+
+    public void setDiceCounter(Boolean diceCounter)
+    {
+        this.diceCounter = diceCounter;
+    }
+
 }

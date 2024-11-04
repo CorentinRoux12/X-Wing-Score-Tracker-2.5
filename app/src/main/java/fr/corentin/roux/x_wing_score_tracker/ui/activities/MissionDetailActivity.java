@@ -1,9 +1,5 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.github.barteksc.pdfviewer.PDFView;
 
 import java.util.Locale;
@@ -12,22 +8,32 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 
-public class MissionDetailActivity extends AppCompatActivity {
+public class MissionDetailActivity extends AbstractActivity {
+
     private PDFView pdfView;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void initContentView() {
         this.setContentView(R.layout.mission_layout);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void findView() {
+        this.pdfView = this.findViewById(R.id.missionRules);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void initDatas() {
         final Mission mission = Mission.parseCode((Integer) this.getIntent().getSerializableExtra("mission"));
-
-        this.findView();
-
         if (mission != null) {
             String resource;
             if (Locale.getDefault().getCountry().toLowerCase().equals(Language.FRENCH.getCodeLanguage())) {
@@ -38,8 +44,7 @@ public class MissionDetailActivity extends AppCompatActivity {
             resource += mission.getRessource();
             resource += mission.getExtension();
 
-            this.pdfView.fitToWidth();
-            this.pdfView.documentFitsView();
+            this.pdfView.fitToWidth(1);
             this.pdfView.fromAsset(resource)
                     .enableSwipe(true)
                     .enableDoubletap(true)
@@ -50,8 +55,4 @@ public class MissionDetailActivity extends AppCompatActivity {
         }
     }
 
-
-    private void findView() {
-        this.pdfView = this.findViewById(R.id.missionRules);
-    }
 }

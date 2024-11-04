@@ -17,8 +17,8 @@
     <string name="lessless">--</string>
     <string name="plusplus">++</string>
     <string name="plusplus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="less1">-1</string>
+    <string name="plus1">+</string>
+    <string name="less1">-</string>
     <string name="lessless2">-2</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
@@ -49,5 +49,17 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="set_alarme">Régler l\'Alarme</string>
     <string name="list">Liste</string>
+    <string name="dicelibelle">Dés</string>
+    <string name="attackdice">Rouge</string>
+    <string name="defensedice">Vert</string>
+    <string name="assault">Assaut</string>
+    <string name="blank">Blank</string>
+    <string name="eye">Eye</string>
+    <string name="hit">Hit</string>
+    <string name="crit">Crit</string>
+    <string name="evade">Evade</string>
+    <string name="chance">Chance</string>
+    <string name="salvage">Salvage</string>
+    <string name="scramble">Scramble</string>
 
 </resources>

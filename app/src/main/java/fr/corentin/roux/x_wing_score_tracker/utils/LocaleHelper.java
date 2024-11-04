@@ -3,8 +3,6 @@ package fr.corentin.roux.x_wing_score_tracker.utils;
 import android.content.Context;
 import android.content.res.Configuration;
 
-import androidx.appcompat.app.AppCompatDelegate;
-
 import java.util.Locale;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
@@ -30,30 +28,15 @@ public class LocaleHelper {
         } else {
             language = Language.parseCodeIhm(setting.getLanguage());
         }
-        Locale locale;
 
-        switch (language) {
-            case FRENCH:
-                locale = Locale.FRENCH;
-                break;
-
-            case ITALIANO:
-                locale = Locale.ITALIAN;
-                break;
-            case SPANNISH:
-                locale = new Locale("es");
-                break;
-            case DEUTSCH:
-                locale = Locale.GERMAN;
-                break;
-            case CHINOIS:
-                locale = Locale.SIMPLIFIED_CHINESE;
-                break;
-            case ENGLISH:
-            default:
-                locale = Locale.ENGLISH;
-                break;
-        }
-        return locale;
+        return switch (language)
+        {
+            case FRENCH -> Locale.FRENCH;
+            case ITALIANO -> Locale.ITALIAN;
+            case SPANNISH -> new Locale("es");
+            case DEUTSCH -> Locale.GERMAN;
+            case CHINOIS -> Locale.SIMPLIFIED_CHINESE;
+            default -> Locale.ENGLISH;
+        };
     }
 }

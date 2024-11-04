@@ -38,8 +38,4 @@ public class TrackerApplication extends Application {
         MultiDex.install(this);
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
 }

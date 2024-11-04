@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgrondColor">
@@ -42,7 +43,7 @@
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/open_sans_light"
                     android:text="@string/no_mission"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/textColor"
                     android:textSize="40sp" />
             </LinearLayout>
 
@@ -100,7 +101,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/firstPlayerShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -211,6 +211,7 @@
 
             <LinearLayout
                 android:id="@+id/firstPlayerBtns"
+                style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
@@ -220,18 +221,20 @@
 
                 <Button
                     android:id="@+id/firstPlayer1"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="10sp"
+                    android:text="Player 1"
                     android:textColor="@color/textColor" />
 
                 <Button
                     android:id="@+id/firstPlayer2"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10sp"
+                    android:text="Player 2"
                     android:textColor="@color/textColor" />
             </LinearLayout>
 
@@ -249,7 +252,6 @@
                     android:id="@+id/playerOne"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="80dp"
                     android:fontFamily="@font/open_sans_light"
@@ -276,7 +278,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayoutScore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -339,8 +340,8 @@
                     android:layout_marginEnd="10dp"
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
-                    android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -360,8 +361,8 @@
                     android:layout_marginStart="10dp"
                     android:backgroundTint="@color/green"
                     android:text="@string/plus1"
-                    android:textColor="@color/black"
-                    android:textSize="10dp" />
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -381,7 +382,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/scorePlayerTwoKill"
@@ -401,7 +402,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plus1"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
@@ -425,7 +426,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="20sp" />
 
 
                 <TextView
@@ -446,7 +447,7 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plus1"
                     android:textColor="@color/black"
-                    android:textSize="10dp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -466,7 +467,7 @@
                     android:backgroundTint="@color/red"
                     android:text="@string/less1"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/scorePlayerTwoMission"
@@ -486,114 +487,830 @@
                     android:backgroundTint="@color/green"
                     android:text="@string/plus1"
                     android:textColor="@color/black"
-                    android:textSize="10sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
-            <TextView
+
+
+            <LinearLayout
+                android:id="@+id/linearDiceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:id="@+id/List"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_light"
-                android:text="@string/list"
+                android:orientation="vertical"
                 android:textAlignment="center"
-                android:textColor="@color/textColor"
-                android:textSize="30sp"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
 
-                <TableLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/open_sans_light"
+                    android:gravity="center"
+                    android:text="@string/dicelibelle"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreKill">
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal">
+                    <TextView
+                        android:id="@+id/totalRedPlayerOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp" />
 
-                        <TextView
-                            android:id="@+id/playerOneList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_light"
-                            android:text="@string/player_1"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColor"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:gravity="center"
+                        android:text="@string/attackdice"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-                        <LinearLayout
-                            android:id="@+id/listShip1Layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal">
+                    <TextView
+                        android:id="@+id/totalRedPlayerTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp" />
+                </LinearLayout>
 
-                            <ListView
-                                android:id="@+id/listShipPlayer1"
-                                style="@style/Widget.AppCompat.Light.ListView.DropDown"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:scrollbars="horizontal|vertical" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
 
-                        </LinearLayout>
-                    </TableRow>
+                    <Button
+                        android:id="@+id/btnLessPlayerOneAttackDicesCrit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
 
-                </TableLayout>
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneAttackDicesCrit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneAttackDicesCrit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/crit"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoAttackDicesCrit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoAttackDicesCrit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoAttackDicesCrit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneAttackDicesHit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneAttackDicesHit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneAttackDicesHit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/hit"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoAttackDicesHit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoAttackDicesHit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoAttackDicesHit"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneAttackDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneAttackDicesEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneAttackDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/eye"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoAttackDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoAttackDicesEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoAttackDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneAttackDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneAttackDicesBlank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp"
+                        tools:ignore="TooManyViews" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneAttackDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/blank"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoAttackDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoAttackDicesBlank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoAttackDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreKill">
+
+                    <TextView
+                        android:id="@+id/totalGreenPlayerOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="50dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:gravity="center"
+                        android:text="@string/defensedice"
+                        android:textAlignment="center"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/totalGreenPlayerTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneDefenseDicesEvade"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneDefenseDicesEvade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneDefenseDicesEvade"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/evade"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoDefenseDicesEvade"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoDefenseDicesEvade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoDefenseDicesEvade"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneDefenseDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneDefenseDicesEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneDefenseDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/eye"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoDefenseDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoDefenseDicesEye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoDefenseDicesEye"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:textAlignment="center"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayoutScoreMission">
+
+                    <Button
+                        android:id="@+id/btnLessPlayerOneDefenseDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+
+                    <TextView
+                        android:id="@+id/scorePlayerOneDefenseDicesBlank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerOneDefenseDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/blank"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/btnLessPlayerTwoDefenseDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:backgroundTint="@color/red"
+                        android:text="@string/less1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/scorePlayerTwoDefenseDicesBlank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/open_sans_light"
+                        android:text="@string/_0"
+                        android:textColor="@color/textColor"
+                        android:textSize="24sp" />
+
+
+                    <Button
+                        android:id="@+id/btnPlusPlayerTwoDefenseDicesBlank"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:backgroundTint="@color/green"
+                        android:text="@string/plus1"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearListLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:gravity="center"
+                android:orientation="vertical"
+                android:textAlignment="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearDiceLayout">
 
-                <TableLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/open_sans_light"
+                    android:gravity="center"
+                    android:text="@string/list"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColor"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/linearListLayout1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:gravity="center_horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
 
-                    <TableRow
+                    <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:gravity="center_horizontal">
 
-                        <TextView
-                            android:id="@+id/playerTwoList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/open_sans_light"
-                            android:text="@string/player_2"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColor"
-                            android:textSize="30sp"
-                            android:textStyle="bold" />
-
-                        <LinearLayout
-                            android:id="@+id/listShip2Layout"
+                        <TableRow
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal">
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
 
-                            <ListView
-                                android:id="@+id/listShipPlayer2"
-                                style="@style/Widget.AppCompat.Light.ListView.DropDown"
+                            <TextView
+                                android:id="@+id/playerOneList"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans_light"
+                                android:text="@string/player_1"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColor"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:scrollbars="horizontal|vertical" />
-                        </LinearLayout>
+                                android:layout_gravity="center_horizontal">
+
+                                <ListView
+                                    android:id="@+id/listShipPlayer1"
+                                    style="@style/Widget.AppCompat.Light.ListView.DropDown"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:scrollbars="horizontal|vertical" />
+
+                            </LinearLayout>
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearListLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="center_horizontal">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_horizontal">
+
+                            <TextView
+                                android:id="@+id/playerTwoList"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/open_sans_light"
+                                android:text="@string/player_2"
+                                android:textAlignment="center"
+                                android:textColor="@color/textColor"
+                                android:textSize="30sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal">
+
+                                <ListView
+                                    android:id="@+id/listShipPlayer2"
+                                    style="@style/Widget.AppCompat.Light.ListView.DropDown"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:scrollbars="horizontal|vertical" />
+                            </LinearLayout>
 
 
-                    </TableRow>
-                </TableLayout>
+                        </TableRow>
+                    </TableLayout>
+                </LinearLayout>
+
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

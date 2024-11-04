@@ -12,14 +12,8 @@
     <string name="_0">0</string>
     <string name="minutes">Minuti</string>
     <string name="Historical">Storico</string>
-    <string name="delete">Elimina</string>
-    <string name="mission_rules">Regole di missione</string>
-    <string name="lessless">--</string>
-    <string name="plusplus">++</string>
-    <string name="plusplus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="less1">-1</string>
-    <string name="lessless2">-2</string>
+    <string name="plus1">+</string>
+    <string name="less1">-</string>
     <string name="yes">sì</string>
     <string name="no">No</string>
     <string name="settings">Impostazioni</string>
@@ -49,5 +43,17 @@
     <string name="dark_mode">Modalità scura</string>
     <string name="set_alarme">Imposta sveglia</string>
     <string name="list">Elenco</string>
+    <string name="dicelibelle">Dadi</string>
+    <string name="attackdice">Dadi di attacco</string>
+    <string name="defensedice">Dadi di difesa</string>
+    <string name="assault">Assalto</string>
+    <string name="blank">Vuoto</string>
+    <string name="eye">Occhio</string>
+    <string name="hit">Colpo</string>
+    <string name="crit">Critico</string>
+    <string name="evade">Eludere</string>
+    <string name="chance">Opportunità</string>
+    <string name="salvage">Salvare</string>
+    <string name="scramble">Scramble</string>
 
 </resources>

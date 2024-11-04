@@ -2,7 +2,7 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-public enum Language implements Serializable {
+public enum Language implements Persistable, Serializable {
     CHINOIS("zh","中国人"),
     ITALIANO("it", "Italiano"),
     SPANNISH("es", "Español"),

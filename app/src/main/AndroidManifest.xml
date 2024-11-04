@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.corentin.roux.x_wing_score_tracker">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:debuggable="false"
@@ -16,8 +16,7 @@
         android:theme="@style/Theme.ScoreTracker">
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MainActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="stateHidden"
             android:exported="true"
             android:theme="@style/Theme.ScoreTracker.NoActionBar">
             <intent-filter>

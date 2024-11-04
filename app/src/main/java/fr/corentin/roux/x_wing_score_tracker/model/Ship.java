@@ -1,9 +1,10 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
+import androidx.room.Ignore;
+
 import java.io.Serializable;
 
-public class Ship implements Serializable {
-
+public class Ship implements Persistable, Serializable {
     String name;
 
     Integer points;
@@ -23,15 +24,17 @@ public class Ship implements Serializable {
         }
     }
 
-    public enum Statut{
-        FULL,
-        HALF,
-        DEAD;
+
+    public Ship(String name, Integer points, Statut statut) {
+        this.name = name;
+        this.points = points;
+        this.statut = statut;
     }
 
     public Ship() {
     }
 
+    @Ignore
     public Ship(String name, Integer points) {
         this.name = name;
         this.points = points;
@@ -59,5 +62,11 @@ public class Ship implements Serializable {
 
     public void setStatut(Statut statut) {
         this.statut = statut;
+    }
+
+    public enum Statut implements Persistable, Serializable {
+        FULL,
+        HALF,
+        DEAD
     }
 }

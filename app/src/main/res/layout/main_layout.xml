@@ -66,7 +66,7 @@
                         android:gravity="center_vertical"
                         android:hint="@string/minutes"
                         android:inputType="number"
-                        android:text="75"
+                        android:text="@string/_75"
                         android:textColor="@color/textColor"
                         android:textSize="24sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -76,6 +76,7 @@
 
             <LinearLayout
                 android:id="@+id/layoutBtnStart"
+                style="?android:attr/buttonBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -86,6 +87,7 @@
 
                 <Button
                     android:id="@+id/btnRandom"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
@@ -95,6 +97,7 @@
 
                 <Button
                     android:id="@+id/btnStart"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green"
@@ -145,6 +148,86 @@
                     tools:ignore="RtlCompat" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/missionLane1"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutBtnStart">
+
+                <Button
+                    android:id="@+id/btnAssault"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/assault"
+                    android:textColor="@color/textColor"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
+
+                <Button
+                    android:id="@+id/btnChance"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/chance"
+                    android:textColor="@color/textColor"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/missionLane2"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/missionLane1">
+
+                <Button
+                    android:id="@+id/btnSalvage"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5sp"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/salvage"
+                    android:textColor="@color/textColor"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
+
+                <Button
+                    android:id="@+id/btnScramble"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:text="@string/scramble"
+                    android:textColor="@color/textColor"
+
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btnRandomMission"
                 android:layout_width="wrap_content"
@@ -156,17 +239,15 @@
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
+                app:layout_constraintTop_toBottomOf="@+id/missionLane2" />
 
             <TextView
                 android:id="@+id/textViewRandomMission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:fontFamily="@font/open_sans_light"
                 android:textColor="@color/textColor"
-
-                android:textSize="@dimen/subsubtitle_text_size"
+                android:textSize="@dimen/title_text_size"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnRandomMission" />
@@ -178,12 +259,12 @@
         android:id="@+id/btnSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="15dp"
         android:backgroundTint="@color/grey"
         android:text="@string/settings"
-        android:textColor="@color/textColor"
+        android:textColor="@color/backgrondColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -192,13 +273,11 @@
         android:id="@+id/btnHistorique"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
         android:backgroundTint="@color/grey"
         android:text="@string/Historical"
-        android:textColor="@color/textColor"
-
+        android:textColor="@color/backgrondColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

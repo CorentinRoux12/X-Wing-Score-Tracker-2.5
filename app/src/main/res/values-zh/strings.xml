@@ -12,14 +12,8 @@
     <string name="_0">0</string>
     <string name="minutes">分钟</string>
     <string name="Historical">历史的</string>
-    <string name="delete">删除</string>
-    <string name="mission_rules">任务规则</string>
-    <string name="lessless">--</string>
-    <string name="plusplus">++</string>
-    <string name="plusplus2">+2</string>
-    <string name="plus1">+1</string>
-    <string name="less1">-1</string>
-    <string name="lessless2">-2</string>
+    <string name="plus1">+</string>
+    <string name="less1">-</string>
     <string name="yes">是的</string>
     <string name="no">不</string>
     <string name="settings">设置</string>
@@ -49,5 +43,17 @@
     <string name="dark_mode">深色模式</string>
     <string name="set_alarme">设置闹钟</string>
     <string name="list">列表</string>
+    <string name="dicelibelle">骰子</string>
+    <string name="attackdice">攻击骰子</string>
+    <string name="defensedice">防御骰子</string>
+    <string name="assault">突击</string>
+    <string name="blank">空白的</string>
+    <string name="eye">眼睛</string>
+    <string name="hit">打</string>
+    <string name="crit">暴击</string>
+    <string name="evade">逃避</string>
+    <string name="chance">机会</string>
+    <string name="salvage">打捞</string>
+    <string name="scramble">争夺</string>
 
 </resources>

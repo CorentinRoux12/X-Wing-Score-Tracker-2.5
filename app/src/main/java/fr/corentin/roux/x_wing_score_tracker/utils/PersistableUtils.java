@@ -3,19 +3,13 @@ package fr.corentin.roux.x_wing_score_tracker.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
+import io.vavr.control.Try;
 
 public class PersistableUtils {
 
@@ -51,50 +45,24 @@ public class PersistableUtils {
      * Permet de récupérer une liste de l'objet passé en param, dans le fichier ciblé
      *
      * @param filename le nom du fichier dans lequel on va lire les datas
-     * @param javaType le type de collection a remonté par la méthode
-     * @param <T>      le type paramétrable qui doit être un {@link Persistable}
-     * @return Une liste d'objet {@link Persistable} dans le fichier {@field filename}
-     */
-    public <T extends Persistable> List<T> get(final String filename, final CollectionType javaType, final Context context) {
-        List<T> result = null;
-        try {
-            result = new ObjectMapper().readValue(context.openFileInput(filename), javaType);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération de liste des données");
-        }
-        return result;
-    }
-
-    /**
-     * Permet de récupérer une liste de l'objet passé en param, dans le fichier ciblé
-     *
-     * @param filename le nom du fichier dans lequel on va lire les datas
      * @param clazz    le type d'objet a remonté par la méthode
      * @param <T>      le type paramétrable qui doit être un {@link Persistable}
-     * @return Un objet {@link Persistable} dans le fichier {@field filename}
+     * @return Un objet {@link Persistable} dans le fichier {field filename}
      */
     public <T extends Persistable> T get(final String filename, final Class<T> clazz, final Context context) {
-        T result = null;
-        try {
-//            T cacheFile = this.mapper.readValue(new File(context.getCacheDir(), filename), clazz);
-//            result = cacheFile;
-            result = new ObjectMapper().readValue(new FileInputStream(new File(context.getFilesDir(), filename)), clazz);
-//            result = new ObjectMapper().readValue(context.openFileInput(filename), clazz);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération des données");
-        }
-        return result;
-    }
-
-    /**
-     * Permet d'écrire une liste de l'objet passé en param, dans le fichier ciblé
-     *
-     * @param filename le nom du fichier dans lequel on va écrire les datas
-     * @param list     une liste d objet <T> qui doit etre ecrit dans le fichier ciblé
-     * @param <T>      le type paramétrable qui doit être un {@link Persistable}
-     */
-    public <T extends Persistable> void write(final String filename, final List<T> list, final Context context) {
-        this.writeJsonToFileSystem(filename, list, context);
+        return Try.of(() -> filename)
+                .map(file -> new File(context.getCacheDir(), file))
+                .map(t -> {
+                    try {
+                        return this.mapper.readValue(t.toURI().toURL(), clazz);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+//                .mapTry(context::openFileInput)
+//                .mapTry(t -> this.mapper.reader().readValue(t, clazz))
+                .onFailure(throwable -> Log.e(this.getClass().getSimpleName(), "Erreur lors de la récupération des données.", throwable))
+                .getOrNull();
     }
 
     /**
@@ -115,21 +83,18 @@ public class PersistableUtils {
      * @param object   l'object à écrire
      */
     private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context) {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(new File(context.getFilesDir(),filename));
-//            fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
-            new ObjectMapper().writer().writeValue(fos, object);
-        } catch (final IOException e) {
-            Log.e(this.getClass().getSimpleName(), "Erreur lors de l'écriture du fichier json");
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (final IOException e) {
-                Log.e(this.getClass().getSimpleName(), "Erreur lors de l' écriture du fichier json");
-            }
-        }
+        Try.of(() -> filename)
+                .andThen(file -> {
+                    try {
+                        this.mapper.writeValue(new File(context.getCacheDir(), file), object);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+//                .map(file -> new File(context.getCacheDir(), file))
+//                .mapTry(t -> this.mapper.writer().writeValue(t.toURI().toURL(), object))
+//                .mapTry(file -> context.openFileOutput(file, Context.MODE_PRIVATE))
+//                .andThenTry(t -> this.mapper.writer().writeValue(t, object))
+                .onFailure(throwable -> Log.e(this.getClass().getSimpleName(), "Erreur lors de l'écriture du fichier json", throwable));
     }
 }
