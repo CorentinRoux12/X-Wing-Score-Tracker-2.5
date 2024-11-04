@@ -58,13 +58,13 @@ public class ShipListAdapter extends BaseAdapter {
             try {
                 name = pilot.getString("name");//e
             } catch (Exception e) {
-                name = pilot.getString("e");
+                name = pilot.getString("a");
             }
             int point;
             try {
                 point = pilot.getInt("points");//f
             } catch (Exception e) {
-                point = pilot.getInt("f");//f
+                point = pilot.getInt("b");//f
             }
             listPlayer.add(new Ship(name, point));
         }

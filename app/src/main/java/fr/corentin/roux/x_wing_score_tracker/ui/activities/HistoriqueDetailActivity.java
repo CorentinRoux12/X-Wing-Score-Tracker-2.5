@@ -224,7 +224,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 diceStatsPlayer1 = diceStats.getJSONObject("diceStatsPlayer1");//h
             } catch (Exception e)
             {
-                diceStatsPlayer1 = diceStats.getJSONObject("b");
+                diceStatsPlayer1 = diceStats.getJSONObject("a");
             }
             Map<DiceFace, Integer> playerOneDiceStat = extractStat(diceStatsPlayer1);
             // PLAYER 2
@@ -234,7 +234,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 diceStatsPlayer2 = diceStats.getJSONObject("diceStatsPlayer2");//h
             } catch (Exception e)
             {
-                diceStatsPlayer2 = diceStats.getJSONObject("c");
+                diceStatsPlayer2 = diceStats.getJSONObject("b");
             }
             final Map<DiceFace, Integer> playerTwoDiceStat = extractStat(diceStatsPlayer2);
 
@@ -252,7 +252,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             ATTACK_EYE = diceStatsPlayer1.getInt("ATTACK_EYE");//h
         } catch (Exception e)
         {
-            ATTACK_EYE = diceStatsPlayer1.getInt("b");
+            ATTACK_EYE = diceStatsPlayer1.getInt("a");
         }
         int ATTACK_BLANK;
         try
@@ -260,7 +260,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             ATTACK_BLANK = diceStatsPlayer1.getInt("ATTACK_BLANK");//h
         } catch (Exception e)
         {
-            ATTACK_BLANK = diceStatsPlayer1.getInt("c");
+            ATTACK_BLANK = diceStatsPlayer1.getInt("b");
         }
         int ATTACK_CRIT;
         try
@@ -268,7 +268,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             ATTACK_CRIT = diceStatsPlayer1.getInt("ATTACK_CRIT");//h
         } catch (Exception e)
         {
-            ATTACK_CRIT = diceStatsPlayer1.getInt("h");
+            ATTACK_CRIT = diceStatsPlayer1.getInt("g");
         }
         int ATTACK_HIT;
         try
@@ -276,7 +276,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             ATTACK_HIT = diceStatsPlayer1.getInt("ATTACK_HIT");//h
         } catch (Exception e)
         {
-            ATTACK_HIT = diceStatsPlayer1.getInt("d");
+            ATTACK_HIT = diceStatsPlayer1.getInt("c");
         }
         //DEFENSE PLAYER 1
         int DEFENSE_EYE;
@@ -285,7 +285,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             DEFENSE_EYE = diceStatsPlayer1.getInt("DEFENSE_EYE");//h
         } catch (Exception e)
         {
-            DEFENSE_EYE = diceStatsPlayer1.getInt("f");
+            DEFENSE_EYE = diceStatsPlayer1.getInt("e");
         }
         int DEFENSE_BLANK;
         try
@@ -293,7 +293,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             DEFENSE_BLANK = diceStatsPlayer1.getInt("DEFENSE_BLANK");//h
         } catch (Exception e)
         {
-            DEFENSE_BLANK = diceStatsPlayer1.getInt("g");
+            DEFENSE_BLANK = diceStatsPlayer1.getInt("f");
         }
         int DEFENSE_EVADE;
         try
@@ -301,7 +301,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             DEFENSE_EVADE = diceStatsPlayer1.getInt("DEFENSE_EVADE");//h
         } catch (Exception e)
         {
-            DEFENSE_EVADE = diceStatsPlayer1.getInt("e");
+            DEFENSE_EVADE = diceStatsPlayer1.getInt("d");
         }
 
         final Map<DiceFace, Integer> map = new HashMap<>();
@@ -332,7 +332,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 roundNumber = round.getString("roundNumber");//h
             } catch (Exception e)
             {
-                roundNumber = round.getString("b");
+                roundNumber = round.getString("a");
             }
             //SCORE P1
             JSONObject scoreP1;
@@ -341,7 +341,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreP1 = round.getJSONObject("scorePlayer1");//h
             } catch (Exception e)
             {
-                scoreP1 = round.getJSONObject("c");
+                scoreP1 = round.getJSONObject("b");
             }
             int scoreGP1;
             try
@@ -349,7 +349,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreGP1 = scoreP1.getInt("scoreGlobal");//h
             } catch (Exception e)
             {
-                scoreGP1 = scoreP1.getInt("b");
+                scoreGP1 = scoreP1.getInt("a");
             }
             int scoreKP1;
             try
@@ -357,7 +357,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreKP1 = scoreP1.getInt("scoreKill");//h
             } catch (Exception e)
             {
-                scoreKP1 = scoreP1.getInt("c");
+                scoreKP1 = scoreP1.getInt("b");
             }
             int scoreMP1;
             try
@@ -365,7 +365,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreMP1 = scoreP1.getInt("scoreMission");//h
             } catch (Exception e)
             {
-                scoreMP1 = scoreP1.getInt("d");
+                scoreMP1 = scoreP1.getInt("c");
             }
             final Score scorePlayer1 = new Score(scoreGP1, scoreKP1, scoreMP1);
             //SCORE P2
@@ -375,7 +375,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreP2 = round.getJSONObject("scorePlayer2");//h
             } catch (Exception e)
             {
-                scoreP2 = round.getJSONObject("d");
+                scoreP2 = round.getJSONObject("c");
             }
             int scoreGP2;
             try
@@ -383,7 +383,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreGP2 = scoreP2.getInt("scoreGlobal");//h
             } catch (Exception e)
             {
-                scoreGP2 = scoreP2.getInt("b");
+                scoreGP2 = scoreP2.getInt("a");
             }
             int scoreKP2;
             try
@@ -391,7 +391,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreKP2 = scoreP2.getInt("scoreKill");//h
             } catch (Exception e)
             {
-                scoreKP2 = scoreP2.getInt("c");
+                scoreKP2 = scoreP2.getInt("b");
             }
             int scoreMP2;
             try
@@ -399,7 +399,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 scoreMP2 = scoreP2.getInt("scoreMission");//h
             } catch (Exception e)
             {
-                scoreMP2 = scoreP2.getInt("d");
+                scoreMP2 = scoreP2.getInt("c");
             }
             final Score scorePlayer2 = new Score(scoreGP2, scoreKP2, scoreMP2);
             //FP
@@ -409,7 +409,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 firstPlayer = round.getString("firstPlayer");//h
             } catch (Exception e)
             {
-                firstPlayer = round.getString("e");
+                firstPlayer = round.getString("d");
             }
             //Time
             int time;
@@ -418,7 +418,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 time = round.getInt("time");//i
             } catch (Exception e)
             {
-                time = round.getInt("f");
+                time = round.getInt("e");
             }
             rounds.add(new Round(roundNumber, scorePlayer1, scorePlayer2, firstPlayer, time));
         }
