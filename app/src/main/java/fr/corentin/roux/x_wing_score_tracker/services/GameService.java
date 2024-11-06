@@ -65,7 +65,8 @@ public class GameService
 
     public void delete(final Context context, final Game game)
     {
-        daoRoom.getDatabaseAccess(context).iGameDaoRoom().delete(game);
+        Try.of(() -> daoRoom.getDatabaseAccess(context))
+                .andThenTry(dao -> dao.iGameDaoRoom().delete(game));
     }
 
 }

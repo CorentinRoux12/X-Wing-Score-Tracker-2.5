@@ -11,8 +11,8 @@ android {
         applicationId "fr.corentin.roux.score_tracker"
         minSdkVersion 24
         targetSdkVersion 34
-        versionCode 60
-        versionName "1.7.6"
+        versionCode VERSION_CODE.toInteger()
+        versionName VERSION_MAJEUR + "." + VERSION_MINEUR + "." + VERSION_PATCH
         multiDexEnabled true
         ndk {
             // Filter for architectures supported by Flutter.
@@ -30,10 +30,6 @@ android {
 
     buildTypes {
         release {
-            ndk {
-                debugSymbolLevel 'FULL'
-            }
-
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
             minifyEnabled true
@@ -48,15 +44,41 @@ android {
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-rules.pro'
+            debuggable false
+        }
+
+        debug {
+            debuggable true
         }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+//        sourceCompatibility JavaVersion.VERSION_17
+//        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildFeatures {
         viewBinding true
+    }
+
+    //apply this at the end of the file
+    applicationVariants.configureEach { variant ->
+        def buildType = variant.buildType.name
+        //increment only for 'release' builds
+        if ('release' == buildType) {
+            def versionCode = VERSION_CODE.toInteger()
+            versionCode += 1
+            ant.propertyfile(file: "../gradle.properties") {
+                entry(key: "VERSION_CODE", value: versionCode)
+            }
+
+            def versionPatch = VERSION_PATCH.toInteger()
+            versionPatch += 1
+            ant.propertyfile(file: "../gradle.properties") {
+                entry(key: "VERSION_PATCH", value: versionPatch)
+            }
+        }
     }
 }
 
@@ -92,24 +114,24 @@ dependencies {
 
     def room_version = "2.5.0"
 
-    implementation("androidx.room:room-runtime:"+room_version)
-    annotationProcessor("androidx.room:room-compiler:"+room_version)
+    implementation("androidx.room:room-runtime:" + room_version)
+    annotationProcessor("androidx.room:room-compiler:" + room_version)
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:"+room_version)
+    implementation("androidx.room:room-ktx:" + room_version)
 
     // optional - RxJava2 support for Room
-    implementation("androidx.room:room-rxjava2:"+room_version)
+    implementation("androidx.room:room-rxjava2:" + room_version)
 
     // optional - RxJava3 support for Room
-    implementation("androidx.room:room-rxjava3:"+room_version)
+    implementation("androidx.room:room-rxjava3:" + room_version)
 
     // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation("androidx.room:room-guava:"+room_version)
+    implementation("androidx.room:room-guava:" + room_version)
 
     // optional - Test helpers
-    testImplementation("androidx.room:room-testing:"+room_version)
+    testImplementation("androidx.room:room-testing:" + room_version)
 
     // optional - Paging 3 Integration
-    implementation("androidx.room:room-paging:"+room_version)
+    implementation("androidx.room:room-paging:" + room_version)
 }
