@@ -3,12 +3,10 @@ package fr.corentin.roux.x_wing_score_tracker.services;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.Arrays;
 import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.dao.DaoRoom;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
-import io.vavr.control.Try;
 
 public class GameService
 {
@@ -45,28 +43,47 @@ public class GameService
 
     public List<Game> getAll(final Context context)
     {
-        return Try.of(() -> daoRoom.getDatabaseAccess(context).iGameDaoRoom().findAll())
-                .getOrElse(List.of());
+        try
+        {
+            return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findAll();
+        } catch (final Throwable throwable)
+        {
+            return List.of();
+        }
     }
 
     public Game getById(final Context context, final int id)
     {
-        return Try.of(() -> daoRoom.getDatabaseAccess(context).iGameDaoRoom().findById(id))
-                .getOrElse(new Game());
+        try
+        {
+            return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findById(id);
+        } catch (final Throwable throwable)
+        {
+            return new Game();
+        }
     }
 
     public void save(final Context context, final Game... game)
     {
-        Arrays.stream(game)
-                .map(Game::serializeForSave)
-                .forEach(gameSanitize -> Try.of(() -> daoRoom.getDatabaseAccess(context))
-                        .andThenTry(t-> t.iGameDaoRoom().save(gameSanitize)));
+        for (Game game1 : game)
+        {
+            try
+            {
+                daoRoom.getDatabaseAccess(context).iGameDaoRoom().save(game1.serializeForSave());
+            } catch (final Throwable ignored)
+            {
+            }
+        }
     }
 
     public void delete(final Context context, final Game game)
     {
-        Try.of(() -> daoRoom.getDatabaseAccess(context))
-                .andThenTry(dao -> dao.iGameDaoRoom().delete(game));
+        try
+        {
+            daoRoom.getDatabaseAccess(context).iGameDaoRoom().delete(game);
+        } catch (final Throwable ignored)
+        {
+        }
     }
 
 }
