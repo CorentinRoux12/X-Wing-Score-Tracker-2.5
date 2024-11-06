@@ -2,14 +2,9 @@ package fr.corentin.roux.x_wing_score_tracker.services;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.Optional;
 
 import fr.corentin.roux.x_wing_score_tracker.dao.DaoRoom;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
-import io.vavr.control.Option;
-import io.vavr.control.Try;
 
 public class SettingService
 {
@@ -45,17 +40,25 @@ public class SettingService
 
     public Setting get(final Context context)
     {
-        return Try.of(() -> this.daoRoom.getDatabaseAccess(context).iSettingDaoRoom().findAll().stream()
-                        .findFirst())
-                .get()
-                .orElse(new Setting());
+        try
+        {
+            return this.daoRoom.getDatabaseAccess(context).iSettingDaoRoom().findAll().stream()
+                    .findFirst()
+                    .get();
+        } catch (final Throwable throwable)
+        {
+            return new Setting();
+        }
     }
 
     public void save(final Context context, final Setting setting)
     {
-        Try.of(() -> daoRoom.getDatabaseAccess(context))
-                .andThenTry(t -> t.iSettingDaoRoom().save(setting));
+        try
+        {
+            this.daoRoom.getDatabaseAccess(context).iSettingDaoRoom().save(setting);
+        } catch (Throwable ignored)
+        {
+
+        }
     }
-
-
 }

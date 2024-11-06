@@ -31,7 +31,7 @@ public class Setting implements Persistable, Serializable
 
     private String listPlayer2 = "";
 
-    private Boolean diceCounter = Boolean.TRUE;
+    private Boolean diceCounter = Boolean.FALSE;
 
     public Setting()
     {

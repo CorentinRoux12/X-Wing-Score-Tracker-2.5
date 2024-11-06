@@ -3,10 +3,11 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
-        android:debuggable="false"
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_app"
@@ -16,26 +17,32 @@
         android:theme="@style/Theme.ScoreTracker">
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MainActivity"
-            android:windowSoftInputMode="stateHidden"
             android:exported="true"
-            android:theme="@style/Theme.ScoreTracker.NoActionBar">
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity"
+        <activity
+            android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity"
             android:configChanges="orientation"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MissionDetailActivity"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.SettingsActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MissionDetailActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.SettingsActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
