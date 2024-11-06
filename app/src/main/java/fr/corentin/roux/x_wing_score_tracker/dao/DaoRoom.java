@@ -6,8 +6,6 @@ import androidx.room.Room;
 
 import java.util.Objects;
 
-import fr.corentin.roux.x_wing_score_tracker.utils.Converters;
-
 public class DaoRoom {
 
     private static DaoRoom instance;
