@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -36,6 +37,7 @@ import fr.corentin.roux.x_wing_score_tracker.ui.activities.model.TimerActivityMo
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.ShipListAdapter;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
 import fr.corentin.roux.x_wing_score_tracker.utils.UIUtils;
+import io.vavr.control.Try;
 import lombok.NonNull;
 
 /**
@@ -757,7 +759,13 @@ public class TimerActivity extends AbstractActivity
     {
         super.onRestoreInstanceState(savedInstanceState);
 
-        this.timerActivityModel = (TimerActivityModel) savedInstanceState.getSerializable("timerActivityModel");
+        this.timerActivityModel = Try.of(() -> savedInstanceState.getSerializable("timerActivityModel"))
+                .map(TimerActivityModel.class::cast)
+                .onFailure(throwable -> {
+                    Log.e("onRestoreInstanceState", "An error occurred while reloading the game.", throwable);
+                    Toast.makeText(this, "An error occurred while reloading the game.", Toast.LENGTH_LONG).show();
+                })
+                .getOrElse(new TimerActivityModel());
 
         if (this.timerActivityModel.isTimerStart())
         {
