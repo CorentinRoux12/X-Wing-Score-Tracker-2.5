@@ -12,14 +12,8 @@
     <string name="_0">0</string>
     <string name="minutes">Minutes</string>
     <string name="Historical">Historique</string>
-    <string name="delete">Supprimer</string>
-    <string name="mission_rules">Règles des Missions</string>
-    <string name="lessless">--</string>
-    <string name="plusplus">++</string>
-    <string name="plusplus2">+2</string>
     <string name="plus1">+</string>
     <string name="less1">-</string>
-    <string name="lessless2">-2</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="settings">Paramètre</string>
