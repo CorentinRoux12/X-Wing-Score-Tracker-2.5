@@ -46,6 +46,8 @@ public class LocaleHelper
                 return Locale.GERMAN;
             case CHINOIS:
                 return Locale.SIMPLIFIED_CHINESE;
+            case POLSKI:
+                return new Locale("pl");
             default:
                 return Locale.ENGLISH;
         }
