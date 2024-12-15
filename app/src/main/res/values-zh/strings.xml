@@ -55,5 +55,8 @@
     <string name="chance">机会</string>
     <string name="salvage">打捞</string>
     <string name="scramble">争夺</string>
+    <string name="dice_stats_counter">骰子统计计数器</string>
+    <string name="import_xws_list">导入XWS列表</string>
+    <string name="reset_xws">重置 XWS 列表</string>
 
 </resources>

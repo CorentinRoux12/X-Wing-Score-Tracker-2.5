@@ -26,24 +26,6 @@
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/subsubtitle_text_size" />
 
-            <LinearLayout
-                android:id="@+id/darkMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/primaryTitle">
-
-                <Button
-                    android:id="@+id/darkModeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:text="@string/dark_mode"
-                    android:textColor="@color/textColor" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -73,6 +55,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/primaryTitle">
 
                 <CheckBox
+                    android:id="@+id/darkModeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:buttonTint="@color/black"
+                    android:fontFamily="@font/open_sans_light"
+                    android:gravity="center"
+                    android:text="@string/dark_mode"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/textColor"
+
+                    android:textSize="@dimen/normal_text"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/primaryTitle">
+
+                <CheckBox
                     android:id="@+id/checkboxDiceCounter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -80,7 +87,7 @@
                     android:buttonTint="@color/black"
                     android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
-                    android:text="Enable Dice Stats Counter"
+                    android:text="@string/dice_stats_counter"
                     android:textAlignment="textStart"
                     android:textColor="@color/textColor"
 
@@ -139,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="List :"
+                    android:text="@string/list"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/subsubtitle_text_size" />
 
@@ -149,7 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Import XWS List"
+                    android:text="@string/import_xws_list"
                     android:textColor="@color/textColor" />
 
                 <Button
@@ -158,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Reset XWS"
+                    android:text="@string/reset_xws"
                     android:textColor="@color/textColor" />
             </LinearLayout>
 
@@ -213,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
-                    android:text="List: "
+                    android:text="@string/list"
                     android:textColor="@color/textColor"
                     android:textSize="@dimen/subsubtitle_text_size" />
 

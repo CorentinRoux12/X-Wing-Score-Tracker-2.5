@@ -50,7 +50,6 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     private TextInputEditText inputOpponent;
     private TextInputEditText inputTime;
     private TextInputEditText inputVolatility;
-    private Button darkModeBtn;
     private Button alarmeSong;
     private Spinner language;
     private String langue;
@@ -58,6 +57,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     private Boolean enabledDiceCount;
     private String pathRingTone;
     private Setting setting;
+    private CheckBox checkboxdarkMode;
     private CheckBox checkboxDiceCounter;
 
     private Button myListImport;
@@ -118,17 +118,17 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
         this.inputTime.setText(this.setting.getRandomTime());
         this.inputVolatility.setText(this.setting.getVolatilityTime());
         this.checkboxDiceCounter.setChecked(this.setting.getDiceCounter());
+        this.checkboxdarkMode.setChecked(this.setting.getEnabledDarkTheme());
 
         this.enabledDarkMode = this.setting.getEnabledDarkTheme();
         this.enabledDiceCount = this.setting.getDiceCounter();
         this.pathRingTone = this.setting.getPathRingTone();
-        this.darkModeBtn.setText("Dark Mode : " + (Boolean.TRUE.equals(enabledDarkMode) ? "Yes" : "No"));
     }
 
     @Override
     protected void initListeners()
     {
-        this.darkModeBtn.setOnClickListener(t -> {
+        this.checkboxdarkMode.setOnClickListener(t -> {
             if (enabledDarkMode == setting.getEnabledDarkTheme())
             {
                 this.enabledDarkMode = !this.enabledDarkMode;
@@ -255,7 +255,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
         this.language = this.findViewById(R.id.language);
         this.inputName = this.findViewById(R.id.inputName);
         this.inputOpponent = this.findViewById(R.id.inputOpponent);
-        this.darkModeBtn = this.findViewById(R.id.darkModeBtn);
+        this.checkboxdarkMode = this.findViewById(R.id.darkModeBtn);
         this.alarmeSong = this.findViewById(R.id.setAlarme);
         this.myListImport = this.findViewById(R.id.myListImport);
         this.opponentListImport = this.findViewById(R.id.opponentListImport);
