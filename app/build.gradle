@@ -4,13 +4,13 @@ plugins {
 
 android {
     namespace "fr.corentin.roux.x_wing_score_tracker"
-    compileSdkVersion 34
+    compileSdkVersion 35
     buildToolsVersion '34.0.0'
 
     defaultConfig {
         applicationId "fr.corentin.roux.score_tracker"
         minSdkVersion 24
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode VERSION_CODE.toInteger()
         versionName VERSION_MAJEUR + "." + VERSION_MINEUR + "." + VERSION_PATCH
         multiDexEnabled true

@@ -46,6 +46,7 @@ public class MainActivity extends AbstractActivity
     private Button btnChance;
     private Button btnSalvage;
     private Button btnScramble;
+    private Button btnKnowledge;
     private Button btnRandomMission;
     private TextView textViewRandomMission;
     private Mission mission;
@@ -152,7 +153,7 @@ public class MainActivity extends AbstractActivity
         this.checkHideTimer.setOnClickListener(t -> this.timerHideCheck = this.checkHideTimer.isChecked());
         this.checkHideTimeLeft.setOnClickListener(t -> this.timeLeftHideCheck = this.checkHideTimeLeft.isChecked());
         this.btnRandomMission.setOnClickListener(t -> {
-            this.mission = Mission.parseCode(this.random.nextInt(4) + 1);
+            this.mission = Mission.parseCode(this.random.nextInt(5) + 1);
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
             Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
         });
@@ -173,6 +174,11 @@ public class MainActivity extends AbstractActivity
         });
         this.btnScramble.setOnClickListener(t -> {
             this.mission = Mission.SCRAMBLE;
+            this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
+            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+        });
+        this.btnKnowledge.setOnClickListener(t -> {
+            this.mission = Mission.KNOWLEDGE;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
             Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
         });
@@ -286,6 +292,7 @@ public class MainActivity extends AbstractActivity
         this.btnChance = this.findViewById(R.id.btnChance);
         this.btnSalvage = this.findViewById(R.id.btnSalvage);
         this.btnScramble = this.findViewById(R.id.btnScramble);
+        this.btnKnowledge = this.findViewById(R.id.btnKnowledge);
         this.textViewRandomMission = this.findViewById(R.id.textViewRandomMission);
         this.checkHideTimeLeft = this.findViewById(R.id.checkHideTimeLeft);
     }

@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 public enum Mission implements Persistable, Serializable {
 
-    NO_MISSION("No Mission", 0, null, null),
-    SATELLITE("Assault At The Satellite Array", 1, "assault", ".pdf"),
-    ENGAGEMENT("Chance Engagement", 2, "engagement", ".pdf"),
-    SALVAGE("Salvage Mission", 3, "salvage", ".pdf"),
-    SCRAMBLE("Scramble The Transmissions", 4, "scramble", ".pdf");
+    NO_MISSION("No Mission", 0, "scenarios", ".pdf",0),
+    SATELLITE("Assault At The Satellite Array", 1, "scenarios", ".pdf",2),
+    ENGAGEMENT("Chance Engagement", 2, "scenarios", ".pdf",3),
+    SALVAGE("Salvage Mission", 3, "scenarios", ".pdf",4),
+    SCRAMBLE("Scramble The Transmissions", 4, "scenarios", ".pdf",5),
+    KNOWLEDGE("Ancient Knowledge", 5, "scenarios", ".pdf",6);
 
     private final String libelle;
 
@@ -17,6 +18,8 @@ public enum Mission implements Persistable, Serializable {
     private final String ressource;
 
     private final String extension;
+
+    private final int page;
 
     public static Mission parseCode(final int code) {
         for (final Mission mission : Mission.values()) {
@@ -27,11 +30,12 @@ public enum Mission implements Persistable, Serializable {
         return null;
     }
 
-    Mission(final String libelle, final int code, final String ressource, final String extension) {
+    Mission(final String libelle, final int code, final String ressource, final String extension, int page) {
         this.libelle = libelle;
         this.code = code;
         this.ressource = ressource;
         this.extension = extension;
+        this.page = page;
     }
 
     public static Mission parseLibelle(final String libelle) {
@@ -57,5 +61,10 @@ public enum Mission implements Persistable, Serializable {
 
     public String getExtension() {
         return extension;
+    }
+
+    public int getPage()
+    {
+        return page;
     }
 }

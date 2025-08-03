@@ -1,0 +1,6 @@
+/.gradle/8.10.2/*
+/.gradle/*
+/.idea/*
+/build/*
+/app/release/*
+/local.properties
