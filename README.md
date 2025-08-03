@@ -13,7 +13,7 @@ Track your:
   - Secret Timer
   - Set a custom Alarm for the end of the game
   - Pickup a random mission
-  - Choose between the 4 missions
+  - Choose between the 5 missions
   - PDF of the mission
   - Register each dices rolls
   - Historical of each game with the dice statistics
