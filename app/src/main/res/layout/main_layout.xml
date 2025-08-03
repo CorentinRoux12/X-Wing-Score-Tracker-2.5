@@ -227,7 +227,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/linearRandomTime" />
 
             </LinearLayout>
+            <Button
+                android:id="@+id/btnKnowledge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/green"
+                android:text="Ancient Knowledge"
+                android:textColor="@color/textColor"
 
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/missionLane2" />
             <Button
                 android:id="@+id/btnRandomMission"
                 android:layout_width="wrap_content"
@@ -239,7 +250,7 @@
 
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/missionLane2" />
+                app:layout_constraintTop_toBottomOf="@+id/btnKnowledge" />
 
             <TextView
                 android:id="@+id/textViewRandomMission"
