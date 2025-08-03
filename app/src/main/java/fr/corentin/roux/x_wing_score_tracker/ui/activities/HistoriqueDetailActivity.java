@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class HistoriqueDetailActivity extends AbstractActivity
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
+    public static final String SPACE_AND_TIRET = "  - ";
+    public static final String SPACE = "  ";
     private TextView finalDate;
     private TextView finalRound;
     private TextView finalTime;
@@ -65,9 +68,9 @@ public class HistoriqueDetailActivity extends AbstractActivity
     {
         Game current = (Game) this.getIntent().getSerializableExtra("game");
         final StringBuilder time = generateTimerAffichage(current.getTimeLeft());
-        final StringBuilder finalScore = new StringBuilder();
+        final StringBuilder finalScoreBuilder = new StringBuilder();
 
-        finalScore.append(current.getNamePlayer1())
+        finalScoreBuilder.append(current.getNamePlayer1())
                 .append(" ")
                 .append(current.getScoreGlobalPlayer1())
                 .append(" - ")
@@ -98,29 +101,29 @@ public class HistoriqueDetailActivity extends AbstractActivity
                     .map(DiceTurn::makeTheCount)
                     .forEach(result::append);
 
-            finalScore
+            finalScoreBuilder
                     .append("\n\n")
                     .append("DICE:").append("\n")
-                    .append("  ").append(current.getNamePlayer1().toUpperCase()).append("\n")
-                    .append("    - ").append("Total Attack : ").append(result.getTotalAttackPlayer1()).append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_EYE.getPrintLibelle()).append(" : ").append(result.getAttackEyePlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_EYE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_BLANK.getPrintLibelle()).append(" : ").append(result.getAttackBlankPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_BLANK.getProba())).append(")").append("\n")
-                    .append("    - ").append("Total Defense : ").append(result.getTotalDefensePlayer1()).append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_EVADE.getPrintLibelle()).append(" : ").append(result.getDefenseEvadePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EVADE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_EYE.getPrintLibelle()).append(" : ").append(result.getDefenseEyePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EYE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_BLANK.getPrintLibelle()).append(" : ").append(result.getDefenseBlankPlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_BLANK.getProba())).append(")").append("\n")
-                    .append("  ").append(current.getNamePlayer2().toUpperCase()).append("\n")
-                    .append("    - ").append("Total Attack : ").append(result.getTotalAttackPlayer2()).append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_EYE.getPrintLibelle()).append(" : ").append(result.getAttackEyePlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_EYE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.ATTACK_BLANK.getPrintLibelle()).append(" : ").append(result.getAttackBlankPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_BLANK.getProba())).append(")").append("\n")
-                    .append("    - ").append("Total Defense : ").append(result.getTotalDefensePlayer2()).append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_EVADE.getPrintLibelle()).append(" : ").append(result.getDefenseEvadePlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_EVADE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_EYE.getPrintLibelle()).append(" : ").append(result.getDefenseEyePlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_EYE.getProba())).append(")").append("\n")
-                    .append("    - ").append(DiceFace.DEFENSE_BLANK.getPrintLibelle()).append(" : ").append(result.getDefenseBlankPlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_BLANK.getProba())).append(")").append("\n");
+                    .append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n")
+                    .append(SPACE + SPACE + "- ").append("Total Attack : ").append(result.getTotalAttackPlayer1()).append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_EYE.getPrintLibelle()).append(" : ").append(result.getAttackEyePlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_EYE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_BLANK.getPrintLibelle()).append(" : ").append(result.getAttackBlankPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_BLANK.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append("Total Defense : ").append(result.getTotalDefensePlayer1()).append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EVADE.getPrintLibelle()).append(" : ").append(result.getDefenseEvadePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EVADE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EYE.getPrintLibelle()).append(" : ").append(result.getDefenseEyePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EYE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_BLANK.getPrintLibelle()).append(" : ").append(result.getDefenseBlankPlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_BLANK.getProba())).append(")").append("\n")
+                    .append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n")
+                    .append(SPACE + SPACE + "- ").append("Total Attack : ").append(result.getTotalAttackPlayer2()).append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_EYE.getPrintLibelle()).append(" : ").append(result.getAttackEyePlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_EYE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_BLANK.getPrintLibelle()).append(" : ").append(result.getAttackBlankPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_BLANK.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append("Total Defense : ").append(result.getTotalDefensePlayer2()).append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EVADE.getPrintLibelle()).append(" : ").append(result.getDefenseEvadePlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_EVADE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EYE.getPrintLibelle()).append(" : ").append(result.getDefenseEyePlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_EYE.getProba())).append(")").append("\n")
+                    .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_BLANK.getPrintLibelle()).append(" : ").append(result.getDefenseBlankPlayer2()).append(" (").append((result.getTotalDefensePlayer2() * DiceFace.DEFENSE_BLANK.getProba())).append(")").append("\n");
         }
 
         int cpt = 0;
@@ -139,36 +142,36 @@ public class HistoriqueDetailActivity extends AbstractActivity
                     .append("Duration of the round : ").append(generateTimerAffichage(round.getTime())).append("\n")
                     .append("First Player : ").append(round.getFirstPlayer()).append("\n")
                     .append("Score Global : \n")
-                    .append("  - ").append(current.getNamePlayer1().toUpperCase()).append(" : ").append(scoreTempJ1).append("\n")
-                    .append("  - ").append(current.getNamePlayer2().toUpperCase()).append(" : ").append(scoreTempJ2).append("\n")
+                    .append(SPACE_AND_TIRET).append(current.getNamePlayer1().toUpperCase()).append(" : ").append(scoreTempJ1).append("\n")
+                    .append(SPACE+"- ").append(current.getNamePlayer2().toUpperCase()).append(" : ").append(scoreTempJ2).append("\n")
                     .append("Scores of the round : \n")
-                    .append("  ").append(current.getNamePlayer1().toUpperCase()).append("\n")
-                    .append("    - Global ").append(round.getScorePlayer1().getScoreGlobal()).append("\n")
-                    .append("      - Kill ").append(round.getScorePlayer1().getScoreKill()).append("\n")
-                    .append("      - Mission ").append(round.getScorePlayer1().getScoreMission()).append("\n")
-                    .append("  ").append(current.getNamePlayer2().toUpperCase()).append("\n")
-                    .append("    - Global ").append(round.getScorePlayer2().getScoreGlobal()).append("\n")
-                    .append("      - Kill ").append(round.getScorePlayer2().getScoreKill()).append("\n")
-                    .append("      - Mission ").append(round.getScorePlayer2().getScoreMission()).append("\n");
+                    .append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n")
+                    .append(SPACE + SPACE +"- Global ").append(round.getScorePlayer1().getScoreGlobal()).append("\n")
+                    .append(SPACE + SPACE +SPACE+"- Kill ").append(round.getScorePlayer1().getScoreKill()).append("\n")
+                    .append(SPACE + SPACE +SPACE+"- Mission ").append(round.getScorePlayer1().getScoreMission()).append("\n")
+                    .append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n")
+                    .append(SPACE+SPACE+"- Global ").append(round.getScorePlayer2().getScoreGlobal()).append("\n")
+                    .append(SPACE+SPACE+SPACE+"- Kill ").append(round.getScorePlayer2().getScoreKill()).append("\n")
+                    .append(SPACE+SPACE+SPACE+"- Mission ").append(round.getScorePlayer2().getScoreMission()).append("\n");
 
             if (currentDiceTurn != null)
             {
                 historique.append("Dice:\n");
                 final int totalAttackPlayer1 = currentDiceTurn.getDiceStatsPlayer1().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
                 final int totalDefensePlayer1 = currentDiceTurn.getDiceStatsPlayer1().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
-                historique.append("  ").append(current.getNamePlayer1().toUpperCase()).append("\n");
+                historique.append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n");
                 currentDiceTurn.getDiceStatsPlayer1().entrySet().stream()
                         .sorted((a, b) -> a.getKey().getOrdre() > b.getKey().getOrdre() ? 1 : -1)
-                        .forEach(diceFaceIntegerEntry -> historique.append("    - ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
+                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE+SPACE+"- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
                                 .append(" (").append(((diceFaceIntegerEntry.getKey().isAttack() ? totalAttackPlayer1 : totalDefensePlayer1) * diceFaceIntegerEntry.getKey().getProba())).append(")")
                                 .append("\n"));
 
                 final int totalAttackPlayer2 = currentDiceTurn.getDiceStatsPlayer2().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
                 final int totalDefensePlayer2 = currentDiceTurn.getDiceStatsPlayer2().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
-                historique.append("  ").append(current.getNamePlayer2().toUpperCase()).append("\n");
+                historique.append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n");
                 currentDiceTurn.getDiceStatsPlayer2().entrySet().stream()
                         .sorted((a, b) -> a.getKey().getOrdre() > b.getKey().getOrdre() ? 1 : -1)
-                        .forEach(diceFaceIntegerEntry -> historique.append("    - ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
+                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE+SPACE+"- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
                                 .append(" (").append(((diceFaceIntegerEntry.getKey().isAttack() ? totalAttackPlayer2 : totalDefensePlayer2) * diceFaceIntegerEntry.getKey().getProba())).append(")")
                                 .append("\n"));
             }
@@ -178,7 +181,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
         this.finalDate.setText(current.getDate());
         this.finalRound.setText((String.valueOf(current.getRound())));
         this.finalTime.setText(time.toString());
-        this.finalScore.setText(finalScore.toString());
+        this.finalScore.setText(finalScoreBuilder.toString());
         this.details.setText(historique.toString());
         this.mission.setText(current.getMission());
     }
@@ -246,73 +249,73 @@ public class HistoriqueDetailActivity extends AbstractActivity
 
     private Map<DiceFace, Integer> extractStat(JSONObject diceStatsPlayer1) throws JSONException
     {
-        int ATTACK_EYE;
+        int attackEye;
         try
         {
-            ATTACK_EYE = diceStatsPlayer1.getInt("ATTACK_EYE");//h
+            attackEye = diceStatsPlayer1.getInt("ATTACK_EYE");//h
         } catch (Exception e)
         {
-            ATTACK_EYE = diceStatsPlayer1.getInt("a");
+            attackEye = diceStatsPlayer1.getInt("a");
         }
-        int ATTACK_BLANK;
+        int attackBlank;
         try
         {
-            ATTACK_BLANK = diceStatsPlayer1.getInt("ATTACK_BLANK");//h
+            attackBlank = diceStatsPlayer1.getInt("ATTACK_BLANK");//h
         } catch (Exception e)
         {
-            ATTACK_BLANK = diceStatsPlayer1.getInt("b");
+            attackBlank = diceStatsPlayer1.getInt("b");
         }
-        int ATTACK_CRIT;
+        int attackCrit;
         try
         {
-            ATTACK_CRIT = diceStatsPlayer1.getInt("ATTACK_CRIT");//h
+            attackCrit = diceStatsPlayer1.getInt("ATTACK_CRIT");//h
         } catch (Exception e)
         {
-            ATTACK_CRIT = diceStatsPlayer1.getInt("g");
+            attackCrit = diceStatsPlayer1.getInt("g");
         }
-        int ATTACK_HIT;
+        int attackHit;
         try
         {
-            ATTACK_HIT = diceStatsPlayer1.getInt("ATTACK_HIT");//h
+            attackHit = diceStatsPlayer1.getInt("ATTACK_HIT");//h
         } catch (Exception e)
         {
-            ATTACK_HIT = diceStatsPlayer1.getInt("c");
+            attackHit = diceStatsPlayer1.getInt("c");
         }
         //DEFENSE PLAYER 1
-        int DEFENSE_EYE;
+        int defenseEye;
         try
         {
-            DEFENSE_EYE = diceStatsPlayer1.getInt("DEFENSE_EYE");//h
+            defenseEye = diceStatsPlayer1.getInt("DEFENSE_EYE");//h
         } catch (Exception e)
         {
-            DEFENSE_EYE = diceStatsPlayer1.getInt("e");
+            defenseEye = diceStatsPlayer1.getInt("e");
         }
-        int DEFENSE_BLANK;
+        int defenseBlank;
         try
         {
-            DEFENSE_BLANK = diceStatsPlayer1.getInt("DEFENSE_BLANK");//h
+            defenseBlank = diceStatsPlayer1.getInt("DEFENSE_BLANK");//h
         } catch (Exception e)
         {
-            DEFENSE_BLANK = diceStatsPlayer1.getInt("f");
+            defenseBlank = diceStatsPlayer1.getInt("f");
         }
-        int DEFENSE_EVADE;
+        int defenseEvade;
         try
         {
-            DEFENSE_EVADE = diceStatsPlayer1.getInt("DEFENSE_EVADE");//h
+            defenseEvade = diceStatsPlayer1.getInt("DEFENSE_EVADE");//h
         } catch (Exception e)
         {
-            DEFENSE_EVADE = diceStatsPlayer1.getInt("d");
+            defenseEvade = diceStatsPlayer1.getInt("d");
         }
 
-        final Map<DiceFace, Integer> map = new HashMap<>();
+        final Map<DiceFace, Integer> map = new EnumMap<>(DiceFace.class);
 
-        map.put(DiceFace.ATTACK_BLANK, ATTACK_BLANK);
-        map.put(DiceFace.ATTACK_EYE, ATTACK_EYE);
-        map.put(DiceFace.ATTACK_HIT, ATTACK_HIT);
-        map.put(DiceFace.ATTACK_CRIT, ATTACK_CRIT);
-        map.put(DiceFace.DEFENSE_BLANK, DEFENSE_BLANK);
-        map.put(DiceFace.DEFENSE_EYE, DEFENSE_EYE);
-        map.put(DiceFace.DEFENSE_EVADE, DEFENSE_EVADE);
+        map.put(DiceFace.ATTACK_BLANK, attackBlank);
+        map.put(DiceFace.ATTACK_EYE, attackEye);
+        map.put(DiceFace.ATTACK_HIT, attackHit);
+        map.put(DiceFace.ATTACK_CRIT, attackCrit);
+        map.put(DiceFace.DEFENSE_BLANK, defenseBlank);
+        map.put(DiceFace.DEFENSE_EYE, defenseEye);
+        map.put(DiceFace.DEFENSE_EVADE, defenseEvade);
 
         return map;
     }

@@ -116,7 +116,7 @@ public class ShipListAdapter extends BaseAdapter {
 
     private void initialisationData(ViewHolder holder, int position) {
         final Ship current = (Ship) this.getItem(position);
-        holder.getNomShip().setText(current.getName());//.length() < 10 ? current.getName() : current.getName().substring(0,9));
+        holder.getNomShip().setText(current.getName());
         holder.getPointShip().setText(String.valueOf(current.getPoints()));
         holder.changeColor(current.getStatut());
     }

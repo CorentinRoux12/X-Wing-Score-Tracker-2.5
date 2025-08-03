@@ -31,6 +31,7 @@ import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 public class MainActivity extends AbstractActivity
 {
 
+    public static final String TOUCH_THE_MISSION_FOR_DETAILS = "Touch the mission for details";
     private final Random random = new Random();
     private TextInputEditText timer;
     private Button btnStart;
@@ -155,32 +156,32 @@ public class MainActivity extends AbstractActivity
         this.btnRandomMission.setOnClickListener(t -> {
             this.mission = Mission.parseCode(this.random.nextInt(5) + 1);
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.btnAssault.setOnClickListener(t -> {
             this.mission = Mission.SATELLITE;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.btnChance.setOnClickListener(t -> {
             this.mission = Mission.ENGAGEMENT;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.btnSalvage.setOnClickListener(t -> {
             this.mission = Mission.SALVAGE;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.btnScramble.setOnClickListener(t -> {
             this.mission = Mission.SCRAMBLE;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.btnKnowledge.setOnClickListener(t -> {
             this.mission = Mission.KNOWLEDGE;
             this.textViewRandomMission.setText(this.mission.getLibelle(), TextView.BufferType.SPANNABLE);
-            Toast.makeText(this, "Touch the mission for details", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, TOUCH_THE_MISSION_FOR_DETAILS, Toast.LENGTH_SHORT).show();
         });
         this.textViewRandomMission.setOnClickListener(t -> {
             if (this.mission != null)
@@ -195,12 +196,12 @@ public class MainActivity extends AbstractActivity
     private String generateRandomTime()
     {
         final long attackDice = this.random.nextInt(8);
-        final Setting setting = SettingService.getInstance().get(this);
+        final Setting settingInstance = SettingService.getInstance().get(this);
         int randomTimer = 75;
         try
         {
-            randomTimer = Integer.parseInt(setting.getRandomTime());
-            int cpt = Integer.parseInt(setting.getVolatilityTime());
+            randomTimer = Integer.parseInt(settingInstance.getRandomTime());
+            int cpt = Integer.parseInt(settingInstance.getVolatilityTime());
             cpt = Math.abs(cpt);
             final List<Long> defenseDice = new ArrayList<>();
             for (int i = 0; i < cpt; i++)
@@ -217,7 +218,7 @@ public class MainActivity extends AbstractActivity
             final long defenseDice2 = this.random.nextInt(8);
             final long defenseDice3 = this.random.nextInt(8);
             final List<Long> defenseDice = Arrays.asList(defenseDice1, defenseDice2, defenseDice3);
-            int basicTime = setting.getRandomTime() != null && !setting.getRandomTime().trim().isEmpty() ?
+            int basicTime = settingInstance.getRandomTime() != null && !settingInstance.getRandomTime().trim().isEmpty() ?
                     randomTimer :
                     75;
             basicTime = this.calculVolatility(attackDice, defenseDice, basicTime);
