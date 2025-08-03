@@ -3,9 +3,10 @@
     <string-array name="language">
         <item>English</item>
         <item>Français</item>
-<!--        <item>Español</item>-->
+        <item>Español</item>
         <item>Deutsch</item>
         <item>Italiano</item>
+        <item>Polski</item>
         <item>中国人</item>
     </string-array>
 </resources>

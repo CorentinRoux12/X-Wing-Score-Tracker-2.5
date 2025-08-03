@@ -2,10 +2,7 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
 import com.github.barteksc.pdfviewer.PDFView;
 
-import java.util.Locale;
-
 import fr.corentin.roux.x_wing_score_tracker.R;
-import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 
 public class MissionDetailActivity extends AbstractActivity
@@ -40,15 +37,6 @@ public class MissionDetailActivity extends AbstractActivity
         final Mission mission = Mission.parseCode((Integer) this.getIntent().getSerializableExtra("mission"));
         if (mission != null)
         {
-//            String resource;
-//            if (Locale.getDefault().getCountry().toLowerCase().equals(Language.FRENCH.getCodeLanguage())) {
-//                resource = "fr/";
-//            } else { // Default Package => English
-//            resource = "en/";
-//            }
-//            resource += mission.getRessource();
-//            resource += mission.getExtension();
-
             this.pdfView.fitToWidth(1);
             this.pdfView.fromAsset("en/scenarios.pdf")
                     .defaultPage(mission.getPage())

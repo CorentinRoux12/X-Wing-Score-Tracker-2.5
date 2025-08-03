@@ -3,4 +3,5 @@
 /.idea/*
 /build/*
 /app/release/*
+/app/build/*
 /local.properties

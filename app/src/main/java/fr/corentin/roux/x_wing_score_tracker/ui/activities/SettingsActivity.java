@@ -224,13 +224,13 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     private void formatLanguage()
     {
         //Code Ihm stocké ici
-        final Language langue = Language.parseCodeIhm(this.setting.getLanguage());
+        final Language langueFromSettings = Language.parseCodeIhm(this.setting.getLanguage());
         final ArrayAdapter<CharSequence> adapterConst = ArrayAdapter.createFromResource(this, R.array.language, android.R.layout.simple_spinner_item);
         adapterConst.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.language.setAdapter(adapterConst);
-        if (langue != null)
+        if (langueFromSettings != null)
         {
-            final int spinnerPosition = adapterConst.getPosition(langue.getCodeIhm());
+            final int spinnerPosition = adapterConst.getPosition(langueFromSettings.getCodeIhm());
             this.language.setSelection(spinnerPosition);
         }
     }
@@ -238,7 +238,9 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     private void reloadDarkMode()
     {
         Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
-        AppCompatDelegate.setDefaultNightMode(this.enabledDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(this.enabledDarkMode) ?
+                AppCompatDelegate.MODE_NIGHT_YES :
+                AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private void startSettingsActivity()
@@ -292,5 +294,6 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     @Override
     public void onPickCanceled()
     {
+        //Nothing to declare
     }
 }

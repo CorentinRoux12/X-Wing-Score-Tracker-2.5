@@ -466,21 +466,21 @@ public class TimerActivity extends AbstractActivity
         this.totalGreenPlayerOne.setText(String.valueOf(diceCounter.getTotalDefensePlayer1()));
         this.totalGreenPlayerTwo.setText(String.valueOf(diceCounter.getTotalDefensePlayer2()));
         //PLAYER1
-        this.scorePlayerOneAttackDicesCrit.setText(diceCounter.getAttackCritPlayer1() + "(" + ((diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_CRIT.getProba())) + ")");
-        this.scorePlayerOneAttackDicesHit.setText(diceCounter.getAttackHitPlayer1() + "(" + ((diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_HIT.getProba())) + ")");
-        this.scorePlayerOneAttackDicesEye.setText(diceCounter.getAttackEyePlayer1() + "(" + ((diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_EYE.getProba())) + ")");
-        this.scorePlayerOneAttackDicesBlank.setText(diceCounter.getAttackBlankPlayer1() + "(" + ((diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_BLANK.getProba())) + ")");
-        this.scorePlayerOneDefenseDicesEvade.setText(diceCounter.getDefenseEvadePlayer1() + "(" + ((diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_EVADE.getProba())) + ")");
-        this.scorePlayerOneDefenseDicesEye.setText(diceCounter.getDefenseEyePlayer1() + "(" + ((diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_EYE.getProba())) + ")");
-        this.scorePlayerOneDefenseDicesBlank.setText(diceCounter.getDefenseBlankPlayer1() + "(" + ((diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_BLANK.getProba())) + ")");
+        this.scorePlayerOneAttackDicesCrit.setText(diceCounter.getAttackCritPlayer1() + "(" + (diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_CRIT.getProba()) + ")");
+        this.scorePlayerOneAttackDicesHit.setText(diceCounter.getAttackHitPlayer1() + "(" + (diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_HIT.getProba()) + ")");
+        this.scorePlayerOneAttackDicesEye.setText(diceCounter.getAttackEyePlayer1() + "(" + (diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_EYE.getProba()) + ")");
+        this.scorePlayerOneAttackDicesBlank.setText(diceCounter.getAttackBlankPlayer1() + "(" + (diceCounter.getTotalAttackPlayer1() * DiceFace.ATTACK_BLANK.getProba()) + ")");
+        this.scorePlayerOneDefenseDicesEvade.setText(diceCounter.getDefenseEvadePlayer1() + "(" + (diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_EVADE.getProba()) + ")");
+        this.scorePlayerOneDefenseDicesEye.setText(diceCounter.getDefenseEyePlayer1() + "(" + (diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_EYE.getProba()) + ")");
+        this.scorePlayerOneDefenseDicesBlank.setText(diceCounter.getDefenseBlankPlayer1() + "(" + (diceCounter.getTotalDefensePlayer1() * DiceFace.DEFENSE_BLANK.getProba()) + ")");
         //PLAYER2
-        this.scorePlayerTwoAttackDicesCrit.setText(diceCounter.getAttackCritPlayer2() + "(" + ((diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_CRIT.getProba())) + ")");
-        this.scorePlayerTwoAttackDicesHit.setText(diceCounter.getAttackHitPlayer2() + "(" + ((diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_HIT.getProba())) + ")");
-        this.scorePlayerTwoAttackDicesEye.setText(diceCounter.getAttackEyePlayer2() + "(" + ((diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_EYE.getProba())) + ")");
-        this.scorePlayerTwoAttackDicesBlank.setText(diceCounter.getAttackBlankPlayer2() + "(" + ((diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_BLANK.getProba())) + ")");
-        this.scorePlayerTwoDefenseDicesEvade.setText(diceCounter.getDefenseEvadePlayer2() + "(" + ((diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_EVADE.getProba())) + ")");
-        this.scorePlayerTwoDefenseDicesEye.setText(diceCounter.getDefenseEyePlayer2() + "(" + ((diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_EYE.getProba())) + ")");
-        this.scorePlayerTwoDefenseDicesBlank.setText(diceCounter.getDefenseBlankPlayer2() + "(" + ((diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_BLANK.getProba())) + ")");
+        this.scorePlayerTwoAttackDicesCrit.setText(diceCounter.getAttackCritPlayer2() + "(" + (diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_CRIT.getProba()) + ")");
+        this.scorePlayerTwoAttackDicesHit.setText(diceCounter.getAttackHitPlayer2() + "(" + (diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_HIT.getProba()) + ")");
+        this.scorePlayerTwoAttackDicesEye.setText(diceCounter.getAttackEyePlayer2() + "(" + (diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_EYE.getProba()) + ")");
+        this.scorePlayerTwoAttackDicesBlank.setText(diceCounter.getAttackBlankPlayer2() + "(" + (diceCounter.getTotalAttackPlayer2() * DiceFace.ATTACK_BLANK.getProba()) + ")");
+        this.scorePlayerTwoDefenseDicesEvade.setText(diceCounter.getDefenseEvadePlayer2() + "(" + (diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_EVADE.getProba()) + ")");
+        this.scorePlayerTwoDefenseDicesEye.setText(diceCounter.getDefenseEyePlayer2() + "(" + (diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_EYE.getProba()) + ")");
+        this.scorePlayerTwoDefenseDicesBlank.setText(diceCounter.getDefenseBlankPlayer2() + "(" + (diceCounter.getTotalDefensePlayer2() * DiceFace.DEFENSE_BLANK.getProba()) + ")");
     }
 
     private void diceListeners()
