@@ -84,13 +84,13 @@ android {
 
 dependencies {
 //    implementation 'com.google.android.play:integrity:1.4.0'
-    implementation 'androidx.appcompat:appcompat:1.7.0'//1.7.1
-    implementation 'com.google.android.material:material:1.12.0'//1.14.0-alpha03
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'//2.2.1
-    implementation 'androidx.navigation:navigation-fragment:2.8.4'//2.9.3
-    implementation 'androidx.navigation:navigation-ui:2.8.4'//2.9.3
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.14.0-alpha03'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.9.3'
+    implementation 'androidx.navigation:navigation-ui:2.9.3'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.2'//2.19.2
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.2'
 //    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
 // https://mvnrepository.com/artifact/com.github.barteksc/android-pdf-viewer
 //    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
@@ -100,20 +100,20 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     /** Lombok **/
-    def lombokVersion = '1.18.22'//1.18.38
+    def lombokVersion = '1.18.38'
     compileOnly 'org.projectlombok:lombok:' + lombokVersion
     annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
 
-    def RingtonePickerVersion = '2.0.6'//3.3.0 ou 3.3.0
+    def RingtonePickerVersion = '3.3.0'
     implementation 'com.github.DeweyReed:UltimateRingtonePicker:' + RingtonePickerVersion
 
     // https://mvnrepository.com/artifact/io.vavr/vavr
-    implementation 'io.vavr:vavr:1.0.0-alpha-4'//0.10.7
+    implementation 'io.vavr:vavr:0.10.7'
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.10.1'//2.13.1
+    implementation 'com.google.code.gson:gson:2.13.1'
 
-    def room_version = "2.5.0"//2.7.2
+    def room_version = "2.7.2"
 
     implementation("androidx.room:room-runtime:" + room_version)
     annotationProcessor("androidx.room:room-compiler:" + room_version)
