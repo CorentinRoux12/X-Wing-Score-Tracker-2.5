@@ -29,18 +29,23 @@
         </activity>
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity"
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:configChanges="orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity"
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.MissionDetailActivity"
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.SettingsActivity"
             android:windowSoftInputMode="adjustPan" />
     </application>

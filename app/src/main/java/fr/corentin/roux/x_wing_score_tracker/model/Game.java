@@ -8,8 +8,6 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @Entity
 public class Game implements Persistable, Serializable {

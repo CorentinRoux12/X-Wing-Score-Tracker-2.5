@@ -3,8 +3,6 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -37,11 +34,9 @@ import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.AdapterViewUtils;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 import io.vavr.control.Try;
-import xyz.aprildown.ultimatemusicpicker.MusicPickerListener;
-import xyz.aprildown.ultimatemusicpicker.UltimateMusicPicker;
 
 @SuppressLint("SetTextI18n")
-public class SettingsActivity extends AbstractActivity implements MusicPickerListener
+public class SettingsActivity extends AbstractActivity
 {
 
     private final SettingService service = SettingService.getInstance();
@@ -157,16 +152,17 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
             }
         });
 
-        this.alarmeSong.setOnClickListener(click -> Try.of(UltimateMusicPicker::new)
-                .map(alarm -> alarm.windowTitle("Alarm Selection"))
-                .map(UltimateMusicPicker::removeSilent)
-                .map(alarm -> alarm.streamType(AudioManager.STREAM_ALARM))
-                .map(UltimateMusicPicker::ringtone)
-                .map(UltimateMusicPicker::notification)
-                .map(UltimateMusicPicker::alarm)
-                .map(UltimateMusicPicker::music)
-                .andThenTry(alarm -> alarm.goWithDialog(getSupportFragmentManager()))
-                .onFailure(throwable -> Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show()));
+        this.alarmeSong.setOnClickListener(t -> Toast.makeText(this, "Sorry this function has been disabled temporarily.", Toast.LENGTH_LONG).show());
+//        this.alarmeSong.setOnClickListener(click -> Try.of(UltimateMusicPicker::new)
+//                .map(alarm -> alarm.windowTitle("Alarm Selection"))
+//                .map(UltimateMusicPicker::removeSilent)
+//                .map(alarm -> alarm.streamType(AudioManager.STREAM_ALARM))
+//                .map(UltimateMusicPicker::ringtone)
+//                .map(UltimateMusicPicker::notification)
+//                .map(UltimateMusicPicker::alarm)
+//                .map(UltimateMusicPicker::music)
+//                .andThenTry(alarm -> alarm.goWithDialog(getSupportFragmentManager()))
+//                .onFailure(throwable -> Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show()));
 
         this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -237,7 +233,7 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
 
     private void reloadDarkMode()
     {
-        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
         AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(this.enabledDarkMode) ?
                 AppCompatDelegate.MODE_NIGHT_YES :
                 AppCompatDelegate.MODE_NIGHT_NO);
@@ -285,15 +281,15 @@ public class SettingsActivity extends AbstractActivity implements MusicPickerLis
     }
 
 
-    @Override
-    public void onMusicPick(@NonNull Uri uri, @NonNull String s)
-    {
-        this.pathRingTone = uri.toString();
-    }
-
-    @Override
-    public void onPickCanceled()
-    {
-        //Nothing to declare
-    }
+//    @Override
+//    public void onMusicPick(@NonNull Uri uri, @NonNull String s)
+//    {
+//        this.pathRingTone = uri.toString();
+//    }
+//
+//    @Override
+//    public void onPickCanceled()
+//    {
+//        //Nothing to declare
+//    }
 }

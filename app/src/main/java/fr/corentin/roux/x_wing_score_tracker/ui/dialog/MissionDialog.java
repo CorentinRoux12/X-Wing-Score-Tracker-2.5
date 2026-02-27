@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -16,9 +17,7 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Language;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
-import lombok.Getter;
 
-@Getter
 public class MissionDialog extends DialogFragment {
 
     private final TimerActivity timerActivity;
@@ -68,5 +67,19 @@ public class MissionDialog extends DialogFragment {
         this.pdfView = this.view.findViewById(R.id.missionRules);
     }
 
+    public TimerActivity getTimerActivity()
+    {
+        return timerActivity;
+    }
 
+    @Override
+    public View getView()
+    {
+        return view;
+    }
+
+    public PDFView getPdfView()
+    {
+        return pdfView;
+    }
 }

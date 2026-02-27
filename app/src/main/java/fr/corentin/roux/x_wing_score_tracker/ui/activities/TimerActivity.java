@@ -38,7 +38,6 @@ import fr.corentin.roux.x_wing_score_tracker.ui.adapters.ShipListAdapter;
 import fr.corentin.roux.x_wing_score_tracker.ui.dialog.EndDialogTimer;
 import fr.corentin.roux.x_wing_score_tracker.utils.UIUtils;
 import io.vavr.control.Try;
-import lombok.NonNull;
 
 /**
  * @author Corentin Roux
@@ -747,7 +746,7 @@ public class TimerActivity extends AbstractActivity
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState)
+    protected void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
 
@@ -755,7 +754,7 @@ public class TimerActivity extends AbstractActivity
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState)
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
     {
         super.onRestoreInstanceState(savedInstanceState);
 
