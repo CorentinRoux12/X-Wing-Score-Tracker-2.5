@@ -84,37 +84,33 @@ android {
 
 dependencies {
 //    implementation 'com.google.android.play:integrity:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.14.0-alpha09'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.9.7'
+    implementation 'androidx.navigation:navigation-ui:2.9.7'
 
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'com.google.android.material:material:1.12.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment:2.8.4'
-    implementation 'androidx.navigation:navigation-ui:2.8.4'
-
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.21.1'
 //    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
 // https://mvnrepository.com/artifact/com.github.barteksc/android-pdf-viewer
 //    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
 
-    implementation 'com.github.barteksc:AndroidPdfViewer:master-SNAPSHOT'
+//    implementation 'com.github.barteksc:AndroidPdfViewer:master-SNAPSHOT'
+//    implementation("com.github.marain87:AndroidPdfViewer:master-3.2.8-gb96fbbd-1")
+    implementation("com.github.DImuthuUpe:AndroidPdfViewer:d84cb4db30")
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    /** Lombok **/
-    def lombokVersion = '1.18.22'
-    compileOnly 'org.projectlombok:lombok:' + lombokVersion
-    annotationProcessor 'org.projectlombok:lombok:' + lombokVersion
-
-    def RingtonePickerVersion = '2.0.6'
+    def RingtonePickerVersion = '3.3.0'
     implementation 'com.github.DeweyReed:UltimateRingtonePicker:' + RingtonePickerVersion
 
     // https://mvnrepository.com/artifact/io.vavr/vavr
-    implementation 'io.vavr:vavr:1.0.0-alpha-4'
+    implementation 'io.vavr:vavr:1.0.0'
 
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.code.gson:gson:2.13.2'
 
-    def room_version = "2.5.0"
+    def room_version = "2.8.4"
 
     implementation("androidx.room:room-runtime:" + room_version)
     annotationProcessor("androidx.room:room-compiler:" + room_version)
