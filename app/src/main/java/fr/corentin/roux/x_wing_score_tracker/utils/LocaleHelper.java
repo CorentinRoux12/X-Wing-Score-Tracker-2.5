@@ -11,6 +11,11 @@ import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 public class LocaleHelper
 {
 
+    private LocaleHelper()
+    {
+        //Nothing to do
+    }
+
     public static Context checkDefaultLanguage(Setting setting, Context context)
     {
         final Locale locale = getLocaleFromSettings(setting);

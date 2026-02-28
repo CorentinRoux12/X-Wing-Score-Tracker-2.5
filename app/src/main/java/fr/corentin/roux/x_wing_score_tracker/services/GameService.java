@@ -46,20 +46,9 @@ public class GameService
         try
         {
             return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findAll();
-        } catch (final Throwable throwable)
+        } catch (final Exception throwable)
         {
             return List.of();
-        }
-    }
-
-    public Game getById(final Context context, final int id)
-    {
-        try
-        {
-            return daoRoom.getDatabaseAccess(context).iGameDaoRoom().findById(id);
-        } catch (final Throwable throwable)
-        {
-            return new Game();
         }
     }
 
@@ -70,8 +59,9 @@ public class GameService
             try
             {
                 daoRoom.getDatabaseAccess(context).iGameDaoRoom().save(game1.serializeForSave());
-            } catch (final Throwable ignored)
+            } catch (final Exception ignored)
             {
+                //Nothing to do
             }
         }
     }
@@ -81,8 +71,9 @@ public class GameService
         try
         {
             daoRoom.getDatabaseAccess(context).iGameDaoRoom().delete(game);
-        } catch (final Throwable ignored)
+        } catch (final Exception ignored)
         {
+            //Nothing to do
         }
     }
 

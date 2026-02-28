@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -124,7 +125,7 @@ public class SettingsActivity extends AbstractActivity
     protected void initListeners()
     {
         this.checkboxdarkMode.setOnClickListener(t -> {
-            if (enabledDarkMode == setting.getEnabledDarkTheme())
+            if (Objects.equals(enabledDarkMode, setting.getEnabledDarkTheme()))
             {
                 this.enabledDarkMode = !this.enabledDarkMode;
                 if (Boolean.TRUE.equals(this.enabledDarkMode))
@@ -139,7 +140,7 @@ public class SettingsActivity extends AbstractActivity
             }
         });
         this.checkboxDiceCounter.setOnClickListener(t -> {
-            if (enabledDiceCount == setting.getDiceCounter())
+            if (Objects.equals(enabledDiceCount, setting.getDiceCounter()))
             {
                 this.enabledDiceCount = !this.enabledDiceCount;
                 if (Boolean.TRUE.equals(this.enabledDiceCount))
@@ -153,16 +154,6 @@ public class SettingsActivity extends AbstractActivity
         });
 
         this.alarmeSong.setOnClickListener(t -> Toast.makeText(this, "Sorry this function has been disabled temporarily.", Toast.LENGTH_LONG).show());
-//        this.alarmeSong.setOnClickListener(click -> Try.of(UltimateMusicPicker::new)
-//                .map(alarm -> alarm.windowTitle("Alarm Selection"))
-//                .map(UltimateMusicPicker::removeSilent)
-//                .map(alarm -> alarm.streamType(AudioManager.STREAM_ALARM))
-//                .map(UltimateMusicPicker::ringtone)
-//                .map(UltimateMusicPicker::notification)
-//                .map(UltimateMusicPicker::alarm)
-//                .map(UltimateMusicPicker::music)
-//                .andThenTry(alarm -> alarm.goWithDialog(getSupportFragmentManager()))
-//                .onFailure(throwable -> Toast.makeText(this, "An error arrive during the alarm selection, restart the app and if need, contact the developper for correction.", Toast.LENGTH_LONG).show()));
 
         this.language.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {

@@ -58,7 +58,7 @@ public class SettingService
             this.daoRoom.getDatabaseAccess(context).iSettingDaoRoom().save(setting);
         } catch (Throwable ignored)
         {
-
+            //Nothing to do
         }
     }
 }
