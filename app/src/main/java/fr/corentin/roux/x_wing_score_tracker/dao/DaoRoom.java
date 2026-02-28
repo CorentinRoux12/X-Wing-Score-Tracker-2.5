@@ -6,28 +6,34 @@ import androidx.room.Room;
 
 import java.util.Objects;
 
-public class DaoRoom {
+public class DaoRoom
+{
 
     private static DaoRoom instance;
 
     private AppDatabase databaseAccess;
 
-    private DaoRoom() {
+    private DaoRoom()
+    {
     }
 
-    public static DaoRoom getInstance() {
-        if (Objects.isNull(instance)) {
+    public static DaoRoom getInstance()
+    {
+        if (Objects.isNull(instance))
+        {
             instance = new DaoRoom();
         }
         return instance;
     }
 
 
-    public AppDatabase getDatabaseAccess(final Context applicationContext) {
-        if (Objects.isNull(databaseAccess)) {
+    public AppDatabase getDatabaseAccess(final Context applicationContext)
+    {
+        if (Objects.isNull(databaseAccess))
+        {
             databaseAccess = Room.databaseBuilder(applicationContext, AppDatabase.class, "database-name")
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(false)
                     .build();
         }
         return databaseAccess;

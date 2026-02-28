@@ -66,19 +66,10 @@ public class MissionDialog extends DialogFragment {
         this.pdfView = this.view.findViewById(R.id.missionRules);
     }
 
-    public TimerActivity getTimerActivity()
-    {
-        return timerActivity;
-    }
-
     @Override
     public View getView()
     {
         return view;
     }
 
-    public PDFView getPdfView()
-    {
-        return pdfView;
-    }
 }
