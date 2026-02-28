@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Game implements Persistable, Serializable {
@@ -16,9 +17,9 @@ public class Game implements Persistable, Serializable {
     private int id;
 
     @Ignore
-    private final ArrayList<Round> rounds = new ArrayList<>();
+    private final List<Round> rounds = new ArrayList<>();
     @Ignore
-    private ArrayList<DiceTurn> diceTurns = new ArrayList<>();
+    private List<DiceTurn> diceTurns = new ArrayList<>();
 
     private String roundsJson = "";
     private String diceJson = "";
@@ -91,7 +92,7 @@ public class Game implements Persistable, Serializable {
         }
     }
 
-    //////////////////--------------------Player1--------------------//////////////////
+    //--------------------Player1--------------------//
 
     private void updateScorePlayer1() {
         this.scoreGlobalPlayer1 = this.scoreKillPlayer1 + this.scoreMissionPlayer1;
@@ -123,7 +124,7 @@ public class Game implements Persistable, Serializable {
         this.updateScorePlayer1();
     }
 
-    //////////////////--------------------Player2--------------------//////////////////
+    //--------------------Player2--------------------//
 
     private void updateScorePlayer2() {
         this.scoreGlobalPlayer2 = this.scoreKillPlayer2 + this.scoreMissionPlayer2;
@@ -157,7 +158,7 @@ public class Game implements Persistable, Serializable {
 
 
     @Ignore
-    public Game(int id, ArrayList<DiceTurn> diceTurns, String roundsJson, String diceJson, long timeLeft, int round, String date, String mission, boolean hideTimeLeft, boolean hideTimer, String namePlayer1, int scoreGlobalPlayer1, int scoreKillPlayer1, int scoreMissionPlayer1, String xwsShipsPlayer1, String namePlayer2, int scoreGlobalPlayer2, int scoreKillPlayer2, int scoreMissionPlayer2, String xwsShipsPlayer2)
+    public Game(int id, List<DiceTurn> diceTurns, String roundsJson, String diceJson, long timeLeft, int round, String date, String mission, boolean hideTimeLeft, boolean hideTimer, String namePlayer1, int scoreGlobalPlayer1, int scoreKillPlayer1, int scoreMissionPlayer1, String xwsShipsPlayer1, String namePlayer2, int scoreGlobalPlayer2, int scoreKillPlayer2, int scoreMissionPlayer2, String xwsShipsPlayer2)
     {
         this.id = id;
         this.diceTurns = diceTurns;
@@ -185,7 +186,7 @@ public class Game implements Persistable, Serializable {
     public Game() {
     }
 
-    public ArrayList<Round> getRounds() {
+    public List<Round> getRounds() {
         return rounds;
     }
 
@@ -333,12 +334,12 @@ public class Game implements Persistable, Serializable {
         this.roundsJson = roundsJson;
     }
 
-    public ArrayList<DiceTurn> getDiceTurns()
+    public List<DiceTurn> getDiceTurns()
     {
         return diceTurns;
     }
 
-    public void setDiceTurns(ArrayList<DiceTurn> diceTurns)
+    public void setDiceTurns(List<DiceTurn> diceTurns)
     {
         this.diceTurns = diceTurns;
     }

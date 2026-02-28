@@ -1,14 +1,14 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class DiceTurn implements Persistable, Serializable
 {
-    private Map<DiceFace, Integer> diceStatsPlayer1 = new HashMap<>();
+    private Map<DiceFace, Integer> diceStatsPlayer1 = new EnumMap<>(DiceFace.class);
 
-    private Map<DiceFace, Integer> diceStatsPlayer2 = new HashMap<>();
+    private Map<DiceFace, Integer> diceStatsPlayer2 = new EnumMap<>(DiceFace.class);
 
     public DiceTurn(Map<DiceFace, Integer> diceStatsPlayer1, Map<DiceFace, Integer> diceStatsPlayer2)
     {

@@ -53,11 +53,10 @@ public class HistoriqueActivity extends AbstractActivity {
     }
 
     public void deleteGame(final int pos) {
-        final List<Game> games = GameService.getInstance().getAll(this.getBaseContext());
-        Game gameToRemove = games.get(pos);
+        final List<Game> gamesSaved = GameService.getInstance().getAll(this.getBaseContext());
+        Game gameToRemove = gamesSaved.get(pos);
         GameService.getInstance().delete(this, gameToRemove);
         this.historiqueAdapter.getGames().remove(pos);
-//        GameService.getInstance().save(this,games);
         this.historiqueAdapter.notifyDataSetChanged();
     }
 }

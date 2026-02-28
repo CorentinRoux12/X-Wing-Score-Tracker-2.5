@@ -1,5 +1,6 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
@@ -18,8 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.DiceCounter;
@@ -44,6 +45,7 @@ import io.vavr.control.Try;
  * <p>
  * Activity for the view of the scoring board
  */
+@SuppressLint("SetTextI18n")
 public class TimerActivity extends AbstractActivity
 {
 
@@ -454,7 +456,7 @@ public class TimerActivity extends AbstractActivity
     private void updateDiceStat()
     {
         final DiceTurn current = this.timerActivityModel.getDiceTurn();
-        final ArrayList<DiceTurn> diceTurns = this.timerActivityModel.getGame().getDiceTurns();
+        final List<DiceTurn> diceTurns = this.timerActivityModel.getGame().getDiceTurns();
 
         final DiceCounter diceCounter = new DiceCounter();
 
