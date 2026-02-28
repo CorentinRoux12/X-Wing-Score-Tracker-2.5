@@ -33,8 +33,8 @@
             android:configChanges="orientation"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueActivity"
+            android:theme="@style/Theme.ScoreTracker.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="fr.corentin.roux.x_wing_score_tracker.ui.activities.HistoriqueDetailActivity"

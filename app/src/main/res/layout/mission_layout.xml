@@ -4,16 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <com.github.barteksc.pdfviewer.PDFView
-        android:id="@+id/missionRules"
+    <fr.corentin.roux.x_wing_score_tracker.ui.activities.model.ZoomableImageView
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/pdfImageView"
+        android:configChanges="orientation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:configChanges="orientation"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:adjustViewBounds="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

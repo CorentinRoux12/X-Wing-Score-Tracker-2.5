@@ -1,15 +1,17 @@
 plugins {
-    id 'com.android.application'
+    id("com.android.application")
 }
 
 android {
     namespace = "fr.corentin.roux.x_wing_score_tracker"
-    compileSdk = 35
+    compileSdk = 36
+    ndkVersion = "29.0.14206865"
+    buildToolsVersion = '36.0.0'
 
     defaultConfig {
         applicationId = "fr.corentin.roux.score_tracker"
         minSdkVersion 24
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode = VERSION_CODE.toInteger()
         versionName = VERSION_MAJEUR + "." + VERSION_MINEUR + "." + VERSION_PATCH
         multiDexEnabled = true
@@ -81,19 +83,18 @@ android {
 
 dependencies {
 //    implementation 'com.google.android.play:integrity:1.4.0'
-    implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.14.0-alpha09")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    implementation("androidx.navigation:navigation-fragment:2.9.7")
-    implementation("androidx.navigation:navigation-ui:2.9.7")
-    //Nécessaire pour le viewer de pdf
-    implementation("com.github.DImuthuUpe:AndroidPdfViewer:d84cb4db30")
-    implementation("androidx.multidex:multidex:2.0.1")
     // https://mvnrepository.com/artifact/io.vavr/vavr
     implementation("io.vavr:vavr:1.0.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.13.2")
-
+    // Android X
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    def navigation_version = "2.9.7"
+    implementation("androidx.navigation:navigation-ui:" + navigation_version)
+    implementation("androidx.navigation:navigation-fragment:" + navigation_version)
+    implementation("androidx.multidex:multidex:2.0.1")
+    implementation("androidx.appcompat:appcompat:1.7.1")
     def room_version = "2.8.4"
     implementation("androidx.room:room-runtime:" + room_version)
     annotationProcessor("androidx.room:room-compiler:" + room_version)
