@@ -29,7 +29,8 @@ public class ZoomableImageView extends androidx.appcompat.widget.AppCompatImageV
 
     float redundantXSpace;
     float redundantYSpace;
-    float width, height;
+    float width;
+    float height;
     float saveScale = 1f;
     float right;
     float bottom;
