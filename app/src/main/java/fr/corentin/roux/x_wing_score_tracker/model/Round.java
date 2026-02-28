@@ -2,7 +2,6 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
-@Deprecated
 public class Round implements Persistable, Serializable {
 
     /**

@@ -55,21 +55,10 @@ public class EndDialogTimer extends DialogFragment {
         }
     }
 
-    public TimerActivity getTimerActivity() {
-        return timerActivity;
-    }
-
     @Nullable
     @Override
     public View getView() {
         return view;
     }
 
-    public Button getBtnYesEnd() {
-        return btnYesEnd;
-    }
-
-    public Button getBtnNoEnd() {
-        return btnNoEnd;
-    }
 }

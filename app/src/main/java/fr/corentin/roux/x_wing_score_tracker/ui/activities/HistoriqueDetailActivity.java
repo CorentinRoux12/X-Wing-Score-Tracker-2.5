@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
@@ -21,6 +22,8 @@ import fr.corentin.roux.x_wing_score_tracker.model.DiceTurn;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.model.Round;
 import fr.corentin.roux.x_wing_score_tracker.model.Score;
+import fr.corentin.roux.x_wing_score_tracker.model.Setting;
+import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import io.vavr.control.Try;
 
 public class HistoriqueDetailActivity extends AbstractActivity
@@ -36,6 +39,8 @@ public class HistoriqueDetailActivity extends AbstractActivity
     private TextView finalScore;
     private TextView details;
     private TextView mission;
+
+    private Setting setting;
 
     /**
      * {@inheritDoc}
@@ -66,6 +71,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
     @Override
     protected void initDatas()
     {
+        this.setting = SettingService.getInstance().get(this);
         Game current = (Game) this.getIntent().getSerializableExtra("game");
         final StringBuilder time = generateTimerAffichage(current.getTimeLeft());
         final StringBuilder finalScoreBuilder = new StringBuilder();
@@ -93,7 +99,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                 .onFailure(throwable -> Toast.makeText(this, "Error while loading dice stats details.", Toast.LENGTH_SHORT).show())
                 .getOrElse(Collections.emptyList());
 
-        if (!diceTurns.isEmpty())
+        if (Boolean.TRUE.equals(setting.getDiceCounter()) && !diceTurns.isEmpty())
         {
             //Préparation du resultat des dices global
             DiceCounter result = new DiceCounter();
@@ -104,7 +110,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
             finalScoreBuilder
                     .append("\n\n")
                     .append("DICE:").append("\n")
-                    .append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n")
+                    .append(SPACE).append(current.getNamePlayer1().toUpperCase(Locale.getDefault())).append("\n")
                     .append(SPACE + SPACE + "- ").append("Total Attack : ").append(result.getTotalAttackPlayer1()).append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer1()).append(" (").append((result.getTotalAttackPlayer1() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
@@ -114,7 +120,7 @@ public class HistoriqueDetailActivity extends AbstractActivity
                     .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EVADE.getPrintLibelle()).append(" : ").append(result.getDefenseEvadePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EVADE.getProba())).append(")").append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_EYE.getPrintLibelle()).append(" : ").append(result.getDefenseEyePlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_EYE.getProba())).append(")").append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.DEFENSE_BLANK.getPrintLibelle()).append(" : ").append(result.getDefenseBlankPlayer1()).append(" (").append((result.getTotalDefensePlayer1() * DiceFace.DEFENSE_BLANK.getProba())).append(")").append("\n")
-                    .append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n")
+                    .append(SPACE).append(current.getNamePlayer2().toUpperCase(Locale.getDefault())).append("\n")
                     .append(SPACE + SPACE + "- ").append("Total Attack : ").append(result.getTotalAttackPlayer2()).append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_CRIT.getPrintLibelle()).append(" : ").append(result.getAttackCritPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_CRIT.getProba())).append(")").append("\n")
                     .append(SPACE + SPACE + "- ").append(DiceFace.ATTACK_HIT.getPrintLibelle()).append(" : ").append(result.getAttackHitPlayer2()).append(" (").append((result.getTotalAttackPlayer2() * DiceFace.ATTACK_HIT.getProba())).append(")").append("\n")
@@ -142,36 +148,36 @@ public class HistoriqueDetailActivity extends AbstractActivity
                     .append("Duration of the round : ").append(generateTimerAffichage(round.getTime())).append("\n")
                     .append("First Player : ").append(round.getFirstPlayer()).append("\n")
                     .append("Score Global : \n")
-                    .append(SPACE_AND_TIRET).append(current.getNamePlayer1().toUpperCase()).append(" : ").append(scoreTempJ1).append("\n")
-                    .append(SPACE+"- ").append(current.getNamePlayer2().toUpperCase()).append(" : ").append(scoreTempJ2).append("\n")
+                    .append(SPACE_AND_TIRET).append(current.getNamePlayer1().toUpperCase(Locale.getDefault())).append(" : ").append(scoreTempJ1).append("\n")
+                    .append(SPACE).append("- ").append(current.getNamePlayer2().toUpperCase(Locale.getDefault())).append(" : ").append(scoreTempJ2).append("\n")
                     .append("Scores of the round : \n")
-                    .append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n")
-                    .append(SPACE + SPACE +"- Global ").append(round.getScorePlayer1().getScoreGlobal()).append("\n")
-                    .append(SPACE + SPACE +SPACE+"- Kill ").append(round.getScorePlayer1().getScoreKill()).append("\n")
-                    .append(SPACE + SPACE +SPACE+"- Mission ").append(round.getScorePlayer1().getScoreMission()).append("\n")
-                    .append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n")
-                    .append(SPACE+SPACE+"- Global ").append(round.getScorePlayer2().getScoreGlobal()).append("\n")
-                    .append(SPACE+SPACE+SPACE+"- Kill ").append(round.getScorePlayer2().getScoreKill()).append("\n")
-                    .append(SPACE+SPACE+SPACE+"- Mission ").append(round.getScorePlayer2().getScoreMission()).append("\n");
+                    .append(SPACE).append(current.getNamePlayer1().toUpperCase(Locale.getDefault())).append("\n")
+                    .append(SPACE).append(SPACE).append("- Global ").append(round.getScorePlayer1().getScoreGlobal()).append("\n")
+                    .append(SPACE).append(SPACE).append(SPACE).append("- Kill ").append(round.getScorePlayer1().getScoreKill()).append("\n")
+                    .append(SPACE).append(SPACE).append(SPACE).append("- Mission ").append(round.getScorePlayer1().getScoreMission()).append("\n")
+                    .append(SPACE).append(current.getNamePlayer2().toUpperCase(Locale.getDefault())).append("\n")
+                    .append(SPACE).append(SPACE).append("- Global ").append(round.getScorePlayer2().getScoreGlobal()).append("\n")
+                    .append(SPACE).append(SPACE).append(SPACE).append("- Kill ").append(round.getScorePlayer2().getScoreKill()).append("\n")
+                    .append(SPACE).append(SPACE).append(SPACE).append("- Mission ").append(round.getScorePlayer2().getScoreMission()).append("\n");
 
-            if (currentDiceTurn != null)
+            if (Boolean.TRUE.equals(setting.getDiceCounter()) && currentDiceTurn != null)
             {
                 historique.append("Dice:\n");
                 final int totalAttackPlayer1 = currentDiceTurn.getDiceStatsPlayer1().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
                 final int totalDefensePlayer1 = currentDiceTurn.getDiceStatsPlayer1().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
-                historique.append(SPACE).append(current.getNamePlayer1().toUpperCase()).append("\n");
+                historique.append(SPACE).append(current.getNamePlayer1().toUpperCase(Locale.getDefault())).append("\n");
                 currentDiceTurn.getDiceStatsPlayer1().entrySet().stream()
                         .sorted((a, b) -> a.getKey().getOrdre() > b.getKey().getOrdre() ? 1 : -1)
-                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE+SPACE+"- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
+                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE).append(SPACE).append("- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
                                 .append(" (").append(((diceFaceIntegerEntry.getKey().isAttack() ? totalAttackPlayer1 : totalDefensePlayer1) * diceFaceIntegerEntry.getKey().getProba())).append(")")
                                 .append("\n"));
 
                 final int totalAttackPlayer2 = currentDiceTurn.getDiceStatsPlayer2().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
                 final int totalDefensePlayer2 = currentDiceTurn.getDiceStatsPlayer2().entrySet().stream().filter(t -> t.getKey().isAttack()).mapToInt(Map.Entry::getValue).sum();
-                historique.append(SPACE).append(current.getNamePlayer2().toUpperCase()).append("\n");
+                historique.append(SPACE).append(current.getNamePlayer2().toUpperCase(Locale.getDefault())).append("\n");
                 currentDiceTurn.getDiceStatsPlayer2().entrySet().stream()
                         .sorted((a, b) -> a.getKey().getOrdre() > b.getKey().getOrdre() ? 1 : -1)
-                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE+SPACE+"- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
+                        .forEach(diceFaceIntegerEntry -> historique.append(SPACE).append(SPACE).append("- ").append(diceFaceIntegerEntry.getKey().getPrintLibelle()).append(" : ").append(diceFaceIntegerEntry.getValue())
                                 .append(" (").append(((diceFaceIntegerEntry.getKey().isAttack() ? totalAttackPlayer2 : totalDefensePlayer2) * diceFaceIntegerEntry.getKey().getProba())).append(")")
                                 .append("\n"));
             }

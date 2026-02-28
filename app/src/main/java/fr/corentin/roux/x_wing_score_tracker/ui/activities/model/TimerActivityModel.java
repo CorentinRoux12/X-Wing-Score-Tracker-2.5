@@ -4,6 +4,7 @@ package fr.corentin.roux.x_wing_score_tracker.ui.activities.model;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import fr.corentin.roux.x_wing_score_tracker.model.DiceTurn;
 import fr.corentin.roux.x_wing_score_tracker.model.Game;
@@ -15,7 +16,7 @@ public class TimerActivityModel implements Serializable {
 
     private Setting setting;
 
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
     private boolean end = false;
     private boolean timerStart = false;
     private long timeToSet;

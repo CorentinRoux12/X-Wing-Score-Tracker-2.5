@@ -3,23 +3,22 @@ plugins {
 }
 
 android {
-    namespace "fr.corentin.roux.x_wing_score_tracker"
-    compileSdkVersion 35
-    buildToolsVersion '34.0.0'
+    namespace = "fr.corentin.roux.x_wing_score_tracker"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId "fr.corentin.roux.score_tracker"
+        applicationId = "fr.corentin.roux.score_tracker"
         minSdkVersion 24
         targetSdkVersion 35
-        versionCode VERSION_CODE.toInteger()
-        versionName VERSION_MAJEUR + "." + VERSION_MINEUR + "." + VERSION_PATCH
-        multiDexEnabled true
+        versionCode = VERSION_CODE.toInteger()
+        versionName = VERSION_MAJEUR + "." + VERSION_MINEUR + "." + VERSION_PATCH
+        multiDexEnabled = true
         ndk {
             // Filter for architectures supported by Flutter.
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
-            debugSymbolLevel 'SYMBOL_TABLE'
+            abiFilters 'armeabi-v7a' , 'arm64-v8a' , 'x86_64' , 'x86'
+            debugSymbolLevel = 'FULL'
         }
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -32,11 +31,11 @@ android {
         release {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
-            minifyEnabled true
+            minifyEnabled = true
 
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
-            shrinkResources true
+            shrinkResources = true
 
             // Includes the default ProGuard rules files that are packaged with
             // the Android Gradle plugin. To learn more, go to the section about
@@ -44,22 +43,20 @@ android {
             proguardFiles getDefaultProguardFile(
                     'proguard-android-optimize.txt'),
                     'proguard-rules.pro'
-            debuggable false
+            debuggable = false
         }
 
         debug {
-            debuggable true
+            debuggable = true
         }
     }
 
     compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_17
-//        targetCompatibility JavaVersion.VERSION_17
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
-        viewBinding true
+        viewBinding = true
     }
 
     //apply this at the end of the file
@@ -84,52 +81,30 @@ android {
 
 dependencies {
 //    implementation 'com.google.android.play:integrity:1.4.0'
-    implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.14.0-alpha09'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
-    implementation 'androidx.navigation:navigation-fragment:2.9.7'
-    implementation 'androidx.navigation:navigation-ui:2.9.7'
-
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.21.1'
-//    implementation 'com.github.barteksc:android-pdf-viewer:2.8.1'
-// https://mvnrepository.com/artifact/com.github.barteksc/android-pdf-viewer
-//    implementation 'com.github.barteksc:android-pdf-viewer:3.1.0-beta.1'
-
-//    implementation 'com.github.barteksc:AndroidPdfViewer:master-SNAPSHOT'
-//    implementation("com.github.marain87:AndroidPdfViewer:master-3.2.8-gb96fbbd-1")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.14.0-alpha09")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.navigation:navigation-fragment:2.9.7")
+    implementation("androidx.navigation:navigation-ui:2.9.7")
+    //Nécessaire pour le viewer de pdf
     implementation("com.github.DImuthuUpe:AndroidPdfViewer:d84cb4db30")
-
-    implementation 'androidx.multidex:multidex:2.0.1'
-
-    def RingtonePickerVersion = '3.3.0'
-    implementation 'com.github.DeweyReed:UltimateRingtonePicker:' + RingtonePickerVersion
-
+    implementation("androidx.multidex:multidex:2.0.1")
     // https://mvnrepository.com/artifact/io.vavr/vavr
-    implementation 'io.vavr:vavr:1.0.0'
-
+    implementation("io.vavr:vavr:1.0.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.13.2'
+    implementation("com.google.code.gson:gson:2.13.2")
 
     def room_version = "2.8.4"
-
     implementation("androidx.room:room-runtime:" + room_version)
     annotationProcessor("androidx.room:room-compiler:" + room_version)
-
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:" + room_version)
-
     // optional - RxJava2 support for Room
     implementation("androidx.room:room-rxjava2:" + room_version)
-
     // optional - RxJava3 support for Room
     implementation("androidx.room:room-rxjava3:" + room_version)
-
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation("androidx.room:room-guava:" + room_version)
-
-    // optional - Test helpers
-    testImplementation("androidx.room:room-testing:" + room_version)
-
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:" + room_version)
 }

@@ -227,6 +227,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="@color/green"
                     android:text="Player 1"
                     android:textColor="@color/textColor" />
 
@@ -235,6 +237,8 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:layout_marginStart="5dp"
                     android:layout_gravity="center"
                     android:text="Player 2"
                     android:textColor="@color/textColor" />

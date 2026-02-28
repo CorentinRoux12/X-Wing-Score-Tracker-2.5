@@ -34,22 +34,15 @@ public class LocaleHelper
             language = Language.parseCodeIhm(setting.getLanguage());
         }
 
-        switch (language)
+        return switch (language)
         {
-            case FRENCH:
-                return Locale.FRENCH;
-            case ITALIANO:
-                return Locale.ITALIAN;
-            case SPANNISH:
-                return new Locale("es");
-            case DEUTSCH:
-                return Locale.GERMAN;
-            case CHINOIS:
-                return Locale.SIMPLIFIED_CHINESE;
-            case POLSKI:
-                return new Locale("pl");
-            default:
-                return Locale.ENGLISH;
-        }
+            case FRENCH -> Locale.FRENCH;
+            case ITALIANO -> Locale.ITALIAN;
+            case SPANNISH -> new Locale("es");
+            case DEUTSCH -> Locale.GERMAN;
+            case CHINOIS -> Locale.SIMPLIFIED_CHINESE;
+            case POLSKI -> new Locale("pl");
+            default -> Locale.ENGLISH;
+        };
     }
 }
