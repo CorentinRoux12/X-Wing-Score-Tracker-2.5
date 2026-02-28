@@ -12,7 +12,8 @@ import fr.corentin.roux.x_wing_score_tracker.model.Round;
 import fr.corentin.roux.x_wing_score_tracker.model.Score;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 
-public class TimerActivityModel implements Serializable {
+public class TimerActivityModel implements Serializable
+{
 
     private Setting setting;
 
@@ -30,16 +31,19 @@ public class TimerActivityModel implements Serializable {
     private DiceTurn diceTurn = new DiceTurn();
 
 
-    public void updateScoreRound() {
+    public void updateScoreRound()
+    {
         final List<Round> rounds = this.game.getRounds();
-        if (!rounds.isEmpty()) {
+        if (!rounds.isEmpty())
+        {
             int cptG1 = 0;
             int cptK1 = 0;
             int cptM1 = 0;
             int cptG2 = 0;
             int cptK2 = 0;
             int cptM2 = 0;
-            for (final Round round : rounds) {
+            for (final Round round : rounds)
+            {
                 cptG1 += round.getScorePlayer1().getScoreGlobal();
                 cptK1 += round.getScorePlayer1().getScoreKill();
                 cptM1 += round.getScorePlayer1().getScoreMission();
@@ -60,7 +64,8 @@ public class TimerActivityModel implements Serializable {
             scoreRoundJoueur2.setScoreGlobal(cptG2);
             scoreRoundJoueur2.setScoreKill(cptK2);
             scoreRoundJoueur2.setScoreMission(cptM2);
-        } else {
+        } else
+        {
             scoreRoundJoueur1.setScoreGlobal(game.getScoreGlobalPlayer1());
             scoreRoundJoueur1.setScoreKill(game.getScoreKillPlayer1());
             scoreRoundJoueur1.setScoreMission(game.getScoreMissionPlayer1());
@@ -70,87 +75,108 @@ public class TimerActivityModel implements Serializable {
         }
     }
 
-    public Setting getSetting() {
+    public Setting getSetting()
+    {
         return setting;
     }
 
-    public void setSetting(Setting setting) {
+    public void setSetting(Setting setting)
+    {
         this.setting = setting;
     }
 
-    public SimpleDateFormat getDateFormat() {
+    public SimpleDateFormat getDateFormat()
+    {
         return dateFormat;
     }
 
-    public boolean isEnd() {
+    public boolean isEnd()
+    {
         return end;
     }
 
-    public void setEnd(boolean end) {
+    public void setEnd(boolean end)
+    {
         this.end = end;
     }
 
-    public boolean isTimerStart() {
+    public boolean isTimerStart()
+    {
         return timerStart;
     }
 
-    public void setTimerStart(boolean timerStart) {
+    public void setTimerStart(boolean timerStart)
+    {
         this.timerStart = timerStart;
     }
 
-    public long getTimeToSet() {
+    public long getTimeToSet()
+    {
         return timeToSet;
     }
 
-    public void setTimeToSet(long timeToSet) {
+    public void setTimeToSet(long timeToSet)
+    {
         this.timeToSet = timeToSet;
     }
 
-    public Game getGame() {
+    public Game getGame()
+    {
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(Game game)
+    {
         this.game = game;
     }
 
-    public int getFirstPlayerChoice() {
+    public int getFirstPlayerChoice()
+    {
         return firstPlayerChoice;
     }
 
-    public void setFirstPlayerChoice(int firstPlayerChoice) {
+    public void setFirstPlayerChoice(int firstPlayerChoice)
+    {
         this.firstPlayerChoice = firstPlayerChoice;
     }
 
-    public boolean isAlreadyEnd() {
+    public boolean isAlreadyEnd()
+    {
         return alreadyEnd;
     }
 
-    public void setAlreadyEnd(boolean alreadyEnd) {
+    public void setAlreadyEnd(boolean alreadyEnd)
+    {
         this.alreadyEnd = alreadyEnd;
     }
 
-    public Score getScoreRoundJoueur1() {
+    public Score getScoreRoundJoueur1()
+    {
         return scoreRoundJoueur1;
     }
 
-    public void setScoreRoundJoueur1(Score scoreRoundJoueur1) {
+    public void setScoreRoundJoueur1(Score scoreRoundJoueur1)
+    {
         this.scoreRoundJoueur1 = scoreRoundJoueur1;
     }
 
-    public Score getScoreRoundJoueur2() {
+    public Score getScoreRoundJoueur2()
+    {
         return scoreRoundJoueur2;
     }
 
-    public void setScoreRoundJoueur2(Score scoreRoundJoueur2) {
+    public void setScoreRoundJoueur2(Score scoreRoundJoueur2)
+    {
         this.scoreRoundJoueur2 = scoreRoundJoueur2;
     }
 
-    public long getTimeStartRound() {
+    public long getTimeStartRound()
+    {
         return timeStartRound;
     }
 
-    public void setTimeStartRound(long timeStartRound) {
+    public void setTimeStartRound(long timeStartRound)
+    {
         this.timeStartRound = timeStartRound;
     }
 
