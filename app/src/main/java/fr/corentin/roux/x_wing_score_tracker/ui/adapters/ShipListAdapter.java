@@ -25,7 +25,8 @@ import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
 import io.vavr.control.Try;
 
-public class ShipListAdapter extends BaseAdapter {
+public class ShipListAdapter extends BaseAdapter
+{
     private static final String RED = "#9d0208";
     private static final String YELLOW = "#E5E500";
     private static final String GREEN = "#2b9348";
@@ -36,7 +37,8 @@ public class ShipListAdapter extends BaseAdapter {
     private final TimerActivity activity;
     private final String player;
 
-    public ShipListAdapter(TimerActivity activity, String name, String xws) {
+    public ShipListAdapter(TimerActivity activity, String name, String xws)
+    {
         this.activity = activity;
         this.context = activity.getBaseContext();
         this.player = name;
@@ -49,21 +51,33 @@ public class ShipListAdapter extends BaseAdapter {
                 .getOrElse(Collections.emptyList());
     }
 
-    private List<Ship> extractList(String xws) throws JSONException {
+    private List<Ship> extractList(String xws) throws JSONException
+    {
         final List<Ship> listPlayer = new ArrayList<>();
+
+        if (xws.isBlank())
+        {
+            return listPlayer;
+        }
+
         final JSONArray pilots = new JSONArray(xws);
-        for (int i = 0; i < pilots.length(); i++) {
+        for (int i = 0; i < pilots.length(); i++)
+        {
             final JSONObject pilot = pilots.getJSONObject(i);
             String name;
-            try {
+            try
+            {
                 name = pilot.getString("name");//e
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 name = pilot.getString("a");
             }
             int point;
-            try {
+            try
+            {
                 point = pilot.getInt("points");//f
-            } catch (Exception e) {
+            } catch (Exception e)
+            {
                 point = pilot.getInt("b");//f
             }
             listPlayer.add(new Ship(name, point));
@@ -72,22 +86,26 @@ public class ShipListAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return ships.size();
     }
 
     @Override
-    public Object getItem(int position) {
+    public Object getItem(int position)
+    {
         return ships.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         @SuppressLint("ViewHolder") final View rowView = this.inflater.inflate(R.layout.ship_adapter_layout, parent, false);
         final ViewHolder holder = new ViewHolder();
         //On fait un mapping entre le xml et le java
@@ -100,12 +118,14 @@ public class ShipListAdapter extends BaseAdapter {
         return rowView;
     }
 
-    private void initialisationListeners(ViewHolder holder, int position) {
+    private void initialisationListeners(ViewHolder holder, int position)
+    {
         holder.nomShip.setOnClickListener(t -> changeScoreListener(position, holder));
         holder.pointShip.setOnClickListener(t -> changeScoreListener(position, holder));
     }
 
-    private void changeScoreListener(int position, ViewHolder holder) {
+    private void changeScoreListener(int position, ViewHolder holder)
+    {
         Ship current = (Ship) this.getItem(position);
         Ship.Statut oldStatut = current.changeStatut();
         holder.changeColor(current.getStatut());
@@ -114,36 +134,45 @@ public class ShipListAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    private void initialisationData(ViewHolder holder, int position) {
+    private void initialisationData(ViewHolder holder, int position)
+    {
         final Ship current = (Ship) this.getItem(position);
         holder.getNomShip().setText(current.getName());
         holder.getPointShip().setText(String.valueOf(current.getPoints()));
         holder.changeColor(current.getStatut());
     }
 
-    public void findViews(final View rowView, final ViewHolder holder) {
+    public void findViews(final View rowView, final ViewHolder holder)
+    {
         holder.nomShip = rowView.findViewById(R.id.nomShip);
         holder.pointShip = rowView.findViewById(R.id.pointShip);
     }
 
-    public static class ViewHolder {
+    public static class ViewHolder
+    {
         private TextView nomShip;
         private Button pointShip;
 
-        public TextView getNomShip() {
+        public TextView getNomShip()
+        {
             return nomShip;
         }
 
-        public Button getPointShip() {
+        public Button getPointShip()
+        {
             return pointShip;
         }
 
-        public void changeColor(Ship.Statut statut) {
-            if (statut.equals(Ship.Statut.FULL)) {
+        public void changeColor(Ship.Statut statut)
+        {
+            if (statut.equals(Ship.Statut.FULL))
+            {
                 pointShip.setBackgroundColor(Color.parseColor(GREEN));
-            } else if (statut.equals(Ship.Statut.HALF)) {
+            } else if (statut.equals(Ship.Statut.HALF))
+            {
                 pointShip.setBackgroundColor(Color.parseColor(YELLOW));
-            } else {
+            } else
+            {
                 pointShip.setBackgroundColor(Color.parseColor(RED));
 
             }

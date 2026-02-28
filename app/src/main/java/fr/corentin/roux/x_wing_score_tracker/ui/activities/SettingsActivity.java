@@ -241,7 +241,7 @@ public class SettingsActivity extends AbstractActivity
 
     private void startSettingsActivity()
     {
-        Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
         this.recreate();
     }
 

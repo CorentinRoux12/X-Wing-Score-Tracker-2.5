@@ -11,7 +11,8 @@ import java.io.IOException;
 import fr.corentin.roux.x_wing_score_tracker.model.Persistable;
 import io.vavr.control.Try;
 
-public class PersistableUtils {
+public class PersistableUtils
+{
 
     /**
      * L'instance de la classe
@@ -25,7 +26,8 @@ public class PersistableUtils {
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
      */
-    private PersistableUtils() {
+    private PersistableUtils()
+    {
         Log.d(this.getClass().getSimpleName(), "Génération du singleton.");
     }
 
@@ -34,8 +36,10 @@ public class PersistableUtils {
      *
      * @return l'instance créer de la classe
      */
-    public static PersistableUtils getInstance() {
-        if (instance == null) {
+    public static PersistableUtils getInstance()
+    {
+        if (instance == null)
+        {
             instance = new PersistableUtils();
         }
         return instance;
@@ -49,7 +53,8 @@ public class PersistableUtils {
      * @param <T>      le type paramétrable qui doit être un {@link Persistable}
      * @return Un objet {@link Persistable} dans le fichier {field filename}
      */
-    public <T extends Persistable> T get(final String filename, final Class<T> clazz, final Context context) {
+    public <T extends Persistable> T get(final String filename, final Class<T> clazz, final Context context)
+    {
         return Try.of(() -> filename)
                 .map(file -> new File(context.getCacheDir(), file))
                 .map(t -> {
@@ -72,7 +77,8 @@ public class PersistableUtils {
      * @param object   un objet qui est de la classe {@link Persistable} à écrire dans le fichier ciblé
      * @param <T>      le type paramétrable qui doit être un {@link Persistable}
      */
-    public <T extends Persistable> void write(final String filename, final T object, final Context context) {
+    public <T extends Persistable> void write(final String filename, final T object, final Context context)
+    {
         this.writeJsonToFileSystem(filename, object, context);
     }
 
@@ -82,7 +88,8 @@ public class PersistableUtils {
      * @param filename le nom du fichier choisit
      * @param object   l'object à écrire
      */
-    private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context) {
+    private <T> void writeJsonToFileSystem(final String filename, final T object, final Context context)
+    {
         Try.of(() -> filename)
                 .andThen(file -> {
                     try {

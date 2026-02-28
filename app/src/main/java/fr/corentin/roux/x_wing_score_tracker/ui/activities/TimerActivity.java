@@ -49,8 +49,8 @@ public class TimerActivity extends AbstractActivity
 
     private static final int MINUTES = 60000;
     private static final int SECONDES = 1000;
-    private static final String RED = "#9d0208";
-    private static final String GREEN = "#2b9348";
+    private static final String RED = "#CD1B1D";
+    private static final String GREEN = "#2FC859";
 
     private TimerActivityModel timerActivityModel = new TimerActivityModel();
 
@@ -336,6 +336,8 @@ public class TimerActivity extends AbstractActivity
             {
                 this.timerActivityModel.setFirstPlayerChoice(1);
                 this.firstPlayerName.setText(timerActivityModel.getGame().getNamePlayer1());
+                this.firstPlayer1.setBackgroundColor(Color.parseColor(RED));
+                this.firstPlayer2.setBackgroundColor(Color.parseColor(GREEN));
             }
         });
         this.firstPlayer2.setOnClickListener(t -> {
@@ -343,6 +345,8 @@ public class TimerActivity extends AbstractActivity
             {
                 this.timerActivityModel.setFirstPlayerChoice(2);
                 this.firstPlayerName.setText(timerActivityModel.getGame().getNamePlayer2());
+                this.firstPlayer1.setBackgroundColor(Color.parseColor(GREEN));
+                this.firstPlayer2.setBackgroundColor(Color.parseColor(RED));
             }
         });
     }

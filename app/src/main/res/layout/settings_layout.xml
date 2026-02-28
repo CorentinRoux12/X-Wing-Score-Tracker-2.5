@@ -61,15 +61,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:buttonTint="@color/black"
+                    android:buttonTint="@color/textColor"
                     android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
                     android:text="@string/dark_mode"
                     android:textAlignment="textStart"
                     android:textColor="@color/textColor"
-
                     android:textSize="@dimen/normal_text"
                     tools:ignore="RtlCompat" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:buttonTint="@color/black"
+                    android:buttonTint="@color/textColor"
                     android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
                     android:text="@string/dice_stats_counter"
@@ -233,7 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Import XWS List"
+                    android:text="@string/import_xws_list"
                     android:textColor="@color/textColor" />
 
                 <Button
@@ -242,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:text="Reset XWS"
+                    android:text="@string/reset_xws"
                     android:textColor="@color/textColor" />
             </LinearLayout>
 

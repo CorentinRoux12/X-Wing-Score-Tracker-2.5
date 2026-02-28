@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.barteksc.pdfviewer.PDFView;
@@ -43,7 +42,7 @@ public class MissionDialog extends DialogFragment {
     private void initDatas() {
         if (this.timerActivity.getGame().getMission() != null) {
             String resource;
-            if (Locale.getDefault().getCountry().toLowerCase().equals(Language.FRENCH.getCodeLanguage())) {
+            if (Locale.getDefault().getCountry().toLowerCase(Locale.getDefault()).equals(Language.FRENCH.getCodeLanguage())) {
                 resource = "fr/";
             } else { // Default Package => English
                 resource = "en/";
