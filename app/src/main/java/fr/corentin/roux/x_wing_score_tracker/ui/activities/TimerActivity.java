@@ -1,5 +1,6 @@
 package fr.corentin.roux.x_wing_score_tracker.ui.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioAttributes;
@@ -18,7 +19,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +45,7 @@ import io.vavr.control.Try;
  * <p>
  * Activity for the view of the scoring board
  */
+@SuppressLint("SetTextI18n")
 public class TimerActivity extends AbstractActivity
 {
 
