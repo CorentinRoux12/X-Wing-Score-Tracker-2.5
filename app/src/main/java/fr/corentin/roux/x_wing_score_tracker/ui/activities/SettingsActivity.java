@@ -233,6 +233,7 @@ public class SettingsActivity extends AbstractActivity
 
     private void reloadDarkMode()
     {
+//        Toast.makeText(this, "Don't click to fast my young apprentice.", Toast.LENGTH_SHORT).show();
         AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(this.enabledDarkMode) ?
                 AppCompatDelegate.MODE_NIGHT_YES :
                 AppCompatDelegate.MODE_NIGHT_NO);
@@ -240,6 +241,7 @@ public class SettingsActivity extends AbstractActivity
 
     private void startSettingsActivity()
     {
+        //Toast.makeText(this, "Recreate Incomming", Toast.LENGTH_SHORT).show();
         this.recreate();
     }
 
@@ -277,4 +279,17 @@ public class SettingsActivity extends AbstractActivity
         this.setting.setPathRingTone(this.pathRingTone);
         this.service.save(this, this.setting);
     }
+
+
+//    @Override
+//    public void onMusicPick(@NonNull Uri uri, @NonNull String s)
+//    {
+//        this.pathRingTone = uri.toString();
+//    }
+//
+//    @Override
+//    public void onPickCanceled()
+//    {
+//        //Nothing to declare
+//    }
 }
