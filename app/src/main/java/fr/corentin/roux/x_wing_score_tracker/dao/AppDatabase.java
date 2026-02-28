@@ -11,7 +11,7 @@ import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 @Database(entities = {
         Setting.class,
         Game.class
-}, version = 4) //TODO A CHANGER A CHAQUE update des pojos
+}, version = 4) //Remember ME: A CHANGER A CHAQUE update des pojos
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
