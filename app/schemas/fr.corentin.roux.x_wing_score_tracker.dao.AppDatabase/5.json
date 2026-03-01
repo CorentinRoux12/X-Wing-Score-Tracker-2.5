@@ -1,0 +1,203 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "5ad98d43c4c07fdb4b8c89f39bb9c86c",
+    "entities": [
+      {
+        "tableName": "Setting",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `opponent` TEXT, `language` TEXT, `randomTime` TEXT, `volatilityTime` TEXT, `enabledDarkTheme` INTEGER, `pathRingTone` TEXT, `listPlayer1` TEXT, `listPlayer2` TEXT, `diceCounter` INTEGER, `lowResolutionMode` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "opponent",
+            "columnName": "opponent",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "language",
+            "columnName": "language",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "randomTime",
+            "columnName": "randomTime",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "volatilityTime",
+            "columnName": "volatilityTime",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "enabledDarkTheme",
+            "columnName": "enabledDarkTheme",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "pathRingTone",
+            "columnName": "pathRingTone",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "listPlayer1",
+            "columnName": "listPlayer1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "listPlayer2",
+            "columnName": "listPlayer2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "diceCounter",
+            "columnName": "diceCounter",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "lowResolutionMode",
+            "columnName": "lowResolutionMode",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "Game",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `roundsJson` TEXT, `diceJson` TEXT, `timeLeft` INTEGER NOT NULL, `round` INTEGER NOT NULL, `date` TEXT, `mission` TEXT, `hideTimeLeft` INTEGER NOT NULL, `hideTimer` INTEGER NOT NULL, `namePlayer1` TEXT, `scoreGlobalPlayer1` INTEGER NOT NULL, `scoreKillPlayer1` INTEGER NOT NULL, `scoreMissionPlayer1` INTEGER NOT NULL, `xwsShipsPlayer1` TEXT, `namePlayer2` TEXT, `scoreGlobalPlayer2` INTEGER NOT NULL, `scoreKillPlayer2` INTEGER NOT NULL, `scoreMissionPlayer2` INTEGER NOT NULL, `xwsShipsPlayer2` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "roundsJson",
+            "columnName": "roundsJson",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "diceJson",
+            "columnName": "diceJson",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "timeLeft",
+            "columnName": "timeLeft",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "round",
+            "columnName": "round",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "mission",
+            "columnName": "mission",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "hideTimeLeft",
+            "columnName": "hideTimeLeft",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hideTimer",
+            "columnName": "hideTimer",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "namePlayer1",
+            "columnName": "namePlayer1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scoreGlobalPlayer1",
+            "columnName": "scoreGlobalPlayer1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scoreKillPlayer1",
+            "columnName": "scoreKillPlayer1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scoreMissionPlayer1",
+            "columnName": "scoreMissionPlayer1",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "xwsShipsPlayer1",
+            "columnName": "xwsShipsPlayer1",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "namePlayer2",
+            "columnName": "namePlayer2",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "scoreGlobalPlayer2",
+            "columnName": "scoreGlobalPlayer2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scoreKillPlayer2",
+            "columnName": "scoreKillPlayer2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scoreMissionPlayer2",
+            "columnName": "scoreMissionPlayer2",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "xwsShipsPlayer2",
+            "columnName": "xwsShipsPlayer2",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ad98d43c4c07fdb4b8c89f39bb9c86c')"
+    ]
+  }
+}

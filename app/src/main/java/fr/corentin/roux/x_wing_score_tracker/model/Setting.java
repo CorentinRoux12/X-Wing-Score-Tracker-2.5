@@ -33,12 +33,14 @@ public class Setting implements Persistable, Serializable
 
     private Boolean diceCounter = Boolean.FALSE;
 
+    private Boolean lowResolutionMode = Boolean.FALSE;
+
     public Setting()
     {
     }
 
     @Ignore
-    public Setting(Integer id, String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, String listPlayer1, String listPlayer2, Boolean diceCounter)
+    public Setting(Integer id, String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, String listPlayer1, String listPlayer2, Boolean diceCounter, Boolean lowResolutionMode)
     {
         this.id = id;
         this.name = name;
@@ -51,6 +53,7 @@ public class Setting implements Persistable, Serializable
         this.listPlayer1 = listPlayer1;
         this.listPlayer2 = listPlayer2;
         this.diceCounter = diceCounter;
+        this.lowResolutionMode = lowResolutionMode;
     }
 
     public Integer getId()
@@ -163,4 +166,13 @@ public class Setting implements Persistable, Serializable
         this.diceCounter = diceCounter;
     }
 
+    public Boolean getLowResolutionMode()
+    {
+        return lowResolutionMode;
+    }
+
+    public void setLowResolutionMode(Boolean lowResolutionMode)
+    {
+        this.lowResolutionMode = lowResolutionMode;
+    }
 }

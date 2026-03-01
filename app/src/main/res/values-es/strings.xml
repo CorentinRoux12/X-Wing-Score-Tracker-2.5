@@ -55,8 +55,10 @@
     <string name="chance">Oportunidad</string>
     <string name="salvage">Salvar</string>
     <string name="scramble">Lucha</string>
+    <string name="_75">75</string>
     <string name="dice_stats_counter">contador de estadísticas de dados</string>
     <string name="import_xws_list">Importar lista XWS</string>
     <string name="reset_xws">Restablecer lista XWS</string>
+    <string name="low_resolution_mode">Modo de baja resolución</string>
 
 </resources>

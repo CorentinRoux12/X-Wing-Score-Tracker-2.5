@@ -55,8 +55,10 @@
     <string name="chance">Opportunità</string>
     <string name="salvage">Salvare</string>
     <string name="scramble">Scramble</string>
+    <string name="_75">75</string>
     <string name="dice_stats_counter">contatore delle statistiche dei dadi</string>
     <string name="import_xws_list">Importa elenco XWS</string>
     <string name="reset_xws">Reimposta elenco XWS</string>
+    <string name="low_resolution_mode">Modalità a bassa risoluzione</string>
 
 </resources>

@@ -8,19 +8,28 @@ import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.window.OnBackInvokedCallback;
+import android.window.OnBackInvokedDispatcher;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.DiceCounter;
@@ -278,6 +287,55 @@ public class TimerActivity extends AbstractActivity
                 this.startActivity(intent);
             }
         });
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void initDefaultValue()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+        {
+            this.getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true)
+            {
+                @Override
+                public void handleOnBackPressed()
+                {
+                    if (!timerActivityModel.isEnd())
+                    {
+                        final EndDialogTimer endDialogTimer = new EndDialogTimer(TimerActivity.this);
+                        endDialogTimer.show(getSupportFragmentManager(), "dialogHelp");
+                    } else
+                    {
+                        TimerActivity.this.finish();
+                    }
+                }
+            });
+        }
+
+        if (Boolean.FALSE.equals(this.timerActivityModel.getSetting().getLowResolutionMode()))
+        {
+            return;
+        }
+        // Mode low resolution activé
+        TextView layoutGlobal = this.findViewById(R.id.layoutGlobal);
+        TextView layoutKill = this.findViewById(R.id.layoutKill);
+        TextView layoutMission = this.findViewById(R.id.layoutMission);
+
+        layoutGlobal.setText("-G-");
+        layoutKill.setText("-K-");
+        layoutMission.setText("-M-");
+
+        ViewGroup.MarginLayoutParams marginLayoutParams = ViewGroup.MarginLayoutParams.class.cast(layoutGlobal.getLayoutParams());
+        marginLayoutParams.setMargins(10, 0, 10, 0);
+
+        layoutGlobal.setLayoutParams(marginLayoutParams);
+        layoutKill.setLayoutParams(marginLayoutParams);
+        layoutMission.setLayoutParams(marginLayoutParams);
+
+        this.playerOne.setLayoutParams(marginLayoutParams);
+        this.playerTwo.setLayoutParams(marginLayoutParams);
+
+
     }
 
 
