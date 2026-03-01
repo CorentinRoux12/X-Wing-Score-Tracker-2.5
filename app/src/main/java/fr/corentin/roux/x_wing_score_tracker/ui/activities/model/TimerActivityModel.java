@@ -12,6 +12,10 @@ import fr.corentin.roux.x_wing_score_tracker.model.Round;
 import fr.corentin.roux.x_wing_score_tracker.model.Score;
 import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 
+/**
+ * Modèle de données pour l'activité TimerActivity.
+ * Encapsule l'état de la partie en cours, les paramètres, le temps restant et les scores par round.
+ */
 public class TimerActivityModel implements Serializable
 {
 
@@ -31,6 +35,9 @@ public class TimerActivityModel implements Serializable
     private DiceTurn diceTurn = new DiceTurn();
 
 
+    /**
+     * Calcule et met à jour les scores du round actuel en fonction du score global et des rounds précédents.
+     */
     public void updateScoreRound()
     {
         final List<Round> rounds = this.game.getRounds();

@@ -13,6 +13,10 @@ import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.Mission;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.model.ZoomableImageView;
 
+/**
+ * Activité affichant le détail d'une mission à l'aide d'un rendu PDF.
+ * Extrait la page correspondante du document de référence des scénarios.
+ */
 public class MissionDetailActivity extends AbstractActivity
 {
     private ZoomableImageView touch;
@@ -64,11 +68,11 @@ public class MissionDetailActivity extends AbstractActivity
                 final ParcelFileDescriptor parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
                 final PdfRenderer pdfRenderer = new PdfRenderer(parcelFileDescriptor);
                 final PdfRenderer.Page page = pdfRenderer.openPage(mission.getPage());
-                // Create a bitmap to render the page to
+                // Création d'un bitmap pour le rendu de la page
                 Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(), Bitmap.Config.ARGB_8888);
-                // Render the page to the bitmap
+                // Rendu de la page vers le bitmap
                 page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-                // Display the bitmap in the ImageView
+                // Affichage du bitmap dans l'ImageView zoomable
                 this.touch.setMinimumHeight(bitmap.getHeight());
                 this.touch.setMinimumWidth(bitmap.getWidth());
                 this.touch.setImageBitmap(bitmap);

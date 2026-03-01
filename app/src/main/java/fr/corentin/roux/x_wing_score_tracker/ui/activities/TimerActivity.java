@@ -20,16 +20,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.window.OnBackInvokedCallback;
-import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import fr.corentin.roux.x_wing_score_tracker.R;
 import fr.corentin.roux.x_wing_score_tracker.model.DiceCounter;
@@ -50,9 +45,10 @@ import fr.corentin.roux.x_wing_score_tracker.utils.UIUtils;
 import io.vavr.control.Try;
 
 /**
+ * Activité gérant le plateau de score et le chronomètre de la partie en cours.
+ * Permet de saisir les scores, de gérer les rounds, de compter les dés et de visualiser les listes de vaisseaux.
+ * 
  * @author Corentin Roux
- * <p>
- * Activity for the view of the scoring board
  */
 @SuppressLint("SetTextI18n")
 public class TimerActivity extends AbstractActivity
@@ -153,9 +149,6 @@ public class TimerActivity extends AbstractActivity
     private ListView listShipPlayer1;
     private ListView listShipPlayer2;
 
-    private ShipListAdapter shipAdapter1;
-    private ShipListAdapter shipAdapter2;
-
     @Override
     protected void initContentView()
     {
@@ -163,6 +156,9 @@ public class TimerActivity extends AbstractActivity
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
+    /**
+     * Initialise les données de la partie à partir des extras de l'Intent et des paramètres.
+     */
     @Override
     protected void initGame()
     {
@@ -239,18 +235,18 @@ public class TimerActivity extends AbstractActivity
         //Init data
         this.initMission();
         //Init des adapters
-        this.shipAdapter1 = (new ShipListAdapter(this, this.timerActivityModel.getGame().getNamePlayer1(), this.timerActivityModel.getGame().getXwsShipsPlayer1()));
-        this.shipAdapter2 = (new ShipListAdapter(this, this.timerActivityModel.getGame().getNamePlayer2(), this.timerActivityModel.getGame().getXwsShipsPlayer2()));
+        final ShipListAdapter shipAdapter1 = (new ShipListAdapter(this, this.timerActivityModel.getGame().getNamePlayer1(), this.timerActivityModel.getGame().getXwsShipsPlayer1()));
+        final ShipListAdapter shipAdapter2 = (new ShipListAdapter(this, this.timerActivityModel.getGame().getNamePlayer2(), this.timerActivityModel.getGame().getXwsShipsPlayer2()));
 
-        this.listShipPlayer1.setAdapter(this.shipAdapter1);
-        this.listShipPlayer2.setAdapter(this.shipAdapter2);
+        this.listShipPlayer1.setAdapter(shipAdapter1);
+        this.listShipPlayer2.setAdapter(shipAdapter2);
 
         UIUtils.setListViewHeightBasedOnItems(listShipPlayer1);
         UIUtils.setListViewHeightBasedOnItems(listShipPlayer2);
 
         //whenever the data changes
-        this.shipAdapter1.notifyDataSetChanged();
-        this.shipAdapter2.notifyDataSetChanged();
+        shipAdapter1.notifyDataSetChanged();
+        shipAdapter2.notifyDataSetChanged();
     }
 
     @Override
@@ -289,7 +285,9 @@ public class TimerActivity extends AbstractActivity
         });
     }
 
-    /** {@inheritDoc} */
+    /** 
+     * Initialise les paramètres par défaut et configure le retour arrière.
+     */
     @Override
     public void initDefaultValue()
     {
@@ -334,8 +332,6 @@ public class TimerActivity extends AbstractActivity
 
         this.playerOne.setLayoutParams(marginLayoutParams);
         this.playerTwo.setLayoutParams(marginLayoutParams);
-
-
     }
 
 
@@ -347,6 +343,9 @@ public class TimerActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Initialise la sonnerie d'alarme.
+     */
     private void initRing()
     {
         final Uri alarmTone = this.timerActivityModel.getSetting().getPathRingTone() != null ?
@@ -361,7 +360,7 @@ public class TimerActivity extends AbstractActivity
     }
 
     /**
-     * Update the timer with the time left
+     * Met à jour l'affichage du chronomètre.
      */
     private void updateTimer()
     {
@@ -373,6 +372,9 @@ public class TimerActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Formate le temps restant en MM:SS.
+     */
     private StringBuilder generateTimeLeft(final int timeToSet)
     {
         final int minutes = timeToSet / MINUTES;
@@ -411,6 +413,9 @@ public class TimerActivity extends AbstractActivity
         });
     }
 
+    /**
+     * Met à jour les scores affichés pour les deux joueurs.
+     */
     public void updateScorePlayers()
     {
         this.updateScorePlayerOne();
@@ -511,6 +516,9 @@ public class TimerActivity extends AbstractActivity
         this.btnPlusRound.setOnClickListener(t -> this.addRound());
     }
 
+    /**
+     * Met à jour les statistiques de dés affichées (Attack/Defense).
+     */
     private void updateDiceStat()
     {
         final DiceTurn current = this.timerActivityModel.getDiceTurn();
@@ -675,6 +683,9 @@ public class TimerActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Passe au round suivant, sauvegarde les détails du round actuel et notifie l'utilisateur si c'est le dernier tour.
+     */
     private void addRound()
     {
         this.updateRoundDetail();
@@ -686,6 +697,9 @@ public class TimerActivity extends AbstractActivity
         this.roundNumber.setText(String.valueOf(this.timerActivityModel.getGame().getRound()));
     }
 
+    /**
+     * Enregistre les informations du round actuel (scores, temps, dés) dans l'objet Game.
+     */
     private void updateRoundDetail()
     {
         final Round round = new Round();
@@ -706,14 +720,14 @@ public class TimerActivity extends AbstractActivity
     }
 
     /**
-     * the trigger for start the timer
+     * Démarre le compte à rebours.
      */
     private void startTimer()
     {
         this.timer = (new CountDownTimer(this.timerActivityModel.getTimeToSet(), SECONDES)
         {
             /**
-             * trigger every {@fields SECONDES} millisecondes
+             * Déclenché à chaque seconde.
              * {@inheritDoc}
              */
             @Override
@@ -724,7 +738,7 @@ public class TimerActivity extends AbstractActivity
             }
 
             /**
-             * at the end of the time
+             * Déclenché à la fin du temps imparti.
              * {@inheritDoc}
              */
             @Override
@@ -744,7 +758,7 @@ public class TimerActivity extends AbstractActivity
     }
 
     /**
-     * the trigger for stop the timer
+     * Arrête le compte à rebours.
      */
     private void stopTimer()
     {
@@ -764,6 +778,9 @@ public class TimerActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Gère l'action du bouton retour pour afficher un dialogue de confirmation si la partie n'est pas finie.
+     */
     @Override
     public void onBackPressed()
     {
@@ -776,6 +793,9 @@ public class TimerActivity extends AbstractActivity
         super.onBackPressed();
     }
 
+    /**
+     * Sauvegarde la partie et libère les ressources lors de la destruction de l'activité.
+     */
     @Override
     protected void onDestroy()
     {
@@ -799,6 +819,9 @@ public class TimerActivity extends AbstractActivity
         super.onDestroy();
     }
 
+    /**
+     * Joue la sonnerie d'alarme de fin de partie.
+     */
     private void playSound()
     {
         if (this.timerActivityModel.isAlreadyEnd())
@@ -854,6 +877,12 @@ public class TimerActivity extends AbstractActivity
         this.timerActivityModel.setEnd(end);
     }
 
+    /**
+     * Met à jour les scores de destruction lorsqu'un statut de vaisseau change.
+     * @param namePlayer Nom du joueur dont le vaisseau a changé de statut.
+     * @param current Le vaisseau concerné.
+     * @param oldStatut L'ancien statut avant modification.
+     */
     public void changeScore(String namePlayer, Ship current, Ship.Statut oldStatut)
     {
         if (oldStatut.equals(Ship.Statut.FULL))

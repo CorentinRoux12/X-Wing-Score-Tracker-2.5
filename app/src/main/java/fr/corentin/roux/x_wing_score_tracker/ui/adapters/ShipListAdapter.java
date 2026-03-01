@@ -25,10 +25,18 @@ import fr.corentin.roux.x_wing_score_tracker.model.Ship;
 import fr.corentin.roux.x_wing_score_tracker.ui.activities.TimerActivity;
 import io.vavr.control.Try;
 
+/**
+ * Adaptateur pour la liste des vaisseaux d'un joueur.
+ * Permet d'afficher les vaisseaux et de changer leur statut (Intact, Moitié, Détruit) en cliquant dessus,
+ * ce qui met à jour automatiquement le score dans la TimerActivity.
+ */
 public class ShipListAdapter extends BaseAdapter
 {
+    /** Couleurs RED utilisées pour les différents statuts des vaisseaux. */
     private static final String RED = "#9d0208";
+    /** Couleurs YELLOW utilisées pour les différents statuts des vaisseaux. */
     private static final String YELLOW = "#E5E500";
+    /** Couleurs GREEN utilisées pour les différents statuts des vaisseaux. */
     private static final String GREEN = "#2b9348";
 
     private final List<Ship> ships;
@@ -37,6 +45,13 @@ public class ShipListAdapter extends BaseAdapter
     private final TimerActivity activity;
     private final String player;
 
+    /**
+     * Constructeur.
+     *
+     * @param activity L'activité {@link TimerActivity} parente.
+     * @param name     Nom du joueur associé à cette liste.
+     * @param xws      Chaîne JSON représentant la liste des vaisseaux (format XWS).
+     */
     public ShipListAdapter(TimerActivity activity, String name, String xws)
     {
         this.activity = activity;
@@ -51,6 +66,9 @@ public class ShipListAdapter extends BaseAdapter
                 .getOrElse(Collections.emptyList());
     }
 
+    /**
+     * Extrait la liste des vaisseaux à partir de la chaîne JSON XWS.
+     */
     private List<Ship> extractList(String xws) throws JSONException
     {
         final List<Ship> listPlayer = new ArrayList<>();
@@ -85,45 +103,57 @@ public class ShipListAdapter extends BaseAdapter
         return listPlayer;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getCount()
     {
         return ships.size();
     }
 
+    /** {@inheritDoc} */
     @Override
     public Object getItem(int position)
     {
         return ships.get(position);
     }
 
+    /** {@inheritDoc} */
     @Override
     public long getItemId(int position)
     {
         return position;
     }
 
+    /** {@inheritDoc} */
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
         @SuppressLint("ViewHolder") final View rowView = this.inflater.inflate(R.layout.ship_adapter_layout, parent, false);
         final ViewHolder holder = new ViewHolder();
-        //On fait un mapping entre le xml et le java
+        //Mapping XML <-> Java
         this.findViews(rowView, holder);
-        //On initialise les champs de la page avec les données du contrat
+        //Initialisation des données
         this.initialisationData(holder, position);
-        //On initialise les listeners de la page
+        //Initialisation des listeners
         this.initialisationListeners(holder, position);
-        //On return la vue remplie
         return rowView;
     }
 
+    /**
+     * Initialise les listeners sur les boutons de chaque vaisseau.
+     *
+     * @param holder   ViewHolder contenant les vues du vaisseau.
+     * @param position Position du vaisseau dans la liste.
+     */
     private void initialisationListeners(ViewHolder holder, int position)
     {
         holder.nomShip.setOnClickListener(t -> changeScoreListener(position, holder));
         holder.pointShip.setOnClickListener(t -> changeScoreListener(position, holder));
     }
 
+    /**
+     * Gère le clic sur un vaisseau pour changer son statut et mettre à jour le score global.
+     */
     private void changeScoreListener(int position, ViewHolder holder)
     {
         Ship current = (Ship) this.getItem(position);
@@ -134,6 +164,12 @@ public class ShipListAdapter extends BaseAdapter
         this.notifyDataSetChanged();
     }
 
+    /**
+     * Initialise les données du vaisseau dans la vue.
+     *
+     * @param holder   ViewHolder contenant les vues du vaisseau.
+     * @param position Position du vaisseau dans la liste.
+     */
     private void initialisationData(ViewHolder holder, int position)
     {
         final Ship current = (Ship) this.getItem(position);
@@ -142,40 +178,59 @@ public class ShipListAdapter extends BaseAdapter
         holder.changeColor(current.getStatut());
     }
 
+    /**
+     * Mapping XML <-> Java.
+     *
+     * @param rowView La vue générée par le layout.
+     * @param holder  ViewHolder contenant les vues du vaisseau.
+     */
     public void findViews(final View rowView, final ViewHolder holder)
     {
         holder.nomShip = rowView.findViewById(R.id.nomShip);
         holder.pointShip = rowView.findViewById(R.id.pointShip);
     }
 
+    /**
+     * Pattern ViewHolder avec gestion dynamique de la couleur selon le statut du vaisseau.
+     */
     public static class ViewHolder
     {
         private TextView nomShip;
         private Button pointShip;
 
+        /**
+         * Getter du nom du vaisseau.
+         *
+         * @return Nom du vaisseau.
+         */
         public TextView getNomShip()
         {
             return nomShip;
         }
 
+        /**
+         * Getter du bouton de points.
+         *
+         * @return Bouton de points.
+         */
         public Button getPointShip()
         {
             return pointShip;
         }
 
+        /**
+         * Change la couleur de fond du bouton de points selon le statut (Intact, Moitié, Détruit).
+         *
+         * @param statut Statut du vaisseau.
+         */
         public void changeColor(Ship.Statut statut)
         {
-            if (statut.equals(Ship.Statut.FULL))
+            this.pointShip.setBackgroundColor(switch (statut)
             {
-                pointShip.setBackgroundColor(Color.parseColor(GREEN));
-            } else if (statut.equals(Ship.Statut.HALF))
-            {
-                pointShip.setBackgroundColor(Color.parseColor(YELLOW));
-            } else
-            {
-                pointShip.setBackgroundColor(Color.parseColor(RED));
-
-            }
+                case FULL -> Color.parseColor(GREEN);
+                case HALF -> Color.parseColor(YELLOW);
+                case DEAD -> Color.parseColor(RED);
+            });
         }
     }
 }

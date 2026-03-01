@@ -1,5 +1,8 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
+/**
+ * Classe utilitaire pour compter et agréger les statistiques de dés pour deux joueurs.
+ */
 public class DiceCounter
 {
 
@@ -25,6 +28,10 @@ public class DiceCounter
     private Integer defenseBlankPlayer2 = 0;
 
 
+    /**
+     * Met à jour les compteurs à partir d'un tour de dés spécifique.
+     * @param diceTurn Le tour de dés contenant les nouvelles statistiques.
+     */
     public void updateCount(DiceTurn diceTurn)
     {
         this.attackCritPlayer1 += diceTurn.getDiceStatsPlayer1().get(DiceFace.ATTACK_CRIT);
@@ -50,6 +57,10 @@ public class DiceCounter
         this.totalDefensePlayer2 = this.defenseEvadePlayer2 + this.defenseEyePlayer2 + this.defenseBlankPlayer2;
     }
 
+    /**
+     * Ajoute les statistiques d'un autre DiceCounter à celui-ci.
+     * @param diceCounter L'autre compteur à agréger.
+     */
     public void append(DiceCounter diceCounter)
     {
         this.attackCritPlayer1 += diceCounter.getAttackCritPlayer1();

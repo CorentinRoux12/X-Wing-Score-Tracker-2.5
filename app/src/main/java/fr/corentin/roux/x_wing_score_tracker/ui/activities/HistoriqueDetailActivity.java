@@ -26,6 +26,10 @@ import fr.corentin.roux.x_wing_score_tracker.model.Setting;
 import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import io.vavr.control.Try;
 
+/**
+ * Activité affichant les détails d'une partie passée issue de l'historique.
+ * Affiche les scores finaux, les statistiques de dés et le détail de chaque round.
+ */
 public class HistoriqueDetailActivity extends AbstractActivity
 {
 
@@ -192,6 +196,11 @@ public class HistoriqueDetailActivity extends AbstractActivity
         this.mission.setText(current.getMission());
     }
 
+    /**
+     * Génère une chaîne de caractères représentant le temps écoulé (MM:SS).
+     * @param timeLeft Le temps en millisecondes.
+     * @return Un StringBuilder contenant le temps formaté.
+     */
     private StringBuilder generateTimerAffichage(long timeLeft)
     {
         final int minutes = generateMinutes(timeLeft);
@@ -218,6 +227,10 @@ public class HistoriqueDetailActivity extends AbstractActivity
         return (int) time % MINUTES / SECONDES;
     }
 
+    /**
+     * Extrait les statistiques de dés à partir d'une chaîne JSON.
+     * Gère l'obfuscation potentielle des noms de champs.
+     */
     private List<DiceTurn> extractDiceStat(String dicesStats) throws JSONException
     {
         final List<DiceTurn> diceTurns = new ArrayList<>();
@@ -327,6 +340,10 @@ public class HistoriqueDetailActivity extends AbstractActivity
     }
 
 
+    /**
+     * Extrait la liste des rounds à partir d'une chaîne JSON.
+     * Gère l'obfuscation potentielle des noms de champs.
+     */
     private List<Round> extractRounds(String roundsJson) throws JSONException
     {
         final List<Round> rounds = new ArrayList<>();

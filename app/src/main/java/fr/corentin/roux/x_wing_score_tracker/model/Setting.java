@@ -6,6 +6,10 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+/**
+ * Entité représentant les paramètres de l'application.
+ * Stocke les préférences utilisateur telles que la langue, le thème, le temps de jeu et les listes de vaisseaux.
+ */
 @Entity
 public class Setting implements Persistable, Serializable
 {
@@ -35,10 +39,16 @@ public class Setting implements Persistable, Serializable
 
     private Boolean lowResolutionMode = Boolean.FALSE;
 
+    /**
+     * Constructeur par défaut.
+     */
     public Setting()
     {
     }
 
+    /**
+     * Constructeur avec tous les champs (utilisé par Room via @Ignore).
+     */
     @Ignore
     public Setting(Integer id, String name, String opponent, String language, String randomTime, String volatilityTime, Boolean enabledDarkTheme, String pathRingTone, String listPlayer1, String listPlayer2, Boolean diceCounter, Boolean lowResolutionMode)
     {

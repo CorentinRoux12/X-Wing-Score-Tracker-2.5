@@ -4,6 +4,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Classe de base abstraite pour toutes les activités de l'application.
+ * Définit le cycle d'initialisation standard (View, Data, Listeners).
+ */
 public abstract class AbstractActivity extends AppCompatActivity {
 
     /**
@@ -12,55 +16,58 @@ public abstract class AbstractActivity extends AppCompatActivity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //We set the view who will be use for display the datas
+        //On définit la vue qui sera utilisée pour l'affichage
         this.initContentView();
-        //Init Basic data
+        //Initialisation des données de base
         this.initGame();
-        //Bind the xml and the fields
+        //Liaison entre le XML et les champs java
         this.findView();
-        //Init des datas de la page
+        //Initialisation des données de la page
         this.initDatas();
-        //Init Adapters
+        //Initialisation des adaptateurs
         this.initAdapters();
-        //Initialization of the listeners
+        //Initialisation des écouteurs
         this.initListeners();
-        //Init Default Value Post Listeners
+        //Initialisation des valeurs par défaut post-listeners
         this.initDefaultValue();
     }
 
+    /**
+     * Initialisation des valeurs par défaut après la mise en place des listeners.
+     */
     protected void initDefaultValue() {
     }
 
     /**
-     * Initilization The content view page
+     * Définit le layout de l'activité (setContentView).
      */
     protected abstract void initContentView();
 
     /**
-     * Initialization the basic data (service,game,...) before load the find view
+     * Initialisation des données de base (services, objets métier) avant le mapping des vues.
      */
     protected void initGame() {
     }
 
     /**
-     * Load/Map all component from the xml
+     * Charge et mappe tous les composants graphiques à partir du XML.
      */
     protected abstract void findView();
 
     /**
-     * Initialization all the adapters
+     * Initialisation de tous les adaptateurs nécessaires à l'activité.
      */
     protected void initAdapters() {
     }
 
     /**
-     * Initilization Datas inside the component
+     * Initialisation des données à l'intérieur des composants graphiques.
      */
     protected void initDatas() {
     }
 
     /**
-     * Initialization the listeners of the page
+     * Initialisation des écouteurs d'événements (onClick, etc.) de la page.
      */
     protected void initListeners() {
     }
