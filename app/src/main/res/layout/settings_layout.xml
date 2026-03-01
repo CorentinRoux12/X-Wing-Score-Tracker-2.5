@@ -98,6 +98,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/primaryTitle">
+
+                <CheckBox
+                    android:id="@+id/checkboxLowResolutionMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:buttonTint="@color/textColor"
+                    android:fontFamily="@font/open_sans_light"
+                    android:gravity="center"
+                    android:text="@string/low_resolution_mode"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/textColor"
+                    android:textSize="@dimen/normal_text"
+                    tools:ignore="RtlCompat" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linearLayoutTimer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

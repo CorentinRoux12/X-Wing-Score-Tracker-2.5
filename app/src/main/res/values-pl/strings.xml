@@ -59,4 +59,5 @@
     <string name="dice_stats_counter">Licznik statystyk kości</string>
     <string name="import_xws_list">Importuj listę XWS</string>
     <string name="reset_xws">Zresetuj XWS</string>
+    <string name="low_resolution_mode">Tryb niskiej rozdzielczości</string>
 </resources>

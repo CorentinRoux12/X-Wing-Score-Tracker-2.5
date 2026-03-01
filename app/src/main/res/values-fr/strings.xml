@@ -55,8 +55,10 @@
     <string name="chance">Chance</string>
     <string name="salvage">Salvage</string>
     <string name="scramble">Scramble</string>
+    <string name="_75">75</string>
     <string name="dice_stats_counter">compteur de statistiques de dés</string>
     <string name="import_xws_list">Importer la liste XWS</string>
     <string name="reset_xws">Réinitialiser la liste XWS</string>
+    <string name="low_resolution_mode">Mode basse résolution</string>
 
 </resources>

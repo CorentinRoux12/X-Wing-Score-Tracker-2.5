@@ -55,7 +55,9 @@
     <string name="chance">Gelegenheitsangriff</string>
     <string name="salvage">Bergungsmission</string>
     <string name="scramble">Verschlüsselte Übertragung</string>
+    <string name="_75">75</string>
     <string name="dice_stats_counter">Würfelstatistikzähler</string>
     <string name="import_xws_list">XWS-Liste importieren</string>
     <string name="reset_xws">XWS-Liste zurücksetzen</string>
+    <string name="low_resolution_mode">Modus mit niedriger Auflösung</string>
 </resources>

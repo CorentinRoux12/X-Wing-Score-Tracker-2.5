@@ -55,6 +55,8 @@ public class SettingsActivity extends AbstractActivity
     private Setting setting;
     private CheckBox checkboxdarkMode;
     private CheckBox checkboxDiceCounter;
+    private CheckBox checkboxLowResolutionMode;
+    private Boolean enabledLowResolutionMode;
 
     private Button myListImport;
     private Button opponentListImport;
@@ -115,10 +117,12 @@ public class SettingsActivity extends AbstractActivity
         this.inputVolatility.setText(this.setting.getVolatilityTime());
         this.checkboxDiceCounter.setChecked(this.setting.getDiceCounter());
         this.checkboxdarkMode.setChecked(this.setting.getEnabledDarkTheme());
+        this.checkboxLowResolutionMode.setChecked(this.setting.getLowResolutionMode());
 
         this.enabledDarkMode = this.setting.getEnabledDarkTheme();
         this.enabledDiceCount = this.setting.getDiceCounter();
         this.pathRingTone = this.setting.getPathRingTone();
+        this.enabledLowResolutionMode = this.setting.getLowResolutionMode();
     }
 
     @Override
@@ -149,6 +153,19 @@ public class SettingsActivity extends AbstractActivity
                 } else
                 {
                     this.setting.setDiceCounter(Boolean.FALSE);
+                }
+            }
+        });
+        this.checkboxLowResolutionMode.setOnClickListener(t -> {
+            if (Objects.equals(enabledLowResolutionMode, setting.getLowResolutionMode()))
+            {
+                this.enabledLowResolutionMode = !this.enabledLowResolutionMode;
+                if (Boolean.TRUE.equals(this.enabledLowResolutionMode))
+                {
+                    this.setting.setLowResolutionMode(Boolean.TRUE);
+                } else
+                {
+                    this.setting.setLowResolutionMode(Boolean.FALSE);
                 }
             }
         });
@@ -249,6 +266,7 @@ public class SettingsActivity extends AbstractActivity
         this.resetOpponentListImport = this.findViewById(R.id.resetOpponentListImport);
         this.resetMyListImport = this.findViewById(R.id.resetMyListImport);
         this.checkboxDiceCounter = this.findViewById(R.id.checkboxDiceCounter);
+        this.checkboxLowResolutionMode = this.findViewById(R.id.checkboxLowResolutionMode);
     }
 
     private void saveSettings()
@@ -266,6 +284,7 @@ public class SettingsActivity extends AbstractActivity
         this.setting.setDiceCounter(this.enabledDiceCount);
         this.setting.setEnabledDarkTheme(this.enabledDarkMode);
         this.setting.setPathRingTone(this.pathRingTone);
+        this.setting.setLowResolutionMode(this.enabledLowResolutionMode);
         this.service.save(this, this.setting);
     }
 }

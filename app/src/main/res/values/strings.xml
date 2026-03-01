@@ -55,8 +55,9 @@
     <string name="chance">Chance</string>
     <string name="salvage">Salvage</string>
     <string name="scramble">Scramble</string>
-    <string name="_75" translatable="false">75</string>
+    <string name="_75">75</string>
     <string name="dice_stats_counter">Dice Stats Counter</string>
     <string name="import_xws_list">Import XWS</string>
     <string name="reset_xws">Reset XWS</string>
+    <string name="low_resolution_mode">Low Resolution Mode</string>
 </resources>
