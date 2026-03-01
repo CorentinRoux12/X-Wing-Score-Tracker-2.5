@@ -36,6 +36,10 @@ import fr.corentin.roux.x_wing_score_tracker.utils.AdapterViewUtils;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 import io.vavr.control.Try;
 
+/**
+ * Activité de gestion des paramètres de l'application.
+ * Permet de modifier le nom des joueurs, la langue, le thème sombre, et d'importer des listes de vaisseaux (XWS).
+ */
 @SuppressLint("SetTextI18n")
 public class SettingsActivity extends AbstractActivity
 {
@@ -70,6 +74,7 @@ public class SettingsActivity extends AbstractActivity
     /** Permet de set une liste de ship dans les settings joueur 2 */
     private final Consumer<List<Ship>> setListPlayer2 = s -> this.setting.setListPlayer2(new Gson().toJson(s));
 
+    /** Logique d'importation de liste XWS depuis le presse-papier */
     private final BiConsumer<Consumer<List<Ship>>, String> setListPlayers = (settingList, player) ->
             Try.of(() -> (ClipboardManager) getSystemService(CLIPBOARD_SERVICE))
                     .mapTry(this::extractList)
@@ -83,6 +88,9 @@ public class SettingsActivity extends AbstractActivity
         this.setContentView(R.layout.settings_layout);
     }
 
+    /**
+     * Applique la langue avant la création de la vue.
+     */
     @Override
     protected void attachBaseContext(Context newBase)
     {
@@ -90,6 +98,9 @@ public class SettingsActivity extends AbstractActivity
         super.attachBaseContext(LocaleHelper.checkDefaultLanguage(setting, newBase));
     }
 
+    /**
+     * Notifie le changement de paramètres au retour.
+     */
     @Override
     public void onBackPressed()
     {
@@ -97,6 +108,9 @@ public class SettingsActivity extends AbstractActivity
         super.onBackPressed();
     }
 
+    /**
+     * Sauvegarde les paramètres lors de la destruction de l'activité.
+     */
     @Override
     protected void onDestroy()
     {
@@ -210,6 +224,9 @@ public class SettingsActivity extends AbstractActivity
         });
     }
 
+    /**
+     * Extrait une liste de vaisseaux à partir du format XWS contenu dans le presse-papier.
+     */
     private List<Ship> extractList(ClipboardManager clipboardManager) throws JSONException
     {
         final List<Ship> listPlayer = new ArrayList<>();
@@ -225,6 +242,9 @@ public class SettingsActivity extends AbstractActivity
         return listPlayer;
     }
 
+    /**
+     * Formate et initialise le spinner de sélection de la langue.
+     */
     private void formatLanguage()
     {
         //Code Ihm stocké ici
@@ -239,6 +259,9 @@ public class SettingsActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Applique le mode sombre ou clair globalement.
+     */
     private void reloadDarkMode()
     {
         AppCompatDelegate.setDefaultNightMode(Boolean.TRUE.equals(this.enabledDarkMode) ?
@@ -246,6 +269,9 @@ public class SettingsActivity extends AbstractActivity
                 AppCompatDelegate.MODE_NIGHT_NO);
     }
 
+    /**
+     * Redémarre l'activité pour appliquer les changements (ex: langue).
+     */
     private void startSettingsActivity()
     {
         this.recreate();
@@ -269,6 +295,9 @@ public class SettingsActivity extends AbstractActivity
         this.checkboxLowResolutionMode = this.findViewById(R.id.checkboxLowResolutionMode);
     }
 
+    /**
+     * Récupère les valeurs saisies dans l'IHM et les sauvegarde via le service.
+     */
     private void saveSettings()
     {
         String time = this.inputTime.getText().toString();

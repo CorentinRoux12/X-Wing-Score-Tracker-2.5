@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entité représentant une partie de X-Wing.
+ * Stocke les scores, les informations des joueurs, les rounds et les statistiques de dés.
+ */
 @Entity
 public class Game implements Persistable, Serializable {
 
@@ -44,22 +48,35 @@ public class Game implements Persistable, Serializable {
     private String xwsShipsPlayer2 = "";
 
 
-
-
+    /**
+     * Sérialise les listes de rounds et de tours de dés en JSON pour la sauvegarde dans Room.
+     * @return L'instance de Game mise à jour.
+     */
     public Game serializeForSave() {
         this.roundsJson = new Gson().toJson(this.rounds);
         this.diceJson = new Gson().toJson(this.diceTurns);
         return this;
     }
 
+    /**
+     * Décrémente le numéro du round actuel.
+     */
     public void removeRound() {
         this.round--;
     }
 
+    /**
+     * Incrémente le numéro du round actuel.
+     */
     public void addRound() {
         this.round++;
     }
 
+    /**
+     * Ajoute des points de destruction à un joueur.
+     * @param namePlayer Nom du joueur qui a marqué les points.
+     * @param point Nombre de points à ajouter.
+     */
     public void addScoreKill(final String namePlayer, final int point) {
         if (!namePlayer.equals(namePlayer1)) {
             this.addScoreKillPlayer1(point);
@@ -68,6 +85,11 @@ public class Game implements Persistable, Serializable {
         }
     }
 
+    /**
+     * Retire des points de destruction à un joueur.
+     * @param namePlayer Nom du joueur concerné.
+     * @param point Nombre de points à retirer.
+     */
     public void lessScoreKill(final String namePlayer, final int point) {
         if (!namePlayer.equals(namePlayer1)) {
             this.lessScoreKillPlayer1(point);
@@ -76,6 +98,11 @@ public class Game implements Persistable, Serializable {
         }
     }
 
+    /**
+     * Ajoute des points de mission à un joueur.
+     * @param namePlayer Nom du joueur qui a marqué les points.
+     * @param point Nombre de points à ajouter.
+     */
     public void addScoreMission(final String namePlayer, final int point) {
         if (!namePlayer.equals(namePlayer1)) {
             this.addScoreMissionPlayer1(point);
@@ -84,6 +111,11 @@ public class Game implements Persistable, Serializable {
         }
     }
 
+    /**
+     * Retire des points de mission à un joueur.
+     * @param namePlayer Nom du joueur concerné.
+     * @param point Nombre de points à retirer.
+     */
     public void lessScoreMission(final String namePlayer, final int point) {
         if (!namePlayer.equals(namePlayer1)) {
             this.lessScoreMissionPlayer1(point);
@@ -94,6 +126,9 @@ public class Game implements Persistable, Serializable {
 
     //--------------------Player1--------------------//
 
+    /**
+     * Met à jour le score global du joueur 1 (somme des kills et missions).
+     */
     private void updateScorePlayer1() {
         this.scoreGlobalPlayer1 = this.scoreKillPlayer1 + this.scoreMissionPlayer1;
     }
@@ -126,6 +161,9 @@ public class Game implements Persistable, Serializable {
 
     //--------------------Player2--------------------//
 
+    /**
+     * Met à jour le score global du joueur 2 (somme des kills et missions).
+     */
     private void updateScorePlayer2() {
         this.scoreGlobalPlayer2 = this.scoreKillPlayer2 + this.scoreMissionPlayer2;
     }

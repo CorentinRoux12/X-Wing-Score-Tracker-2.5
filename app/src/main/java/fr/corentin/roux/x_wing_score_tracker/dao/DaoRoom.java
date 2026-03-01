@@ -6,6 +6,10 @@ import androidx.room.Room;
 
 import java.util.Objects;
 
+/**
+ * Singleton permettant l'accès à la base de données Room.
+ * Gère l'initialisation de la base de données SQLite via Room.
+ */
 public class DaoRoom
 {
 
@@ -13,10 +17,16 @@ public class DaoRoom
 
     private AppDatabase databaseAccess;
 
+    /**
+     * Constructeur privé pour le singleton.
+     */
     private DaoRoom()
     {
     }
 
+    /**
+     * @return L'unique instance de DaoRoom.
+     */
     public static DaoRoom getInstance()
     {
         if (Objects.isNull(instance))
@@ -27,6 +37,11 @@ public class DaoRoom
     }
 
 
+    /**
+     * Initialise et retourne l'accès à la base de données.
+     * @param applicationContext Le contexte de l'application.
+     * @return L'instance de {@link AppDatabase}.
+     */
     public AppDatabase getDatabaseAccess(final Context applicationContext)
     {
         if (Objects.isNull(databaseAccess))

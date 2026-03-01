@@ -6,7 +6,12 @@ import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
-public class TrackerApplication extends Application {
+/**
+ * Classe Application principale de l'application Score Tracker.
+ * Initialise le singleton de l'application et configure MultiDex.
+ */
+public class TrackerApplication extends Application
+{
 
     /**
      * L'instance de la classe
@@ -16,7 +21,8 @@ public class TrackerApplication extends Application {
     /**
      * Constructeur privé de la classe permettant de bloquer l'instanciation depuis l'extérieure de la classe
      */
-    private TrackerApplication() {
+    private TrackerApplication()
+    {
         Log.d(this.getClass().getSimpleName(), "Génération du singleton.");
     }
 
@@ -25,15 +31,19 @@ public class TrackerApplication extends Application {
      *
      * @return l'instance créer de la classe
      */
-    public static TrackerApplication getInstance() {
-        if (instance == null) {
+    public static TrackerApplication getInstance()
+    {
+        if (instance == null)
+        {
             instance = new TrackerApplication();
         }
         return instance;
     }
 
+    /** {@inheritDoc} */
     @Override
-    protected void attachBaseContext(final Context newBase) {
+    protected void attachBaseContext(final Context newBase)
+    {
         super.attachBaseContext(newBase);
         MultiDex.install(this);
     }

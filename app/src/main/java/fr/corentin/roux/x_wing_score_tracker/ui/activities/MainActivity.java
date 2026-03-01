@@ -24,9 +24,11 @@ import fr.corentin.roux.x_wing_score_tracker.services.SettingService;
 import fr.corentin.roux.x_wing_score_tracker.utils.LocaleHelper;
 
 /**
+ * Activité principale servant d'écran d'accueil.
+ * Permet de configurer le timer, de choisir une mission et de lancer une partie.
+ * Gère également l'accès aux paramètres et à l'historique.
+ * 
  * @author Corentin Roux
- * <p>
- * The Main view at the start of the application
  */
 public class MainActivity extends AbstractActivity
 {
@@ -72,7 +74,7 @@ public class MainActivity extends AbstractActivity
     }
 
     /**
-     * Pour le changement de langue on doit redemarer l app ...
+     * Configure le contexte avec la langue sélectionnée dans les paramètres.
      * {@inheritDoc}
      */
     @Override
@@ -90,6 +92,7 @@ public class MainActivity extends AbstractActivity
 
 
     /**
+     * Vérifie si les paramètres ont changé pour recréer l'activité si nécessaire.
      * {@inheritDoc}
      */
     @Override
@@ -106,6 +109,7 @@ public class MainActivity extends AbstractActivity
     }
 
     /**
+     * Initialise les valeurs par défaut de l'interface (checkboxes et thème).
      * {@inheritDoc}
      */
     @Override
@@ -123,6 +127,7 @@ public class MainActivity extends AbstractActivity
     }
 
     /**
+     * Initialise les écouteurs de clics pour tous les boutons de l'écran d'accueil.
      * {@inheritDoc}
      */
     @Override
@@ -193,6 +198,11 @@ public class MainActivity extends AbstractActivity
         });
     }
 
+    /**
+     * Génère un temps de jeu aléatoire basé sur la volatilité configurée.
+     * Simule des lancers de dés pour ajuster le timer de base.
+     * @return Le temps généré sous forme de chaîne.
+     */
     private String generateRandomTime()
     {
         final long attackDice = this.random.nextInt(8);
@@ -226,6 +236,9 @@ public class MainActivity extends AbstractActivity
         }
     }
 
+    /**
+     * Calcule l'impact des dés sur le temps de base.
+     */
     private int calculVolatility(final long attackDice, final List<Long> defenseDice, int basicTime)
     {
         //Defense
@@ -266,6 +279,9 @@ public class MainActivity extends AbstractActivity
         return basicTime;
     }
 
+    /**
+     * Lance l'activité du Timer avec les paramètres configurés.
+     */
     private void startTimerActivity()
     {
         final Intent intent = new Intent(this, TimerActivity.class);

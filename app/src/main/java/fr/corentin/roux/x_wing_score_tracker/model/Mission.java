@@ -2,6 +2,10 @@ package fr.corentin.roux.x_wing_score_tracker.model;
 
 import java.io.Serializable;
 
+/**
+ * Énumération des missions (scénarios) disponibles dans X-Wing.
+ * Chaque mission est associée à un libellé, un code unique et une page spécifique dans le document de référence.
+ */
 public enum Mission implements Persistable, Serializable {
 
     NO_MISSION("No Mission", 0, "scenarios", ".pdf",0),
@@ -21,6 +25,11 @@ public enum Mission implements Persistable, Serializable {
 
     private final int page;
 
+    /**
+     * Recherche une mission à partir de son code.
+     * @param code Le code de la mission.
+     * @return La mission correspondante ou null si non trouvée.
+     */
     public static Mission parseCode(final int code) {
         for (final Mission mission : Mission.values()) {
             if (mission.getCode() == code) {
@@ -38,6 +47,11 @@ public enum Mission implements Persistable, Serializable {
         this.page = page;
     }
 
+    /**
+     * Recherche une mission à partir de son libellé.
+     * @param libelle Le libellé de la mission.
+     * @return La mission correspondante ou null si non trouvée.
+     */
     public static Mission parseLibelle(final String libelle) {
         for (final Mission mission : Mission.values()) {
             if (mission.getLibelle().equals(libelle)) {

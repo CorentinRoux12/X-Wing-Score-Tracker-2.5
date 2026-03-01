@@ -1,5 +1,9 @@
 package fr.corentin.roux.x_wing_score_tracker.model;
 
+/**
+ * Représente les différentes faces possibles des dés d'attaque et de défense.
+ * Chaque face possède une probabilité associée et un libellé pour l'affichage.
+ */
 public enum DiceFace
 {
     ATTACK_BLANK("ATTACK_BLANK", 0.25, "Attack Blank", 4, true),

@@ -10,6 +10,10 @@ import fr.corentin.roux.x_wing_score_tracker.model.Game;
 import fr.corentin.roux.x_wing_score_tracker.services.GameService;
 import fr.corentin.roux.x_wing_score_tracker.ui.adapters.HistoriqueAdapter;
 
+/**
+ * Activité affichant l'historique de toutes les parties enregistrées.
+ * Permet de visualiser la liste des parties passées et d'en supprimer.
+ */
 public class HistoriqueActivity extends AbstractActivity {
 
     private HistoriqueAdapter historiqueAdapter;
@@ -52,6 +56,10 @@ public class HistoriqueActivity extends AbstractActivity {
         this.listHistorique.setAdapter(this.historiqueAdapter);
     }
 
+    /**
+     * Supprime une partie de la liste et de la base de données.
+     * @param pos La position de la partie dans l'adaptateur.
+     */
     public void deleteGame(final int pos) {
         final List<Game> gamesSaved = GameService.getInstance().getAll(this.getBaseContext());
         Game gameToRemove = gamesSaved.get(pos);
